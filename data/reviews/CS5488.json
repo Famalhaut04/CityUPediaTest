@@ -1,0 +1,13 @@
+{
+  "course_code": "CS5488",
+  "level": null,
+  "verdict": "暂无评价",
+  "summary": "大数据算法与技术课程：讲授大数据存储与计算框架（Hadoop/Spark）、流式算法、近似算法与分布式算法，以及大规模数据处理实践。",
+  "tags": [
+    "大数据",
+    "分布式算法",
+    "Hadoop"
+  ],
+  "source_ids": [],
+  "last_updated": "2026-08-05"
+}

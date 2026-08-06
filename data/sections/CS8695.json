@@ -1,0 +1,22 @@
+[
+  {
+    "crn": "11649",
+    "section": "C01",
+    "credits": 2.0,
+    "web": "Y",
+    "available": "140",
+    "capacity": "140",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "F",
+    "time": "13:00 - 14:50",
+    "building": "Yeung Kin Man Acad Building",
+    "room": "LT-1",
+    "instructor": "Qingfu ZHANG , Guangdong BAI , Nan GUAN , Jianyuan GUO , Junhui HOU , Heqing HUANG , Jun HUANG , Zhenliang LU , Zhichao LU , Linqi SONG , Zhimeng YIN",
+    "medium": "English",
+    "notes": [
+      "only for Programme: PhD (joint Mainland U) in CS",
+      "only for Programme: MPhil Computer Science",
+      "only for Programme: PhD Computer Science"
+    ]
+  }
+]

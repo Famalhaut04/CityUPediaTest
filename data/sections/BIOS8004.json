@@ -1,0 +1,21 @@
+[
+  {
+    "crn": "12978",
+    "section": "C01",
+    "credits": 3.0,
+    "web": "Y",
+    "available": "30",
+    "capacity": "30",
+    "date": "31/08/2026 - 28/11/2026",
+    "day": "W",
+    "time": "09:00 - 11:50",
+    "building": "Yeung Kin Man Acad Building Y5-",
+    "room": "305",
+    "instructor": "Mingxuan CAI",
+    "medium": "English",
+    "notes": [
+      "only for Programme: PhD (Joint Mainland U) in BIOS",
+      "only for Programme: PhD Biostatistics"
+    ]
+  }
+]
