@@ -107,10 +107,11 @@
                   return course.eligible_sections.map((section) => {
                     const isFirstTutorialMeeting = Number(section.credits) === 0 && !seenTutorialKeys.has(MSDS.sectionKey(section));
                     if (isFirstTutorialMeeting) seenTutorialKeys.add(MSDS.sectionKey(section));
+                    const restricted = MSDS.sectionRestrictedProgrammes(section);
                     return `
                   <tr>
                     ${tutorials.length ? `<td>${isFirstTutorialMeeting ? `<input type="radio" class="tutorial-pick" name="tutorial-pick" value="${MSDS.escapeHtml(MSDS.sectionKey(section))}" ${MSDS.sectionKey(section) === String(chosenTutorialCrn) ? "checked" : ""}>` : ""}</td>` : ""}
-                    <td><strong>${MSDS.escapeHtml(section.section)}</strong><span>${Number(section.credits) === 0 ? "Tutorial · 0 学分" : `${section.credits} 学分`}</span></td>
+                    <td><strong>${MSDS.escapeHtml(section.section)}</strong><span>${Number(section.credits) === 0 ? "Tutorial · 0 学分" : `${section.credits} 学分`}</span>${restricted.length ? `<span class="section-restriction">仅限：${MSDS.escapeHtml(restricted.join("、"))}</span>` : ""}</td>
                     <td><strong>${MSDS.escapeHtml(MSDS.DAY_NAMES[section.day] || section.day)} ${MSDS.escapeHtml(section.time)}</strong><span>${MSDS.escapeHtml(section.date)}</span></td>
                     <td><strong>${MSDS.escapeHtml([section.building, section.room].filter(Boolean).join(" "))}</strong></td>
                     <td><strong>${MSDS.escapeHtml(section.instructor)}</strong></td>

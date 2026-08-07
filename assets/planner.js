@@ -301,7 +301,9 @@
     return sections.map((section) => {
       const key = MSDS.sectionKey(section);
       const webNote = section.web === "N" ? " · 非网页注册" : "";
-      return `<option value="${MSDS.escapeHtml(key)}" ${String(selectedKey) === key ? "selected" : ""}>${MSDS.escapeHtml(MSDS.formatSection(section) + webNote)}</option>`;
+      const restricted = MSDS.sectionRestrictedProgrammes(section);
+      const restrictionNote = restricted.length ? ` · 仅限：${restricted.join("、")}` : "";
+      return `<option value="${MSDS.escapeHtml(key)}" ${String(selectedKey) === key ? "selected" : ""}>${MSDS.escapeHtml(MSDS.formatSection(section) + webNote + restrictionNote)}</option>`;
     }).join("");
   }
 

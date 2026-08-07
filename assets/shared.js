@@ -218,6 +218,14 @@
     return `${section.section} · ${DAY_NAMES[section.day] || section.day} ${section.time}`;
   }
 
+  // 从 notes 中提取“only for Programme: X”限制，返回专业名称列表（无限制则为空数组）
+  function sectionRestrictedProgrammes(section) {
+    if (!Array.isArray(section?.notes)) return [];
+    return section.notes
+      .map((note) => note.match(/^only for Programme:\s*(.+)$/i)?.[1]?.trim())
+      .filter(Boolean);
+  }
+
   function showToast(message) {
     const toast = document.getElementById("toast");
     if (!toast) return;
@@ -419,6 +427,7 @@
     escapeHtml,
     findSection,
     formatSection,
+    sectionRestrictedProgrammes,
     getElectiveGroup,
     getElectiveGroupInfo,
     getProgramme,
