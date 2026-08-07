@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CityU 选课助手 · 用户反馈问卷">
+  <title>用户反馈问卷 · CityU 选课助手</title>
+  <link rel="stylesheet" href="assets/styles.css?v=20260807a">
+  <style>
+    /* 问卷专用样式 */
+    .survey-page { max-width: 760px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    .survey-hero {
+      text-align: center;
+      margin-bottom: 36px;
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      box-shadow: var(--shadow-card);
+    }
+    .survey-hero .hero-logo {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 18px rgba(99,102,241,0.25);
+    }
+    .survey-hero h1 {
+      font-size: 26px; font-weight: 900;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .survey-hero p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .survey-section {
+      margin-bottom: 32px;
+      padding: 28px 26px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      box-shadow: var(--shadow-card);
+    }
+    .survey-section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .survey-section-title .num {
+      display: inline-grid;
+      place-items: center;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      color: #fff;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .survey-field { margin-bottom: 20px; }
+    .survey-field:last-child { margin-bottom: 0; }
+    .survey-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .survey-label .required { color: #e53e3e; margin-left: 2px; }
+    .survey-hint {
+      font-size: 12px;
+      color: var(--faint);
+      margin-bottom: 8px;
+    }
+
+    .survey-input,
+    .survey-select,
+    .survey-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 200ms, box-shadow 200ms;
+      box-sizing: border-box;
+    }
+    .survey-input:focus,
+    .survey-select:focus,
+    .survey-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+    .survey-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+    .survey-radio-group,
+    .survey-checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .survey-radio-item,
+    .survey-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 180ms;
+      font-size: 13px;
+      color: var(--muted);
+      user-select: none;
+    }
+    .survey-radio-item:hover,
+    .survey-checkbox-item:hover {
+      border-color: var(--primary-border);
+      color: var(--ink);
+    }
+    .survey-radio-item input,
+    .survey-checkbox-item input {
+      margin: 0;
+      accent-color: var(--primary);
+    }
+    .survey-radio-item:has(input:checked),
+    .survey-checkbox-item:has(input:checked) {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* 星级评分 */
+    .star-rating { display: flex; gap: 4px; }
+    .star-rating input { display: none; }
+    .star-rating label {
+      font-size: 28px;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 150ms;
+      line-height: 1;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #f5a623;
+    }
+    .star-rating .stars-wrap { display: flex; flex-direction: row-reverse; gap: 4px; }
+
+    .survey-submit-bar {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      padding: 20px;
+      margin-top: 8px;
+      background: linear-gradient(to top, var(--bg) 60%, transparent);
+    }
+    .survey-btn {
+      padding: 12px 32px;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 200ms;
+      font-family: inherit;
+    }
+    .survey-btn-primary {
+      background: var(--accent-gradient);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(99,102,241,0.35);
+    }
+    .survey-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.45); }
+    .survey-btn-secondary {
+      background: var(--card);
+      color: var(--primary);
+      border: 1.5px solid var(--primary-border);
+    }
+    .survey-btn-secondary:hover { background: var(--primary-soft); }
+
+    .survey-result-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .survey-result-overlay.show { display: flex; }
+    .survey-result-card {
+      width: 100%;
+      max-width: 560px;
+      padding: 32px 28px;
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .survey-result-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .survey-result-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .survey-result-box {
+      width: 100%;
+      min-height: 200px;
+      max-height: 300px;
+      padding: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.6;
+      resize: vertical;
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+    }
+    .survey-result-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 640px) {
+      .survey-page { padding: 20px 14px 60px; }
+      .survey-section { padding: 20px 16px; }
+      .survey-hero { padding: 24px 18px; }
+      .survey-hero h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body data-page="survey">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="brand" href="index.html" aria-label="CityU 选课助手首页">
+        <img class="brand-mark" src="assets/cssa-logo.png" alt="CSSA Logo">
+        <span class="brand-text"><strong>CityU 选课助手</strong><small>Course Planner · Sem A 2026/27</small></span>
+      </a>
+    </div>
+    <nav class="sidebar-menu" aria-label="主导航">
+      <div class="menu-group">
+        <span class="menu-group-title">课程管理</span>
+        <a class="menu-item" href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
+          <span>课程表</span>
+        </a>
+        <a class="menu-item" href="https://www.cityu.edu.hk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span>城大官网</span>
+        </a>
+      </div>
+      <div class="menu-group">
+        <span class="menu-group-title">关于</span>
+        <a class="menu-item" href="about.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>关于我们</span>
+        </a>
+        <a class="menu-item active" href="survey.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" aria-hidden="true"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>反馈问卷</span>
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="survey-page">
+      <div class="survey-hero">
+        <img class="hero-logo" src="assets/cssa-logo.png" alt="CSSA Logo">
+        <h1>CityU 选课助手 · 用户反馈问卷</h1>
+        <p>感谢使用 CityU 选课助手 测试版 2.0！<br>你的反馈将帮助我们持续改进，问卷约需 3 分钟。</p>
+      </div>
+
+      <form id="survey-form">
+
+        <!-- 第一部分：基本信息 -->
+        <div class="survey-section">
+          <div class="survey-section-title"><span class="num">1</span> 基本信息</div>
+
+          <div class="survey-field">
+            <label class="survey-label">你的硕士项目<span class="required">*</span></label>
+            <div class="survey-radio-group">
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSDS"> 数据科学</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSCS"> 计算机科学</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSAI"> 人工智能</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSCY"> 网络安全</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSBIOS"> 生物统计学</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSEC"> 电子商贸</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="MSAIFS"> 人工智能与科学</label>
+              <label class="survey-radio-item"><input type="radio" name="programme" value="other"> 其他</label>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">入学年份<span class="required">*</span></label>
+            <div class="survey-radio-group">
+              <label class="survey-radio-item"><input type="radio" name="enrollment" value="2026"> 2026 秋季入学</label>
+              <label class="survey-radio-item"><input type="radio" name="enrollment" value="2025"> 2025 或更早</label>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">使用设备（可多选）</label>
+            <div class="survey-checkbox-group">
+              <label class="survey-checkbox-item"><input type="checkbox" name="device" value="pc"> 电脑</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="device" value="tablet"> 平板</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="device" value="phone"> 手机</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二部分：整体评价 -->
+        <div class="survey-section">
+          <div class="survey-section-title"><span class="num">2</span> 整体评价</div>
+
+          <div class="survey-field">
+            <label class="survey-label">整体使用体验评分<span class="required">*</span></label>
+            <div class="star-rating">
+              <div class="stars-wrap">
+                <input type="radio" name="overall_rating" id="star5" value="5"><label for="star5">★</label>
+                <input type="radio" name="overall_rating" id="star4" value="4"><label for="star4">★</label>
+                <input type="radio" name="overall_rating" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="overall_rating" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="overall_rating" id="star1" value="1"><label for="star1">★</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">界面设计评分</label>
+            <div class="star-rating">
+              <div class="stars-wrap">
+                <input type="radio" name="ui_rating" id="ui5" value="5"><label for="ui5">★</label>
+                <input type="radio" name="ui_rating" id="ui4" value="4"><label for="ui4">★</label>
+                <input type="radio" name="ui_rating" id="ui3" value="3"><label for="ui3">★</label>
+                <input type="radio" name="ui_rating" id="ui2" value="2"><label for="ui2">★</label>
+                <input type="radio" name="ui_rating" id="ui1" value="1"><label for="ui1">★</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">课程数据准确性评分</label>
+            <div class="star-rating">
+              <div class="stars-wrap">
+                <input type="radio" name="data_rating" id="data5" value="5"><label for="data5">★</label>
+                <input type="radio" name="data_rating" id="data4" value="4"><label for="data4">★</label>
+                <input type="radio" name="data_rating" id="data3" value="3"><label for="data3">★</label>
+                <input type="radio" name="data_rating" id="data2" value="2"><label for="data2">★</label>
+                <input type="radio" name="data_rating" id="data1" value="1"><label for="data1">★</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">你会向同学推荐这个工具吗？<span class="required">*</span></label>
+            <div class="survey-radio-group">
+              <label class="survey-radio-item"><input type="radio" name="recommend" value="yes"> 一定会</label>
+              <label class="survey-radio-item"><input type="radio" name="recommend" value="maybe"> 可能会</label>
+              <label class="survey-radio-item"><input type="radio" name="recommend" value="no"> 可能不会</label>
+              <label class="survey-radio-item"><input type="radio" name="recommend" value="never"> 绝对不会</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第三部分：功能反馈 -->
+        <div class="survey-section">
+          <div class="survey-section-title"><span class="num">3</span> 功能反馈</div>
+
+          <div class="survey-field">
+            <label class="survey-label">你觉得最好用的功能是？（可多选）</label>
+            <div class="survey-checkbox-group">
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="cascade"> 三级级联选择（学院→院系→项目）</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="timetable"> 可视化课表规划</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="conflict"> 时间冲突检测</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="reviews"> 课程评价与口碑分</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="syllabus"> 课程 PDF 与中文翻译</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="i18n"> 中英文切换</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="best_feature" value="credits"> 学分统计</label>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">你觉得最需要改进的功能是？（可多选）</label>
+            <div class="survey-checkbox-group">
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="cascade"> 三级级联选择</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="timetable"> 课表规划</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="conflict"> 冲突检测</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="reviews"> 课程评价</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="syllabus"> 课程 PDF 与翻译</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="search"> 搜索与筛选</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="improve_feature" value="mobile"> 移动端适配</label>
+            </div>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">你希望未来新增哪些功能？（可多选）</label>
+            <div class="survey-checkbox-group">
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="export"> 课表导出（图片/ICS）</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="share"> 课表分享链接</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="more_reviews"> 更多课程评价</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="professor"> 教授评价</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="grade"> 成绩分布参考</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="notification"> 选课开放提醒</label>
+              <label class="survey-checkbox-item"><input type="checkbox" name="new_feature" value="darkmode"> 深色模式</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第四部分：问题与建议 -->
+        <div class="survey-section">
+          <div class="survey-section-title"><span class="num">4</span> 问题与建议</div>
+
+          <div class="survey-field">
+            <label class="survey-label">你遇到了哪些 Bug 或问题？</label>
+            <p class="survey-hint">请描述具体页面和操作步骤，方便我们定位</p>
+            <textarea class="survey-textarea" name="bugs" rows="4" placeholder="例如：在手机上打开课程详情页时，班次列表显示不全…"></textarea>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">课程数据是否有误？</label>
+            <p class="survey-hint">如果发现课程名称、学分、班次时间等与 AIMS 不一致，请指出</p>
+            <textarea class="survey-textarea" name="data_error" rows="3" placeholder="例如：CS5293 的课程名称应该是…"></textarea>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">其他建议或想说的话</label>
+            <textarea class="survey-textarea" name="suggestion" rows="4" placeholder="任何想法都欢迎，吐槽也行～"></textarea>
+          </div>
+
+          <div class="survey-field">
+            <label class="survey-label">联系方式（选填）</label>
+            <p class="survey-hint">留下微信或邮箱，方便我们跟进反馈</p>
+            <input class="survey-input" type="text" name="contact" placeholder="微信 / 邮箱（选填）">
+          </div>
+        </div>
+
+        <div class="survey-submit-bar">
+          <button type="button" class="survey-btn survey-btn-secondary" onclick="document.getElementById('survey-form').reset()">重置</button>
+          <button type="submit" class="survey-btn survey-btn-primary">生成反馈</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- 结果弹窗 -->
+  <div class="survey-result-overlay" id="result-overlay">
+    <div class="survey-result-card">
+      <h3>反馈已生成</h3>
+      <p>请复制以下内容，通过微信发送给管理员或提交到 GitHub Issues：</p>
+      <textarea class="survey-result-box" id="result-text" readonly></textarea>
+      <div class="survey-result-actions">
+        <button class="survey-btn survey-btn-primary" onclick="copyResult()">复制内容</button>
+        <a class="survey-btn survey-btn-secondary" href="https://github.com/Famalhaut04/Cityu-course-selection/issues/new" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">提交到 GitHub</a>
+        <button class="survey-btn survey-btn-secondary" onclick="closeResult()">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="assets/shared.js?v=20260807a"></script>
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(el => el.value);
+    }
+
+    function getLabelForValue(name, value) {
+      const el = document.querySelector(`input[name="${name}"][value="${value}"]`);
+      return el ? el.parentElement.textContent.trim() : value;
+    }
+
+    function getRatingStars(name) {
+      const checked = document.querySelector(`input[name="${name}"]:checked`);
+      if (!checked) return '未评分';
+      const score = parseInt(checked.value);
+      return '★'.repeat(score) + '☆'.repeat(5 - score) + ` (${score}/5)`;
+    }
+
+    function getProgrammeLabel() {
+      const checked = document.querySelector('input[name="programme"]:checked');
+      if (!checked) return '未填写';
+      return checked.parentElement.textContent.trim();
+    }
+
+    document.getElementById('survey-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // 校验必填项
+      const programme = document.querySelector('input[name="programme"]:checked');
+      const enrollment = document.querySelector('input[name="enrollment"]:checked');
+      const overallRating = document.querySelector('input[name="overall_rating"]:checked');
+      const recommend = document.querySelector('input[name="recommend"]:checked');
+
+      if (!programme) { showToast('请选择你的硕士项目'); return; }
+      if (!enrollment) { showToast('请选择入学年份'); return; }
+      if (!overallRating) { showToast('请给整体体验评分'); return; }
+      if (!recommend) { showToast('请选择是否推荐'); return; }
+
+      const lines = [];
+      lines.push('═════════════════════════════════');
+      lines.push('  CityU 选课助手 · 用户反馈');
+      lines.push('  提交时间：' + new Date().toLocaleString('zh-CN'));
+      lines.push('═════════════════════════════════');
+      lines.push('');
+      lines.push('【基本信息】');
+      lines.push('硕士项目：' + getProgrammeLabel());
+      lines.push('入学年份：' + (enrollment.value === '2026' ? '2026 秋季入学' : '2025 或更早'));
+      const devices = getCheckedValues('device');
+      lines.push('使用设备：' + (devices.length ? devices.map(d => ({pc:'电脑',tablet:'平板',phone:'手机'})[d]).join('、') : '未填写'));
+      lines.push('');
+      lines.push('【整体评价】');
+      lines.push('整体体验：' + getRatingStars('overall_rating'));
+      lines.push('界面设计：' + getRatingStars('ui_rating'));
+      lines.push('数据准确性：' + getRatingStars('data_rating'));
+      lines.push('推荐意愿：' + (recommend ? getLabelForValue('recommend', recommend.value) : '未填写'));
+      lines.push('');
+      lines.push('【功能反馈】');
+      const bestFeatures = getCheckedValues('best_feature');
+      const bestLabels = {cascade:'三级级联选择', timetable:'可视化课表规划', conflict:'时间冲突检测', reviews:'课程评价与口碑分', syllabus:'课程PDF与中文翻译', i18n:'中英文切换', credits:'学分统计'};
+      lines.push('最好用的功能：' + (bestFeatures.length ? bestFeatures.map(f => bestLabels[f]).join('、') : '未填写'));
+      const improveFeatures = getCheckedValues('improve_feature');
+      const improveLabels = {cascade:'三级级联选择', timetable:'课表规划', conflict:'冲突检测', reviews:'课程评价', syllabus:'课程PDF与翻译', search:'搜索与筛选', mobile:'移动端适配'};
+      lines.push('需改进的功能：' + (improveFeatures.length ? improveFeatures.map(f => improveLabels[f]).join('、') : '未填写'));
+      const newFeatures = getCheckedValues('new_feature');
+      const newLabels = {export:'课表导出', share:'课表分享链接', more_reviews:'更多课程评价', professor:'教授评价', grade:'成绩分布参考', notification:'选课开放提醒', darkmode:'深色模式'};
+      lines.push('希望新增的功能：' + (newFeatures.length ? newFeatures.map(f => newLabels[f]).join('、') : '未填写'));
+      lines.push('');
+      lines.push('【问题与建议】');
+      lines.push('遇到的Bug：');
+      lines.push(document.querySelector('textarea[name="bugs"]').value || '无');
+      lines.push('');
+      lines.push('课程数据问题：');
+      lines.push(document.querySelector('textarea[name="data_error"]').value || '无');
+      lines.push('');
+      lines.push('其他建议：');
+      lines.push(document.querySelector('textarea[name="suggestion"]').value || '无');
+      lines.push('');
+      lines.push('联系方式：' + (document.querySelector('input[name="contact"]').value || '未填写'));
+      lines.push('');
+      lines.push('═════════════════════════════════');
+
+      document.getElementById('result-text').value = lines.join('\n');
+      document.getElementById('result-overlay').classList.add('show');
+    });
+
+    function copyResult() {
+      const text = document.getElementById('result-text');
+      text.select();
+      text.setSelectionRange(0, 99999);
+      try {
+        document.execCommand('copy');
+        showToast('已复制到剪贴板');
+      } catch (err) {
+        showToast('复制失败，请手动选择复制');
+      }
+    }
+
+    function closeResult() {
+      document.getElementById('result-overlay').classList.remove('show');
+    }
+  </script>
+</body>
+</html>
