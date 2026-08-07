@@ -53,7 +53,9 @@
       const haystack = `${course.code} ${course.programme_title}`.toLowerCase();
       const matchesSearch = haystack.includes(searchTerm.toLowerCase());
       const matchesFilter = activeFilter === "all"
-        || requirementTypeOf(course) === activeFilter;
+        || (activeFilter === "core" || activeFilter === "elective"
+          ? requirementTypeOf(course) === activeFilter
+          : MSDS.getElectiveGroup(course, activeProgramme) === activeFilter);
       const primaryDays = course.eligible_sections
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
@@ -179,6 +181,7 @@
       document.getElementById("stat-requirement-label").textContent = "核心 + 选修学分";
     }
     document.getElementById("programme-summary-name").textContent = `${programme.code} · ${programme.name_zh}`;
+    renderFilterRow(programme);
     // 课表表头的项目介绍链接
     const infoLink = document.getElementById("programme-info-link");
     if (infoLink) {
@@ -192,6 +195,32 @@
       }
     }
     document.getElementById("data-note").textContent = `课表快照：${data.schedule_as_of || ""}（Asia/Beijing），数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。`;
+  }
+
+  // 若当前项目配置了选修分组（如 MSCY 的 Group I / Group II），在“选修”后追加对应筛选按钮
+  function renderFilterRow(programme) {
+    const row = document.querySelector(".filter-row");
+    if (!row) return;
+    row.querySelectorAll(".filter-pill-group").forEach((el) => el.remove());
+
+    const groups = programme?.requirement_credit_units?.elective_groups;
+    if (Array.isArray(groups) && groups.length) {
+      const lang = MSDS.getStoredLang();
+      let anchor = row.querySelector('[data-filter="elective"]');
+      groups.forEach((group) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "filter-pill filter-pill-group";
+        button.dataset.filter = group.key;
+        button.textContent = lang === "en" ? group.label_en : group.label_zh;
+        anchor?.insertAdjacentElement("afterend", button);
+        anchor = button;
+      });
+    }
+
+    const validFilters = ["all", "core", "elective", ...(groups || []).map((group) => group.key)];
+    if (!validFilters.includes(activeFilter)) activeFilter = "all";
+    row.querySelectorAll(".filter-pill").forEach((item) => item.classList.toggle("active", item.dataset.filter === activeFilter));
   }
 
   function renderCourseList() {
@@ -410,13 +439,18 @@
       return;
     }
     container.hidden = false;
+    const lang = MSDS.getStoredLang();
     container.innerHTML = groups.map((group) => {
       const groupCourses = electiveCourses.filter((course) => MSDS.getElectiveGroup(course, activeProgramme) === group.key);
       const credits = sumCredits(groupCourses);
       const belowMin = group.min_credits != null && credits < group.min_credits;
       const aboveMax = group.max_credits != null && credits > group.max_credits;
-      const requirementText = group.min_credits != null ? `至少 ${group.min_credits} 学分` : `至多 ${group.max_credits} 学分`;
-      return `<span class="elective-group-item ${belowMin || aboveMax ? "is-warn" : ""}">${MSDS.escapeHtml(group.label_zh)}：已选 ${credits} 学分（${requirementText}）</span>`;
+      const label = lang === "en" ? group.label_en : group.label_zh;
+      const requirementText = lang === "en"
+        ? (group.min_credits != null ? `min ${group.min_credits} credits` : `max ${group.max_credits} credits`)
+        : (group.min_credits != null ? `至少 ${group.min_credits} 学分` : `至多 ${group.max_credits} 学分`);
+      const selectedText = lang === "en" ? `${credits} credits selected` : `已选 ${credits} 学分`;
+      return `<span class="elective-group-item ${belowMin || aboveMax ? "is-warn" : ""}">${MSDS.escapeHtml(label)}: ${selectedText} (${requirementText})</span>`;
     }).join("");
   }
 
@@ -524,12 +558,12 @@
       renderCourseList();
     });
 
-    document.querySelectorAll(".filter-pill").forEach((button) => {
-      button.addEventListener("click", () => {
-        activeFilter = button.dataset.filter;
-        document.querySelectorAll(".filter-pill").forEach((item) => item.classList.toggle("active", item === button));
-        renderCourseList();
-      });
+    document.querySelector(".filter-row")?.addEventListener("click", (event) => {
+      const button = event.target.closest(".filter-pill");
+      if (!button) return;
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll(".filter-pill").forEach((item) => item.classList.toggle("active", item === button));
+      renderCourseList();
     });
 
     document.querySelectorAll(".day-filter-pill").forEach((button) => {
