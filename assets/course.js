@@ -66,7 +66,8 @@
         <div class="detail-actions">
           <button id="detail-add" class="button ${isAdded ? "button-quiet" : "button-primary"}" type="button">${isAdded ? "已加入课表" : "加入课表"}</button>
           <a class="button button-quiet" href="index.html">查看课表</a>
-          ${courseDocument ? `<a class="button button-document" href="syllabus.html?code=${encodeURIComponent(course.code)}">查看详细课程介绍</a>` : ""}
+          ${courseDocument?.translation ? `<a class="button button-document" href="syllabus.html?code=${encodeURIComponent(course.code)}">查看详细课程介绍</a>` : ""}
+          ${courseDocument ? `<a class="button button-document" href="${MSDS.escapeHtml(courseDocument.pdf)}" download>课程详情 PDF</a>` : ""}
         </div>
       </section>
 
