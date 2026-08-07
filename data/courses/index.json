@@ -1371,7 +1371,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "semester_tag": "SemB"
     },
     {
       "code": "CS5612",
@@ -1395,7 +1396,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 0
+      "section_count": 0,
+      "semester_tag": "SemB"
     },
     {
       "code": "DSC6001",
