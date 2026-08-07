@@ -174,6 +174,18 @@
     return String(section.crn || `${section.section}-${section.day}-${section.time}`);
   }
 
+  // 同一 CRN 可能对应多条“每周上课时间”记录（如一周两次课）；
+  // 凡是需要枚举“可选班次”本身（而非某班次的每次上课时间）的地方，都应先按 CRN 去重
+  function uniqueByKey(sections) {
+    const seen = new Set();
+    return sections.filter((section) => {
+      const key = sectionKey(section);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
   function pickTutorial(primary, tutorials) {
     if (!tutorials.length) return null;
     const suffix = primary?.section?.match(/(\d+)$/)?.[1];
@@ -187,8 +199,8 @@
   }
 
   function makeDefaultSelection(course) {
-    const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
-    const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
+    const primaries = uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) > 0));
+    const tutorials = uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) === 0));
     const primary = primaries[0] || course.eligible_sections[0];
     const tutorial = pickTutorial(primary, tutorials);
     return {
@@ -414,6 +426,7 @@
     loadCourseData,
     makeDefaultSelection,
     pickTutorial,
+    uniqueByKey,
     ratingFor,
     ratingStars,
     recommendationBadge,

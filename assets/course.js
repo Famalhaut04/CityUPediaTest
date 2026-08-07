@@ -30,10 +30,13 @@
     const selections = MSDS.getStoredSelections(currentProgramme);
     const isAdded = Boolean(selections[course.code]);
     let added = isAdded;
+    // 原始记录：一个班次可能对应多条“每周上课时间”（如一周两次课），表格需要逐条展示
     const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
     const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
-    const defaultPrimary = primaries[0] || course.eligible_sections[0];
-    const defaultTutorial = MSDS.pickTutorial(defaultPrimary, tutorials);
+    // 去重后的 tutorial 列表：用于挑选默认值（同一 tutorial 的多次上课时间不算多个选项）
+    const tutorialOptions = MSDS.uniqueByKey(tutorials);
+    const defaultPrimary = MSDS.uniqueByKey(primaries)[0] || course.eligible_sections[0];
+    const defaultTutorial = MSDS.pickTutorial(defaultPrimary, tutorialOptions);
     let chosenTutorialCrn = selections[course.code]?.tutorialCrn
       ?? (defaultTutorial ? MSDS.sectionKey(defaultTutorial) : null);
     const instructors = [...new Set(course.eligible_sections.map((section) => section.instructor).filter(Boolean))].join("；");
@@ -99,15 +102,22 @@
             <div class="section-table-wrap">
               <table class="section-table">
                 <thead><tr>${tutorials.length ? "<th>选择</th>" : ""}<th>班次</th><th>时间</th><th>地点</th><th>教师</th><th>CRN / 注册</th></tr></thead>
-                <tbody>${course.eligible_sections.map((section) => `
+                <tbody>${(() => {
+                  const seenTutorialKeys = new Set();
+                  return course.eligible_sections.map((section) => {
+                    const isFirstTutorialMeeting = Number(section.credits) === 0 && !seenTutorialKeys.has(MSDS.sectionKey(section));
+                    if (isFirstTutorialMeeting) seenTutorialKeys.add(MSDS.sectionKey(section));
+                    return `
                   <tr>
-                    ${tutorials.length ? `<td>${Number(section.credits) === 0 ? `<input type="radio" class="tutorial-pick" name="tutorial-pick" value="${MSDS.escapeHtml(MSDS.sectionKey(section))}" ${MSDS.sectionKey(section) === String(chosenTutorialCrn) ? "checked" : ""}>` : ""}</td>` : ""}
+                    ${tutorials.length ? `<td>${isFirstTutorialMeeting ? `<input type="radio" class="tutorial-pick" name="tutorial-pick" value="${MSDS.escapeHtml(MSDS.sectionKey(section))}" ${MSDS.sectionKey(section) === String(chosenTutorialCrn) ? "checked" : ""}>` : ""}</td>` : ""}
                     <td><strong>${MSDS.escapeHtml(section.section)}</strong><span>${Number(section.credits) === 0 ? "Tutorial · 0 学分" : `${section.credits} 学分`}</span></td>
                     <td><strong>${MSDS.escapeHtml(MSDS.DAY_NAMES[section.day] || section.day)} ${MSDS.escapeHtml(section.time)}</strong><span>${MSDS.escapeHtml(section.date)}</span></td>
                     <td><strong>${MSDS.escapeHtml([section.building, section.room].filter(Boolean).join(" "))}</strong></td>
                     <td><strong>${MSDS.escapeHtml(section.instructor)}</strong></td>
                     <td><strong>${MSDS.escapeHtml(section.crn)}</strong><span>${section.web === "Y" ? "可网页注册" : "WEB=N"}</span></td>
-                  </tr>`).join("")}</tbody>
+                  </tr>`;
+                  }).join("");
+                })()}</tbody>
               </table>
             </div>
           </section>

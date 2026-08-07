@@ -257,12 +257,16 @@
     listElement.innerHTML = filtered.map((course) => {
       const rec = MSDS.getRecommendation(course);
       const isAdded = Boolean(selections[course.code]);
+      // 原始记录：一个班次可能对应多条“每周上课时间”（如一周两次课），用于课表文案完整展示
       const primaries = course.eligible_sections.filter((item) => Number(item.credits) > 0);
       const tutorials = course.eligible_sections.filter((item) => Number(item.credits) === 0);
+      // 去重后的班次列表：用于“共几个班次”计数与“选择时间”下拉框（同一班次的多次上课时间不算多个选项）
+      const primaryOptions = MSDS.uniqueByKey(primaries);
+      const tutorialOptions = MSDS.uniqueByKey(tutorials);
       const scheduleText = primaries.map((item) => `${MSDS.DAY_NAMES[item.day]} ${item.time}`).join(" / ");
       const selectedPrimary = selections[course.code]?.primaryCrn;
       const selectedTutorial = selections[course.code]?.tutorialCrn
-        || (tutorials.length ? MSDS.sectionKey(MSDS.pickTutorial(MSDS.findSection(course, selectedPrimary) || primaries[0], tutorials)) : null);
+        || (tutorialOptions.length ? MSDS.sectionKey(MSDS.pickTutorial(MSDS.findSection(course, selectedPrimary) || primaryOptions[0], tutorialOptions)) : null);
       const coreBadge = requirementTypeOf(course) === "core"
         ? '<span class="mini-badge core">核心</span>'
         : MSDS.recommendationBadge(rec, true);
@@ -279,14 +283,14 @@
               ${termBadge}
             </div>
             <a class="course-title-link" href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.programme_title)}</a>
-            <div class="course-meta"><span>${course.credits} 学分</span><span>${primaries.length} 个主课班次</span>${MSDS.ratingStars(rec, { withMeta: false }) ? `<span class="course-rating">${MSDS.ratingStars(rec, { withMeta: false })}</span>` : ""}</div>
+            <div class="course-meta"><span>${course.credits} 学分</span><span>${primaryOptions.length} 个主课班次</span>${MSDS.ratingStars(rec, { withMeta: false }) ? `<span class="course-rating">${MSDS.ratingStars(rec, { withMeta: false })}</span>` : ""}</div>
             <div class="course-schedule" title="${MSDS.escapeHtml(scheduleText)}">${MSDS.escapeHtml(scheduleText)}</div>
             <div class="course-preview" aria-label="${MSDS.escapeHtml(course.code)} 课程预览">
               <p>${MSDS.escapeHtml(rec.summary)}</p>
               <div class="course-preview-tags">${rec.tags.slice(0, 3).map((tag) => `<span>${MSDS.escapeHtml(tag)}</span>`).join("") || `<span>${MSDS.escapeHtml(rec.verdict)}</span>`}</div>
             </div>
-            ${primaries.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaries, selectedPrimary || MSDS.sectionKey(primaries[0]))}</select></label>` : ""}
-            ${tutorials.length > 1 ? `<label class="quick-section-picker"><span>选择 Tutorial</span><select data-quick-tutorial="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} Tutorial">${sectionOptions(tutorials, selectedTutorial)}</select></label>` : ""}
+            ${primaryOptions.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaryOptions, selectedPrimary || MSDS.sectionKey(primaryOptions[0]))}</select></label>` : ""}
+            ${tutorialOptions.length > 1 ? `<label class="quick-section-picker"><span>选择 Tutorial</span><select data-quick-tutorial="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} Tutorial">${sectionOptions(tutorialOptions, selectedTutorial)}</select></label>` : ""}
           </div>
           ${isAdded ? `<span class="add-course is-added" aria-label="${MSDS.escapeHtml(course.code)} 已在课表">✓</span>` : `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}">+</button>`}
         </article>`;
@@ -310,8 +314,8 @@
 
     selectedListElement.innerHTML = selectedCourses.map((course) => {
       const selected = selections[course.code];
-      const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
-      const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
+      const primaries = MSDS.uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) > 0));
+      const tutorials = MSDS.uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) === 0));
       return `
         <article class="selected-course">
           <div class="selected-course-head">
@@ -350,19 +354,34 @@
       const selected = selections[course.code];
       if (!selected) return;
       [selected.primaryCrn, selected.tutorialCrn].filter(Boolean).forEach((key) => {
-        const section = MSDS.findSection(course, key);
-        if (!section || !section.time || !DAYS.includes(section.day)) return;
-        const [startText, endText] = section.time.split(" - ");
-        events.push({
-          id: `${course.code}-${key}`,
-          course,
-          section,
-          start: minutes(startText),
-          end: minutes(endText),
-          color: COLORS[courseIndex % COLORS.length],
-          conflict: false,
-          lane: 0,
-          laneCount: 1
+        // 同一 CRN 可能一周上多次课（如周四+周三各一次），每条记录都要单独上课表；
+        // 同一天同一时间出现多条记录（如同一节课分两个教室平行上课）则合并成一格，避免课表上出现“自己和自己冲突”的假重叠
+        const meetings = course.eligible_sections.filter((item) => MSDS.sectionKey(item) === String(key));
+        const byDayTime = new Map();
+        meetings.forEach((item) => {
+          if (!item.time || !DAYS.includes(item.day)) return;
+          const dtKey = `${item.day}|${item.time}`;
+          const existing = byDayTime.get(dtKey);
+          if (!existing) {
+            byDayTime.set(dtKey, item);
+            return;
+          }
+          const rooms = new Set([existing, item].map((s) => [s.building, s.room].filter(Boolean).join(" ")).filter(Boolean));
+          if (rooms.size > 1) byDayTime.set(dtKey, { ...existing, building: "", room: [...rooms].join(" / ") });
+        });
+        byDayTime.forEach((section, dtKey) => {
+          const [startText, endText] = section.time.split(" - ");
+          events.push({
+            id: `${course.code}-${key}-${dtKey}`,
+            course,
+            section,
+            start: minutes(startText),
+            end: minutes(endText),
+            color: COLORS[courseIndex % COLORS.length],
+            conflict: false,
+            lane: 0,
+            laneCount: 1
+          });
         });
       });
     });
