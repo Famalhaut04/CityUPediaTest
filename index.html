@@ -116,6 +116,10 @@
                 <button class="day-filter-pill" type="button" data-day-filter="S">六</button>
               </div>
             </div>
+            <div id="term-filter" class="day-filter" aria-label="按学期筛选" hidden>
+              <span>学期</span>
+              <div id="term-filter-row" class="day-filter-row"></div>
+            </div>
             <div id="course-list" class="course-list" aria-live="polite"></div>
           </div>
 
@@ -135,9 +139,13 @@
                 <span class="selection-summary-plus" aria-hidden="true">+</span>
                 <span class="selection-summary-part">总 <strong id="selected-count">0</strong>门 <strong id="credit-count">0</strong>分</span>
               </h2>
+              <div id="elective-group-summary" class="elective-group-summary" hidden></div>
             </div>
             <div class="toolbar-actions">
               <span id="conflict-status" class="conflict-status is-clear" data-i18n="conflict.clear">暂无冲突</span>
+              <button id="export-selection" class="button button-quiet" type="button" data-i18n="toolbar.export">导出文本</button>
+              <button id="import-selection" class="button button-quiet" type="button" data-i18n="toolbar.import">导入文本</button>
+              <input id="import-selection-file" type="file" accept=".txt,text/plain" hidden>
               <button id="clear-selection" class="button button-quiet" type="button" data-i18n="toolbar.clear">清空</button>
             </div>
           </div>
