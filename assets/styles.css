@@ -1948,6 +1948,13 @@ body {
   color: var(--muted);
 }
 
+.section-table td .tutorial-pick {
+  width: 15px;
+  height: 15px;
+  margin: 2px 0 0;
+  cursor: pointer;
+}
+
 .source-list {
   display: grid;
   gap: 14px;

@@ -258,8 +258,11 @@
       const rec = MSDS.getRecommendation(course);
       const isAdded = Boolean(selections[course.code]);
       const primaries = course.eligible_sections.filter((item) => Number(item.credits) > 0);
+      const tutorials = course.eligible_sections.filter((item) => Number(item.credits) === 0);
       const scheduleText = primaries.map((item) => `${MSDS.DAY_NAMES[item.day]} ${item.time}`).join(" / ");
       const selectedPrimary = selections[course.code]?.primaryCrn;
+      const selectedTutorial = selections[course.code]?.tutorialCrn
+        || (tutorials.length ? MSDS.sectionKey(MSDS.pickTutorial(MSDS.findSection(course, selectedPrimary) || primaries[0], tutorials)) : null);
       const coreBadge = requirementTypeOf(course) === "core"
         ? '<span class="mini-badge core">核心</span>'
         : MSDS.recommendationBadge(rec, true);
@@ -283,6 +286,7 @@
               <div class="course-preview-tags">${rec.tags.slice(0, 3).map((tag) => `<span>${MSDS.escapeHtml(tag)}</span>`).join("") || `<span>${MSDS.escapeHtml(rec.verdict)}</span>`}</div>
             </div>
             ${primaries.length > 1 ? `<label class="quick-section-picker"><span>选择时间</span><select data-quick-section="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} 上课时间">${sectionOptions(primaries, selectedPrimary || MSDS.sectionKey(primaries[0]))}</select></label>` : ""}
+            ${tutorials.length > 1 ? `<label class="quick-section-picker"><span>选择 Tutorial</span><select data-quick-tutorial="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} Tutorial">${sectionOptions(tutorials, selectedTutorial)}</select></label>` : ""}
           </div>
           ${isAdded ? `<span class="add-course is-added" aria-label="${MSDS.escapeHtml(course.code)} 已在课表">✓</span>` : `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}">+</button>`}
         </article>`;
@@ -498,27 +502,29 @@
     MSDS.saveSelections(selections, activeProgramme);
   }
 
-  function selectionForPrimary(course, primaryCrn) {
+  function selectionForPrimary(course, primaryCrn, tutorialCrn) {
     const selection = MSDS.makeDefaultSelection(course);
-    if (!primaryCrn) return selection;
-    selection.primaryCrn = primaryCrn;
-    const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
-    const matching = MSDS.makeDefaultSelection({
-      ...course,
-      eligible_sections: [MSDS.findSection(course, primaryCrn), ...tutorials].filter(Boolean)
-    });
-    selection.tutorialCrn = matching.tutorialCrn;
+    if (primaryCrn) {
+      selection.primaryCrn = primaryCrn;
+      const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
+      const matching = MSDS.makeDefaultSelection({
+        ...course,
+        eligible_sections: [MSDS.findSection(course, primaryCrn), ...tutorials].filter(Boolean)
+      });
+      selection.tutorialCrn = matching.tutorialCrn;
+    }
+    if (tutorialCrn) selection.tutorialCrn = tutorialCrn;
     return selection;
   }
 
-  function toggleCourse(code, primaryCrn) {
+  function toggleCourse(code, primaryCrn, tutorialCrn) {
     const course = courseByCode(code);
     if (!course) return;
     if (selections[code]) {
       delete selections[code];
       MSDS.showToast(`已移除 ${code}`);
     } else {
-      selections[code] = selectionForPrimary(course, primaryCrn);
+      selections[code] = selectionForPrimary(course, primaryCrn, tutorialCrn);
       MSDS.showToast(`已加入 ${code}`);
     }
     renderAll();
@@ -643,14 +649,23 @@
       if (!button) return;
       const row = button.closest(".course-row");
       const sectionSelect = row?.querySelector("[data-quick-section]");
-      toggleCourse(button.dataset.code, sectionSelect?.value);
+      const tutorialSelect = row?.querySelector("[data-quick-tutorial]");
+      toggleCourse(button.dataset.code, sectionSelect?.value, tutorialSelect?.value);
     });
 
     listElement.addEventListener("change", (event) => {
-      const select = event.target.closest("[data-quick-section]");
-      if (!select || !selections[select.dataset.quickSection]) return;
-      const course = courseByCode(select.dataset.quickSection);
-      selections[course.code] = selectionForPrimary(course, select.value);
+      const sectionSelect = event.target.closest("[data-quick-section]");
+      const tutorialSelect = event.target.closest("[data-quick-tutorial]");
+      const select = sectionSelect || tutorialSelect;
+      if (!select) return;
+      const code = sectionSelect ? select.dataset.quickSection : select.dataset.quickTutorial;
+      if (!selections[code]) return;
+      const course = courseByCode(code);
+      if (sectionSelect) {
+        selections[course.code] = selectionForPrimary(course, select.value);
+      } else {
+        selections[course.code].tutorialCrn = select.value || null;
+      }
       renderAll();
       MSDS.showToast(`已切换 ${course.code} 班次`);
     });

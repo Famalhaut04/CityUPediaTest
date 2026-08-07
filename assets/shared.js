@@ -413,6 +413,7 @@
     getStoredSelections,
     loadCourseData,
     makeDefaultSelection,
+    pickTutorial,
     ratingFor,
     ratingStars,
     recommendationBadge,
