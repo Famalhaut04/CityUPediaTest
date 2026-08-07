@@ -55,7 +55,9 @@
       const matchesFilter = activeFilter === "all"
         || (activeFilter === "core" || activeFilter === "elective"
           ? requirementTypeOf(course) === activeFilter
-          : MSDS.getElectiveGroup(course, activeProgramme) === activeFilter);
+          : (activeFilter === "SemA" || activeFilter === "SemB"
+            ? course.semester_tag === activeFilter
+            : MSDS.getElectiveGroup(course, activeProgramme) === activeFilter));
       const primaryDays = course.eligible_sections
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
@@ -197,11 +199,12 @@
     document.getElementById("data-note").textContent = `课表快照：${data.schedule_as_of || ""}（Asia/Beijing），数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。`;
   }
 
-  // 若当前项目配置了选修分组（如 MSCY 的 Group I / Group II），在“选修”后追加对应筛选按钮
+  // 若当前项目配置了选修分组（如 MSCY 的 Group I / Group II），在“选修”后追加对应筛选按钮；
+  // 若课程带有学期标签（如 MSCY 的 SemA/SemB），在行末追加学期筛选按钮
   function renderFilterRow(programme) {
     const row = document.querySelector(".filter-row");
     if (!row) return;
-    row.querySelectorAll(".filter-pill-group").forEach((el) => el.remove());
+    row.querySelectorAll(".filter-pill-group, .filter-pill-term").forEach((el) => el.remove());
 
     const groups = programme?.requirement_credit_units?.elective_groups;
     if (Array.isArray(groups) && groups.length) {
@@ -218,7 +221,17 @@
       });
     }
 
-    const validFilters = ["all", "core", "elective", ...(groups || []).map((group) => group.key)];
+    const terms = [...new Set(programmeCourses().map((course) => course.semester_tag).filter(Boolean))].sort();
+    terms.forEach((term) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "filter-pill filter-pill-term";
+      button.dataset.filter = term;
+      button.textContent = term;
+      row.appendChild(button);
+    });
+
+    const validFilters = ["all", "core", "elective", ...(groups || []).map((group) => group.key), ...terms];
     if (!validFilters.includes(activeFilter)) activeFilter = "all";
     row.querySelectorAll(".filter-pill").forEach((item) => item.classList.toggle("active", item.dataset.filter === activeFilter));
   }
