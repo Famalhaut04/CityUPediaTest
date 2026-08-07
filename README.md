@@ -69,7 +69,8 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 
 ### 详细课程文件与中文翻译
 
-- 对部分课程提供"查看详细课程介绍"入口
+- 课程详情页提供「课程详情 PDF」按钮，可直接下载对应课程的官方课程文件
+- 对部分课程提供"查看详细课程介绍"入口（中英逐页对照）
 - 英文 PDF 原文转换为网页页图，无需下载本地文件
 - 英文页图与对应中文翻译同步切换
 
@@ -91,9 +92,10 @@ python -m http.server 8090
 
 ```text
 ├── index.html                 # 课程浏览、项目切换与课表规划主页
-├── course.html                # 课程详情页
+├── course.html                # 课程详情页（含课程详情 PDF 下载）
 ├── syllabus.html              # PDF 原文与中文翻译页面
 ├── about.html                 # 关于我们（CityUHK CSSA）
+├── feedback.html              # 问题反馈页
 ├── assets/
 │   ├── styles.css             # 全站样式与响应式布局
 │   ├── shared.js              # 数据加载、存储、i18n 和公共工具
@@ -109,7 +111,7 @@ python -m http.server 8090
 │   ├── reviews/               # 各课程评价摘要
 │   ├── source-reviews/        # 按来源整理的课程评价原文
 │   └── sources.json           # 评价来源及原文链接
-├── docs/                      # 课程 PDF 资料
+├── docs/                      # 课程官方 PDF 资料（按课程代码命名）
 └── tools/
     └── build-web-course-images.mjs # 课程页图生成工具
 ```
