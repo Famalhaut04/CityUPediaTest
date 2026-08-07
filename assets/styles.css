@@ -755,7 +755,8 @@ body {
   background: var(--card);
 }
 
-.day-filter-pill {
+.day-filter-pill,
+.term-filter-pill {
   min-width: 0;
   min-height: 28px;
   padding: 3px;
@@ -769,11 +770,13 @@ body {
   transition: all 200ms ease;
 }
 
-.day-filter-pill:hover {
+.day-filter-pill:hover,
+.term-filter-pill:hover {
   color: var(--primary);
 }
 
-.day-filter-pill.active {
+.day-filter-pill.active,
+.term-filter-pill.active {
   background: var(--primary-soft);
   color: var(--primary-strong);
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);

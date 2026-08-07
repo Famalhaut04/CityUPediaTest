@@ -23,6 +23,7 @@
   let searchTerm = "";
   let activeFilter = "all";
   let activeDay = "all";
+  let activeSemester = "all";
 
   const listElement = document.getElementById("course-list");
   const selectedListElement = document.getElementById("selected-list");
@@ -55,14 +56,13 @@
       const matchesFilter = activeFilter === "all"
         || (activeFilter === "core" || activeFilter === "elective"
           ? requirementTypeOf(course) === activeFilter
-          : (activeFilter === "SemA" || activeFilter === "SemB"
-            ? course.semester_tag === activeFilter
-            : MSDS.getElectiveGroup(course, activeProgramme) === activeFilter));
+          : MSDS.getElectiveGroup(course, activeProgramme) === activeFilter);
       const primaryDays = course.eligible_sections
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
       const matchesDay = activeDay === "all" || primaryDays.includes(activeDay);
-      return matchesSearch && matchesFilter && matchesDay;
+      const matchesSemester = activeSemester === "all" || course.semester_tag === activeSemester;
+      return matchesSearch && matchesFilter && matchesDay && matchesSemester;
     });
   }
 
@@ -184,6 +184,7 @@
     }
     document.getElementById("programme-summary-name").textContent = `${programme.code} · ${programme.name_zh}`;
     renderFilterRow(programme);
+    renderTermFilter();
     // 课表表头的项目介绍链接
     const infoLink = document.getElementById("programme-info-link");
     if (infoLink) {
@@ -199,12 +200,11 @@
     document.getElementById("data-note").textContent = `课表快照：${data.schedule_as_of || ""}（Asia/Beijing），数据采集自 CityU AIMS 系统。名额和注册状态会变化，请以 CityU 系统为准。`;
   }
 
-  // 若当前项目配置了选修分组（如 MSCY 的 Group I / Group II），在“选修”后追加对应筛选按钮；
-  // 若课程带有学期标签（如 MSCY 的 SemA/SemB），在行末追加学期筛选按钮
+  // 若当前项目配置了选修分组（如 MSCY 的 Group I / Group II），在“选修”后追加对应筛选按钮
   function renderFilterRow(programme) {
     const row = document.querySelector(".filter-row");
     if (!row) return;
-    row.querySelectorAll(".filter-pill-group, .filter-pill-term").forEach((el) => el.remove());
+    row.querySelectorAll(".filter-pill-group").forEach((el) => el.remove());
 
     const groups = programme?.requirement_credit_units?.elective_groups;
     if (Array.isArray(groups) && groups.length) {
@@ -221,19 +221,30 @@
       });
     }
 
-    const terms = [...new Set(programmeCourses().map((course) => course.semester_tag).filter(Boolean))].sort();
-    terms.forEach((term) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "filter-pill filter-pill-term";
-      button.dataset.filter = term;
-      button.textContent = term;
-      row.appendChild(button);
-    });
-
-    const validFilters = ["all", "core", "elective", ...(groups || []).map((group) => group.key), ...terms];
+    const validFilters = ["all", "core", "elective", ...(groups || []).map((group) => group.key)];
     if (!validFilters.includes(activeFilter)) activeFilter = "all";
     row.querySelectorAll(".filter-pill").forEach((item) => item.classList.toggle("active", item.dataset.filter === activeFilter));
+  }
+
+  // 若当前项目的课程带有学期标签（如 MSCY 的 SemA/SemB），显示独立的学期筛选行；
+  // 该维度与“核心/选修/分组”筛选相互独立，可同时生效（与 activeDay 的模式一致）
+  function renderTermFilter() {
+    const container = document.getElementById("term-filter");
+    const row = document.getElementById("term-filter-row");
+    if (!container || !row) return;
+
+    const terms = [...new Set(programmeCourses().map((course) => course.semester_tag).filter(Boolean))].sort();
+    if (!terms.length) {
+      container.hidden = true;
+      row.innerHTML = "";
+      activeSemester = "all";
+      return;
+    }
+    container.hidden = false;
+    if (!["all", ...terms].includes(activeSemester)) activeSemester = "all";
+    row.innerHTML = [`<button class="term-filter-pill ${activeSemester === "all" ? "active" : ""}" type="button" data-term-filter="all">全部</button>`]
+      .concat(terms.map((term) => `<button class="term-filter-pill ${activeSemester === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
+      .join("");
   }
 
   function renderCourseList() {
@@ -587,6 +598,14 @@
         document.querySelectorAll(".day-filter-pill").forEach((item) => item.classList.toggle("active", item === button));
         renderCourseList();
       });
+    });
+
+    document.getElementById("term-filter-row")?.addEventListener("click", (event) => {
+      const button = event.target.closest(".term-filter-pill");
+      if (!button) return;
+      activeSemester = button.dataset.termFilter;
+      document.querySelectorAll("#term-filter-row .term-filter-pill").forEach((item) => item.classList.toggle("active", item === button));
+      renderCourseList();
     });
 
     document.querySelectorAll(".segment").forEach((button) => {
