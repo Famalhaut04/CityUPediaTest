@@ -210,12 +210,15 @@
       const coreBadge = requirementTypeOf(course) === "core"
         ? '<span class="mini-badge core">核心</span>'
         : MSDS.recommendationBadge(rec, true);
+      const groupInfo = MSDS.getElectiveGroupInfo(currentProgramme(), MSDS.getElectiveGroup(course, activeProgramme));
+      const groupBadge = groupInfo ? `<span class="mini-badge group">${MSDS.escapeHtml(groupInfo.label_zh)}</span>` : "";
       return `
         <article class="course-row">
           <div class="course-row-main">
             <div class="course-code-line">
               <span class="course-code">${MSDS.escapeHtml(course.code)}</span>
               ${coreBadge}
+              ${groupBadge}
             </div>
             <a class="course-title-link" href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.programme_title)}</a>
             <div class="course-meta"><span>${course.credits} 学分</span><span>${primaries.length} 个主课班次</span>${MSDS.ratingStars(rec, { withMeta: false }) ? `<span class="course-rating">${MSDS.ratingStars(rec, { withMeta: false })}</span>` : ""}</div>
@@ -391,6 +394,30 @@
     document.getElementById("selected-count").textContent = selectedCourses.length;
     document.getElementById("selected-tab-count").textContent = selectedCourses.length;
     document.getElementById("credit-count").textContent = sumCredits(selectedCourses);
+
+    updateElectiveGroupSummary(electiveCourses, sumCredits);
+  }
+
+  // 展示 Group I / Group II 等选修分组的学分进度（如有配置），提示是否满足下限/上限
+  function updateElectiveGroupSummary(electiveCourses, sumCredits) {
+    const container = document.getElementById("elective-group-summary");
+    if (!container) return;
+    const programme = currentProgramme();
+    const groups = programme?.requirement_credit_units?.elective_groups;
+    if (!Array.isArray(groups) || !groups.length) {
+      container.hidden = true;
+      container.innerHTML = "";
+      return;
+    }
+    container.hidden = false;
+    container.innerHTML = groups.map((group) => {
+      const groupCourses = electiveCourses.filter((course) => MSDS.getElectiveGroup(course, activeProgramme) === group.key);
+      const credits = sumCredits(groupCourses);
+      const belowMin = group.min_credits != null && credits < group.min_credits;
+      const aboveMax = group.max_credits != null && credits > group.max_credits;
+      const requirementText = group.min_credits != null ? `至少 ${group.min_credits} 学分` : `至多 ${group.max_credits} 学分`;
+      return `<span class="elective-group-item ${belowMin || aboveMax ? "is-warn" : ""}">${MSDS.escapeHtml(group.label_zh)}：已选 ${credits} 学分（${requirementText}）</span>`;
+    }).join("");
   }
 
   function renderAll() {

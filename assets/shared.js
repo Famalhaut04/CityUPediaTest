@@ -89,6 +89,19 @@
     return course?.programme_requirement_types?.[code] || course?.requirement_type || "elective";
   }
 
+  // 课程在某个项目下所属的选修分组（如 Group I / Group II）；无分组要求时返回 null
+  function getElectiveGroup(course, programmeCode) {
+    const code = String(programmeCode || DEFAULT_PROGRAMME);
+    return course?.programme_elective_groups?.[code] || null;
+  }
+
+  // 根据项目的 requirement_credit_units.elective_groups 配置查找分组的展示信息
+  function getElectiveGroupInfo(programme, groupKey) {
+    const groups = programme?.requirement_credit_units?.elective_groups;
+    if (!Array.isArray(groups)) return null;
+    return groups.find((group) => group.key === groupKey) || null;
+  }
+
   // 课程所属的项目列表；未标注时回退到默认项目
   function courseProgrammes(course, data) {
     if (Array.isArray(course?.programmes) && course.programmes.length) return course.programmes;
@@ -390,6 +403,8 @@
     escapeHtml,
     findSection,
     formatSection,
+    getElectiveGroup,
+    getElectiveGroupInfo,
     getProgramme,
     getProgrammes,
     getRecommendation,

@@ -24,9 +24,9 @@
     const currentProgramme = MSDS.getStoredProgramme() || MSDS.DEFAULT_PROGRAMME;
     const courseProgrammes = MSDS.courseProgrammes(course, data);
     const belongsToCurrent = courseProgrammes.includes(currentProgramme);
-    const displayRequirementType = belongsToCurrent
-      ? MSDS.getRequirementType(course, currentProgramme)
-      : MSDS.getRequirementType(course, courseProgrammes[0] || MSDS.DEFAULT_PROGRAMME);
+    const displayProgramme = belongsToCurrent ? currentProgramme : (courseProgrammes[0] || MSDS.DEFAULT_PROGRAMME);
+    const displayRequirementType = MSDS.getRequirementType(course, displayProgramme);
+    const displayGroupInfo = MSDS.getElectiveGroupInfo(MSDS.getProgramme(data, displayProgramme), MSDS.getElectiveGroup(course, displayProgramme));
     const selections = MSDS.getStoredSelections(currentProgramme);
     const isAdded = Boolean(selections[course.code]);
     const instructors = [...new Set(course.eligible_sections.map((section) => section.instructor).filter(Boolean))].join("；");
@@ -74,7 +74,9 @@
           <section class="detail-section">
             <h2>课程事实</h2>
             <div class="fact-grid">
-              ${fact("课程类型", displayRequirementType === "core" ? "核心课" : "选修课")}
+              ${fact("课程类型", displayRequirementType === "core"
+                ? "核心课"
+                : (displayGroupInfo ? `选修课（${displayGroupInfo.label_zh}）` : "选修课"))}
               ${fact("所属项目", courseProgrammes.map((pCode) => MSDS.getProgramme(data, pCode).code).join("、"))}
               ${fact("先修要求", course.prerequisites === "Nil" ? "无" : course.prerequisites)}
               ${fact("互斥课程", course.exclusive_course === "Nil" ? "无" : course.exclusive_course)}

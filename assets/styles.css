@@ -1009,6 +1009,12 @@ body {
   color: var(--info);
 }
 
+.mini-badge.group {
+  background: var(--card-soft);
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+}
+
 .mini-badge.strong,
 .mini-badge.good,
 .verdict-badge.strong,
@@ -1246,6 +1252,27 @@ body {
 .selection-summary-plus {
   color: var(--muted);
   font-size: 11px;
+}
+
+.elective-group-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.elective-group-item {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.elective-group-item.is-warn {
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .toolbar-actions {

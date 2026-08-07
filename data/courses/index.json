@@ -73,13 +73,28 @@
       "graduation_credit_units": 31,
       "requirement_credit_units": {
         "core": 10,
-        "electives": 21
+        "electives": 21,
+        "elective_groups": [
+          {
+            "key": "group1",
+            "label_zh": "选修 Group I",
+            "label_en": "Elective Group I",
+            "min_credits": 12
+          },
+          {
+            "key": "group2",
+            "label_zh": "选修 Group II",
+            "label_en": "Elective Group II",
+            "max_credits": 9
+          }
+        ]
       },
       "default_selections": [],
       "data_ready": true,
       "notes": [
         "核心 10 学分 + 选修 21 学分。",
-        "核心课：网络安全导论、信息安全与隐私专题、信息安全技术管理、当代网络安全研讨会（CS5285/CS5293/CS5294/CS5612）。"
+        "核心课：网络安全导论、信息安全与隐私专题、信息安全技术管理、当代网络安全研讨会（CS5285/CS5293/CS5294/CS5612）。",
+        "选修课分为 Group I 与 Group II 两组：Group I 至少需修满 12 学分，Group II 最多修 9 学分。"
       ],
       "college": "计算学院",
       "college_en": "College of Computing",
@@ -693,7 +708,8 @@
         "MSCS"
       ],
       "programme_requirement_types": {
-        "MSCS": "core"
+        "MSCS": "core",
+        "MSCY": "elective"
       },
       "requirement_type": "core",
       "programme_title": "Computer Networks & Internets",
@@ -709,7 +725,10 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 6
+      "section_count": 6,
+      "programme_elective_groups": {
+        "MSCY": "group2"
+      }
     },
     {
       "code": "CS5285",
@@ -763,7 +782,10 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      }
     },
     {
       "code": "CS5294",
@@ -815,7 +837,10 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      }
     },
     {
       "code": "CS5298",
@@ -841,7 +866,10 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 2
+      "section_count": 2,
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      }
     },
     {
       "code": "CS5351",
@@ -850,7 +878,8 @@
         "MSCS"
       ],
       "programme_requirement_types": {
-        "MSCS": "core"
+        "MSCS": "core",
+        "MSCY": "elective"
       },
       "requirement_type": "core",
       "programme_title": "Software Engineering",
@@ -866,12 +895,14 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 3
+      "section_count": 3,
+      "programme_elective_groups": {
+        "MSCY": "group2"
+      }
     },
     {
       "code": "CS5481",
       "programmes": [
-        "MSCY",
         "MSCS"
       ],
       "programme_requirement_types": {
@@ -921,11 +952,9 @@
     {
       "code": "CS5488",
       "programmes": [
-        "MSCY",
         "MSCS"
       ],
       "programme_requirement_types": {
-        "MSCY": "elective",
         "MSCS": "elective"
       },
       "requirement_type": "elective",
@@ -953,7 +982,8 @@
       ],
       "programme_requirement_types": {
         "MSAI": "core",
-        "MSCS": "elective"
+        "MSCS": "elective",
+        "MSCY": "elective"
       },
       "requirement_type": "core",
       "programme_title": "Machine Learning: Algorithms and Applications",
@@ -969,7 +999,10 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 9
+      "section_count": 9,
+      "programme_elective_groups": {
+        "MSCY": "group2"
+      }
     },
     {
       "code": "CS5494",
@@ -1497,6 +1530,303 @@
       "credits": 3,
       "remarks": "SD",
       "prerequisites": "Nil",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS5288",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Cryptograph: Theory and Practice",
+      "schedule_title": "Cryptograph: Theory and Practice",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS5291",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Cybersecurity Forensics and Incident Response",
+      "schedule_title": "Cybersecurity Forensics and Incident Response",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6283",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Advanced Topics in Mobile and IoT Security",
+      "schedule_title": "Advanced Topics in Mobile and IoT Security",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6290",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Privacy-enhancing Technologies",
+      "schedule_title": "Privacy-enhancing Technologies",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "CS5285",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6284",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Advanced Topics in Software Security",
+      "schedule_title": "Advanced Topics in Software Security",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS5297",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Topics in AI security",
+      "schedule_title": "Topics in AI security",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6537",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Guided Study in Information Security",
+      "schedule_title": "Guided Study in Information Security",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6532",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Internship in Cybersecurity",
+      "schedule_title": "Internship in Cybersecurity",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "CS6531",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS6531",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group1"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Project in Cybersecurity",
+      "schedule_title": "Project in Cybersecurity",
+      "title_changed": false,
+      "credits": 6,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "CS6532",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS5296",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group2"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Cloud Computing: Theory and Practice",
+      "schedule_title": "Cloud Computing: Theory and Practice",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
+      "exclusive_course": "Nil",
+      "summary": {
+        "web": "N",
+        "available": "0",
+        "capacity": "0",
+        "medium": "English"
+      },
+      "section_count": 0
+    },
+    {
+      "code": "CS5483",
+      "programmes": [
+        "MSCY"
+      ],
+      "programme_requirement_types": {
+        "MSCY": "elective"
+      },
+      "programme_elective_groups": {
+        "MSCY": "group2"
+      },
+      "requirement_type": "elective",
+      "programme_title": "Data Warehousing and Data Mining",
+      "schedule_title": "Data Warehousing and Data Mining",
+      "title_changed": false,
+      "credits": 3,
+      "remarks": "CC",
+      "prerequisites": "暂未采集，请以官方课程大纲为准",
       "exclusive_course": "Nil",
       "summary": {
         "web": "N",
