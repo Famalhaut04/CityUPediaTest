@@ -585,6 +585,92 @@
     MSDS.showToast(`已切换至 ${currentProgramme().name_zh}`);
   }
 
+  // ==================== 选课结果导出 / 导入（纯文本） ====================
+  function selectionsToText() {
+    const lines = [
+      "# CityU 选课结果导出",
+      `# Programme: ${activeProgramme}`,
+      `# Exported: ${new Date().toISOString()}`,
+      ""
+    ];
+    Object.keys(selections).sort().forEach((code) => {
+      const selected = selections[code];
+      const course = courseByCode(code);
+      const primarySection = course && selected.primaryCrn ? MSDS.findSection(course, selected.primaryCrn) : null;
+      const note = course
+        ? ` # ${course.programme_title}${primarySection ? " · " + MSDS.formatSection(primarySection) : ""}`
+        : "";
+      lines.push(`${code} | Primary=${selected.primaryCrn || "-"} | Tutorial=${selected.tutorialCrn || "-"}${note}`);
+    });
+    return lines.join("\n") + "\n";
+  }
+
+  function exportSelectionsAsText() {
+    if (!Object.keys(selections).length) {
+      MSDS.showToast("还没有选课，无法导出");
+      return;
+    }
+    const text = selectionsToText();
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `cityu-selection-${activeProgramme}-${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    MSDS.showToast("已导出选课结果");
+  }
+
+  // 解析形如 "COMP5111 | Primary=12345 | Tutorial=12346" 的行；# 开头为注释，行内 # 之后的内容视为备注忽略
+  function parseSelectionsText(text) {
+    return text.split(/\r?\n/)
+      .map((rawLine) => rawLine.trim())
+      .filter((line) => line && !line.startsWith("#"))
+      .map((line) => {
+        const match = line.match(/^([A-Za-z0-9]+)\s*\|\s*Primary=([^|#]+?)\s*(?:\|\s*Tutorial=([^|#]+?)\s*)?(?:#.*)?$/);
+        if (!match) return { raw: line, error: "格式无法解析" };
+        const [, code, primaryRaw, tutorialRaw] = match;
+        return {
+          code: code.toUpperCase(),
+          primaryCrn: primaryRaw && primaryRaw.trim() !== "-" ? primaryRaw.trim() : null,
+          tutorialCrn: tutorialRaw && tutorialRaw.trim() !== "-" ? tutorialRaw.trim() : null
+        };
+      });
+  }
+
+  function importSelectionsFromText(text) {
+    const parsed = parseSelectionsText(text);
+    if (!parsed.length) {
+      MSDS.showToast("文件内容为空或格式不正确");
+      return;
+    }
+    if (!window.confirm(`将导入 ${parsed.length} 门课程，覆盖当前「${activeProgramme}」的选课结果，确定继续吗？`)) return;
+
+    const nextSelections = {};
+    const skipped = [];
+    parsed.forEach((item) => {
+      if (item.error) { skipped.push(`${item.raw}（${item.error}）`); return; }
+      const course = courseByCode(item.code);
+      if (!course) { skipped.push(`${item.code}（当前项目中找不到该课程）`); return; }
+      const primarySection = item.primaryCrn ? MSDS.findSection(course, item.primaryCrn) : null;
+      if (item.primaryCrn && !primarySection) { skipped.push(`${item.code}（主课班次 ${item.primaryCrn} 不存在，可能已变更，已跳过整门课）`); return; }
+      const tutorialSection = item.tutorialCrn ? MSDS.findSection(course, item.tutorialCrn) : null;
+      if (item.tutorialCrn && !tutorialSection) skipped.push(`${item.code}（Tutorial 班次 ${item.tutorialCrn} 不存在，已忽略该 Tutorial）`);
+      nextSelections[item.code] = {
+        primaryCrn: primarySection ? item.primaryCrn : null,
+        tutorialCrn: tutorialSection ? item.tutorialCrn : null
+      };
+    });
+
+    selections = nextSelections;
+    renderAll();
+    const successCount = Object.keys(nextSelections).length;
+    MSDS.showToast(`已导入 ${successCount} 门课程${skipped.length ? `，跳过 ${skipped.length} 项` : ""}`);
+    if (skipped.length) console.warn("导入选课结果时跳过的记录：", skipped);
+  }
+
   function switchProgramme(code) {
     if (code === activeProgramme) return;
     const available = programmes.find((p) => p.code === code);
@@ -727,6 +813,21 @@
       selections = {};
       renderAll();
       MSDS.showToast("课表已清空");
+    });
+
+    document.getElementById("export-selection").addEventListener("click", exportSelectionsAsText);
+
+    const importFileInput = document.getElementById("import-selection-file");
+    document.getElementById("import-selection").addEventListener("click", () => {
+      importFileInput.value = "";
+      importFileInput.click();
+    });
+    importFileInput.addEventListener("change", () => {
+      const file = importFileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => importSelectionsFromText(String(reader.result || ""));
+      reader.readAsText(file);
     });
   }
 
