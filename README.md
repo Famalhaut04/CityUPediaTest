@@ -18,7 +18,7 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 ### 新增功能
 
 - **三级级联选择**：学院 → 院系 → 硕士项目，逐级展开，界面更清晰
-- **新增三个硕士项目**：生物统计学（MSBIOS）、电子商贸（MSEC）、人工智能与科学（MSAI4S）
+- **新增三个硕士项目**：生物统计学（MSBIOS）、电子商贸（MSEC）、人工智能与科学（MSAIFS）
 - **关于我们页面**：独立页面展示 CityUHK CSSA 组织介绍、五大常设部门、社交媒体关注入口
 - **CSSA 官方 Logo**：全站品牌标识替换为 CSSA 官方圆形 Logo
 - **中英文双语**：全站 i18n 国际化支持，一键切换语言
@@ -44,7 +44,7 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 | MSCY | 网络安全理学硕士（MSc Cybersecurity） | Department of Computer Science |
 | MSBIOS | 生物统计学理学硕士（MSc Biostatistics） | Department of Biostatistics |
 | MSEC | 电子商贸理学硕士（MSc Electronic Commerce） | Department of Computer Science |
-| MSAI4S | 人工智能与科学理学硕士（MSc AI for Sciences） | Department of Computer Science |
+| MSAIFS | 人工智能与科学理学硕士（MSc AI for Sciences） | Department of Data Science |
 
 ## 网页版主要功能
 
