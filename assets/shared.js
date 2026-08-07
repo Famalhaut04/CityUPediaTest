@@ -89,6 +89,19 @@
     return course?.programme_requirement_types?.[code] || course?.requirement_type || "elective";
   }
 
+  // 课程在某个项目下所属的选修分组（如 Group I / Group II）；无分组要求时返回 null
+  function getElectiveGroup(course, programmeCode) {
+    const code = String(programmeCode || DEFAULT_PROGRAMME);
+    return course?.programme_elective_groups?.[code] || null;
+  }
+
+  // 根据项目的 requirement_credit_units.elective_groups 配置查找分组的展示信息
+  function getElectiveGroupInfo(programme, groupKey) {
+    const groups = programme?.requirement_credit_units?.elective_groups;
+    if (!Array.isArray(groups)) return null;
+    return groups.find((group) => group.key === groupKey) || null;
+  }
+
   // 课程所属的项目列表；未标注时回退到默认项目
   function courseProgrammes(course, data) {
     if (Array.isArray(course?.programmes) && course.programmes.length) return course.programmes;
@@ -161,6 +174,18 @@
     return String(section.crn || `${section.section}-${section.day}-${section.time}`);
   }
 
+  // 同一 CRN 可能对应多条“每周上课时间”记录（如一周两次课）；
+  // 凡是需要枚举“可选班次”本身（而非某班次的每次上课时间）的地方，都应先按 CRN 去重
+  function uniqueByKey(sections) {
+    const seen = new Set();
+    return sections.filter((section) => {
+      const key = sectionKey(section);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
   function pickTutorial(primary, tutorials) {
     if (!tutorials.length) return null;
     const suffix = primary?.section?.match(/(\d+)$/)?.[1];
@@ -174,8 +199,8 @@
   }
 
   function makeDefaultSelection(course) {
-    const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
-    const tutorials = course.eligible_sections.filter((section) => Number(section.credits) === 0);
+    const primaries = uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) > 0));
+    const tutorials = uniqueByKey(course.eligible_sections.filter((section) => Number(section.credits) === 0));
     const primary = primaries[0] || course.eligible_sections[0];
     const tutorial = pickTutorial(primary, tutorials);
     return {
@@ -191,6 +216,14 @@
   function formatSection(section) {
     if (!section) return "";
     return `${section.section} · ${DAY_NAMES[section.day] || section.day} ${section.time}`;
+  }
+
+  // 从 notes 中提取“only for Programme: X”限制，返回专业名称列表（无限制则为空数组）
+  function sectionRestrictedProgrammes(section) {
+    if (!Array.isArray(section?.notes)) return [];
+    return section.notes
+      .map((note) => note.match(/^only for Programme:\s*(.+)$/i)?.[1]?.trim())
+      .filter(Boolean);
   }
 
   function showToast(message) {
@@ -268,6 +301,8 @@
       "day.label": "上课日",
       "day.all": "全部",
       "toolbar.clear": "清空",
+      "toolbar.export": "导出文本",
+      "toolbar.import": "导入文本",
       "conflict.clear": "暂无冲突",
       "empty.timetable.title": "从左侧加入课程",
       "empty.timetable.desc": "班次可在「已选」中切换",
@@ -304,6 +339,8 @@
       "day.label": "Day",
       "day.all": "All",
       "toolbar.clear": "Clear",
+      "toolbar.export": "Export",
+      "toolbar.import": "Import",
       "conflict.clear": "No conflicts",
       "empty.timetable.title": "Add courses from the left",
       "empty.timetable.desc": "Switch sections in \"Selected\" tab",
@@ -390,6 +427,9 @@
     escapeHtml,
     findSection,
     formatSection,
+    sectionRestrictedProgrammes,
+    getElectiveGroup,
+    getElectiveGroupInfo,
     getProgramme,
     getProgrammes,
     getRecommendation,
@@ -398,6 +438,8 @@
     getStoredSelections,
     loadCourseData,
     makeDefaultSelection,
+    pickTutorial,
+    uniqueByKey,
     ratingFor,
     ratingStars,
     recommendationBadge,
