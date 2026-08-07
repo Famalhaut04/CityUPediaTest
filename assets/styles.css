@@ -1015,6 +1015,11 @@ body {
   border: 1px solid var(--hairline);
 }
 
+.mini-badge.term {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
 .mini-badge.strong,
 .mini-badge.good,
 .verdict-badge.strong,

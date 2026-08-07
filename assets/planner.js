@@ -241,6 +241,7 @@
         : MSDS.recommendationBadge(rec, true);
       const groupInfo = MSDS.getElectiveGroupInfo(currentProgramme(), MSDS.getElectiveGroup(course, activeProgramme));
       const groupBadge = groupInfo ? `<span class="mini-badge group">${MSDS.escapeHtml(groupInfo.label_zh)}</span>` : "";
+      const termBadge = course.semester_tag ? `<span class="mini-badge term">${MSDS.escapeHtml(course.semester_tag)}</span>` : "";
       return `
         <article class="course-row">
           <div class="course-row-main">
@@ -248,6 +249,7 @@
               <span class="course-code">${MSDS.escapeHtml(course.code)}</span>
               ${coreBadge}
               ${groupBadge}
+              ${termBadge}
             </div>
             <a class="course-title-link" href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.programme_title)}</a>
             <div class="course-meta"><span>${course.credits} 学分</span><span>${primaries.length} 个主课班次</span>${MSDS.ratingStars(rec, { withMeta: false }) ? `<span class="course-rating">${MSDS.ratingStars(rec, { withMeta: false })}</span>` : ""}</div>

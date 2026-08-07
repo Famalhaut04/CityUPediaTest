@@ -756,7 +756,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 5
+      "section_count": 5,
+      "semester_tag": "SemA"
     },
     {
       "code": "CS5292",
@@ -811,7 +812,8 @@
         "capacity": "0",
         "medium": "English"
       },
-      "section_count": 3
+      "section_count": 3,
+      "semester_tag": "SemA"
     },
     {
       "code": "CS5295",

@@ -47,6 +47,7 @@
           <div class="detail-code-row">
             <span class="detail-code">${MSDS.escapeHtml(course.code)}</span>
             ${displayRequirementType === "core" ? '<span class="verdict-badge core">核心课</span>' : MSDS.recommendationBadge(rec)}
+            ${course.semester_tag ? `<span class="mini-badge term">${MSDS.escapeHtml(course.semester_tag)}</span>` : ""}
           </div>
           <h1>${MSDS.escapeHtml(course.programme_title)}</h1>
           <p>${course.credits} 学分 · ${MSDS.escapeHtml(course.remarks)} · ${MSDS.escapeHtml(titleNote)}</p>
