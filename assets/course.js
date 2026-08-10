@@ -8,6 +8,16 @@
     return `<div class="fact"><span>${MSDS.escapeHtml(label)}</span><strong>${MSDS.escapeHtml(value || "无")}</strong></div>`;
   }
 
+  // 评价星级选择器：5 个可点击的星，支持悬停预览与点击选择
+  function ratingPickerHTML(current, readOnly) {
+    const stars = [1, 2, 3, 4, 5].map((value) => {
+      const filled = current >= value ? "is-filled" : "";
+      const label = readOnly ? "" : `aria-label="评分 ${value} 星"`;
+      return `<button type="button" class="rate-star ${filled}" data-rate="${value}" ${label} ${readOnly ? "disabled" : ""}>★</button>`;
+    }).join("");
+    return `<div class="rating-picker" role="radiogroup" aria-label="课程评分">${stars}</div>`;
+  }
+
   function renderCourse(data, course, courseDocument) {
     const rec = MSDS.getRecommendation(course);
     const sourceStore = data.sources || {};
@@ -29,6 +39,7 @@
     const displayGroupInfo = MSDS.getElectiveGroupInfo(MSDS.getProgramme(data, displayProgramme), MSDS.getElectiveGroup(course, displayProgramme));
     const selections = MSDS.getStoredSelections(currentProgramme);
     const isAdded = Boolean(selections[course.code]);
+    const myReview = MSDS.getCourseReview(course.code);
     let added = isAdded;
     // 原始记录：一个班次可能对应多条“每周上课时间”（如一周两次课），表格需要逐条展示
     const primaries = course.eligible_sections.filter((section) => Number(section.credits) > 0);
@@ -80,6 +91,25 @@
               ${rating ? `<div class="review-rating">${rating}</div>` : ""}
               <p>${MSDS.escapeHtml(rec.summary)}</p>
               ${rec.tags.length ? `<div class="tag-list detail-tags">${rec.tags.map((tag) => `<span class="tag">${MSDS.escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+            </div>
+          </section>
+
+          <section class="detail-section my-review-section">
+            <h2>我的评价</h2>
+            <p class="my-review-hint">评分与评语仅保存在当前浏览器本地，仅供自己参考。</p>
+            <div class="my-review-form">
+              <div class="my-review-stars">
+                <span class="my-review-label">课程评分</span>
+                ${ratingPickerHTML(myReview?.rating || 0, false)}
+                <span class="my-review-score" id="my-review-score">${myReview?.rating ? `${myReview.rating} 星` : "未评分"}</span>
+              </div>
+              <label class="my-review-comment-label" for="my-review-comment">课程评语（选填）</label>
+              <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的选课感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
+              <div class="my-review-actions">
+                <button id="my-review-save" class="button button-primary" type="button">${myReview ? "更新评价" : "保存评价"}</button>
+                ${myReview ? `<button id="my-review-remove" class="button button-quiet" type="button">删除评价</button>` : ""}
+                <span class="my-review-saved" id="my-review-saved" hidden></span>
+              </div>
             </div>
           </section>
 
@@ -151,7 +181,14 @@
       }
       const current = MSDS.getStoredSelections(programme);
       if (current[course.code]) {
-        window.location.href = "index.html";
+        // 已加入：再次点击取消选择
+        delete current[course.code];
+        MSDS.saveSelections(current, programme);
+        added = false;
+        const button = document.getElementById("detail-add");
+        button.textContent = "加入课表";
+        button.className = "button button-primary";
+        MSDS.showToast(`已取消选择 ${course.code}`);
         return;
       }
       current[course.code] = MSDS.makeDefaultSelection(course);
@@ -167,6 +204,65 @@
       button.textContent = "已加入课表";
       button.className = "button button-quiet";
       MSDS.showToast(`已加入 ${course.code}（${programme}）`);
+    });
+
+    // ============ 我的评价：星级选择、保存、删除 ============
+    let chosenRating = myReview?.rating || 0;
+    const scoreEl = document.getElementById("my-review-score");
+    const starsContainer = document.querySelector(".rating-picker");
+
+    function refreshStarState() {
+      starsContainer.querySelectorAll(".rate-star").forEach((star) => {
+        star.classList.toggle("is-filled", Number(star.dataset.rate) <= chosenRating);
+      });
+      scoreEl.textContent = chosenRating ? `${chosenRating} 星` : "未评分";
+    }
+
+    if (starsContainer) {
+      starsContainer.addEventListener("click", (event) => {
+        const star = event.target.closest(".rate-star");
+        if (!star || star.disabled) return;
+        chosenRating = Number(star.dataset.rate);
+        refreshStarState();
+      });
+      starsContainer.addEventListener("mouseover", (event) => {
+        const star = event.target.closest(".rate-star");
+        if (!star || star.disabled) return;
+        starsContainer.querySelectorAll(".rate-star").forEach((s) => {
+          s.classList.toggle("is-hover", Number(s.dataset.rate) <= Number(star.dataset.rate));
+        });
+      });
+      starsContainer.addEventListener("mouseout", () => {
+        starsContainer.querySelectorAll(".rate-star").forEach((s) => s.classList.remove("is-hover"));
+      });
+    }
+
+    document.getElementById("my-review-save").addEventListener("click", () => {
+      if (!chosenRating) {
+        MSDS.showToast("请先选择星级评分");
+        return;
+      }
+      const comment = document.getElementById("my-review-comment").value.trim();
+      MSDS.saveCourseReview(course.code, { rating: chosenRating, comment });
+      const savedEl = document.getElementById("my-review-saved");
+      savedEl.textContent = `已保存于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
+      savedEl.hidden = false;
+      MSDS.showToast(`已保存 ${course.code} 的评价`);
+    });
+
+    document.getElementById("my-review-remove")?.addEventListener("click", () => {
+      if (!window.confirm(`确定删除 ${course.code} 的个人评价吗？`)) return;
+      MSDS.removeCourseReview(course.code);
+      chosenRating = 0;
+      document.getElementById("my-review-comment").value = "";
+      refreshStarState();
+      document.getElementById("my-review-remove").remove();
+      const saveButton = document.getElementById("my-review-save");
+      saveButton.textContent = "保存评价";
+      const savedEl = document.getElementById("my-review-saved");
+      savedEl.hidden = true;
+      savedEl.textContent = "";
+      MSDS.showToast("已删除评价");
     });
 
     document.querySelectorAll(".tutorial-pick").forEach((radio) => {

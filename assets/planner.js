@@ -268,6 +268,8 @@
       const termBadge = course.semester_tag
         ? `<span class="mini-badge term ${course.semester_tag === "SemA" ? "term-a" : "term-b"}">${MSDS.escapeHtml(course.semester_tag)}</span>`
         : "";
+      const myReview = MSDS.getCourseReview(course.code);
+      const reviewBadge = myReview ? `<span class="mini-badge review" title="我的评价：${Number(myReview.rating)} 星${myReview.comment ? " · " + MSDS.escapeHtml(myReview.comment) : ""}">已评 ${Number(myReview.rating)}★</span>` : "";
       return `
         <article class="course-row">
           <div class="course-row-main">
@@ -276,6 +278,7 @@
               ${coreBadge}
               ${groupBadge}
               ${termBadge}
+              ${reviewBadge}
             </div>
             <a class="course-title-link" href="course.html?code=${encodeURIComponent(course.code)}">${MSDS.escapeHtml(course.programme_title)}</a>
             <div class="course-meta"><span>${course.credits} 学分</span><span>${primaryOptions.length} 个主课班次</span>${MSDS.ratingStars(rec, { withMeta: false }) ? `<span class="course-rating">${MSDS.ratingStars(rec, { withMeta: false })}</span>` : ""}</div>
@@ -288,15 +291,11 @@
             ${tutorialOptions.length > 1 ? `<label class="quick-section-picker"><span>选择 Tutorial</span><select data-quick-tutorial="${MSDS.escapeHtml(course.code)}" aria-label="选择 ${MSDS.escapeHtml(course.code)} Tutorial">${sectionOptions(tutorialOptions, selectedTutorial)}</select></label>` : ""}
           </div>
           ${(() => {
-            // 未开设课程（无任何班次）：加入后显示为可再次点击取消的按钮，避免无法撤销选择
-            const isUnopened = course.eligible_sections.length === 0;
+            // 所有已添加课程都显示为可再次点击取消的按钮，点击即可撤销选择
             if (!isAdded) {
-              return `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}">+</button>`;
+              return `<button class="add-course" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="加入 ${MSDS.escapeHtml(course.code)}" title="加入课表">+</button>`;
             }
-            if (isUnopened) {
-              return `<button class="add-course is-added is-removable" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="取消选择 ${MSDS.escapeHtml(course.code)}">✓</button>`;
-            }
-            return `<span class="add-course is-added" aria-label="${MSDS.escapeHtml(course.code)} 已在课表">✓</span>`;
+            return `<button class="add-course is-added is-removable" type="button" data-code="${MSDS.escapeHtml(course.code)}" aria-label="取消选择 ${MSDS.escapeHtml(course.code)}" title="点击取消选择">✓</button>`;
           })()}
         </article>`;
     }).join("");

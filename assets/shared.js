@@ -3,6 +3,7 @@
 
   const LEGACY_STORAGE_KEY = "MSDS-planner-selections-v1";
   const STORAGE_KEY = "CITYU-planner-selections-v3";
+  const REVIEWS_KEY = "CITYU-course-reviews-v1";
   const PROGRAMME_KEY = "CITYU-current-programme";
   const DEFAULT_PROGRAMME = "MSDS";
   const DAY_NAMES = { M: "周一", T: "周二", W: "周三", R: "周四", F: "周五", S: "周六", U: "周日" };
@@ -168,6 +169,38 @@
     const code = String(programmeCode || getStoredProgramme());
     delete all[code];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  }
+
+  // ============ 用户个人课程评价（本地保存） ============
+  // 数据结构：{ [courseCode]: { rating: 1-5, comment: string, updatedAt: ISO 字符串 } }
+  function getStoredReviews() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(REVIEWS_KEY) || "{}");
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function getCourseReview(code) {
+    const all = getStoredReviews();
+    return all[String(code)] || null;
+  }
+
+  function saveCourseReview(code, review) {
+    const all = getStoredReviews();
+    all[String(code)] = {
+      rating: Math.max(1, Math.min(5, Number(review.rating) || 0)),
+      comment: String(review.comment || "").trim(),
+      updatedAt: new Date().toISOString()
+    };
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(all));
+  }
+
+  function removeCourseReview(code) {
+    const all = getStoredReviews();
+    delete all[String(code)];
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(all));
   }
 
   function sectionKey(section) {
@@ -466,6 +499,7 @@
     findSection,
     formatSection,
     sectionRestrictedProgrammes,
+    getCourseReview,
     getElectiveGroup,
     getElectiveGroupInfo,
     getProgramme,
@@ -473,6 +507,7 @@
     getRecommendation,
     getRequirementType,
     getStoredProgramme,
+    getStoredReviews,
     getStoredSelections,
     loadCourseData,
     makeDefaultSelection,
@@ -481,6 +516,8 @@
     ratingFor,
     ratingStars,
     recommendationBadge,
+    removeCourseReview,
+    saveCourseReview,
     saveProgramme,
     saveSelections,
     sectionKey,
