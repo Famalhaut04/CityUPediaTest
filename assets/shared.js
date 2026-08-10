@@ -575,7 +575,24 @@
       "feedback.result.desc": "请复制以下内容，发送给管理员或提交到 GitHub Issues：",
       "feedback.result.copy": "复制内容",
       "feedback.result.github": "提交到 GitHub",
-      "feedback.result.close": "关闭"
+      "feedback.result.close": "关闭",
+      "reviews.title": "课程评价中心",
+      "reviews.desc": "按学院与院系浏览课程，查看所有使用者的共享评价，也可以直接为心仪的课程提交评价。",
+      "reviews.statCourses": "课程总数",
+      "reviews.statReviews": "评价总数",
+      "reviews.statAvg": "平均评分",
+      "reviews.empty": "该院系暂无课程数据。",
+      "reviews.reviews": "条评价",
+      "reviews.noReviews": "暂无评价，来抢首评吧！",
+      "reviews.reviewTitle": "课程评价",
+      "reviews.myReview": "我的评价",
+      "reviews.nicknamePlaceholder": "昵称（不填显示匿名）",
+      "reviews.commentPlaceholder": "分享你的课程体验…",
+      "reviews.submit": "提交评价",
+      "reviews.loading": "正在加载课程…",
+      "reviews.cloudDisabled": "云端共享未启用：管理员需在 assets/cloud-config.js 中配置 Supabase 数据库地址。",
+      "reviews.localExp": "学生经验摘要",
+      "reviews.localHint": "以下内容整理自公开社交平台的学生分享，仅供参考，不构成选课建议。"
     },
     en: {
       "nav.courses": "Courses",
@@ -633,7 +650,24 @@
       "feedback.result.desc": "Please copy the content below and send it to the admin or submit it to GitHub Issues:",
       "feedback.result.copy": "Copy Content",
       "feedback.result.github": "Submit to GitHub",
-      "feedback.result.close": "Close"
+      "feedback.result.close": "Close",
+      "reviews.title": "Course Reviews",
+      "reviews.desc": "Browse courses by college and department, read shared reviews, or submit your own.",
+      "reviews.statCourses": "Courses",
+      "reviews.statReviews": "Reviews",
+      "reviews.statAvg": "Avg Rating",
+      "reviews.empty": "No courses in this department yet.",
+      "reviews.reviews": "reviews",
+      "reviews.noReviews": "No reviews yet. Be the first!",
+      "reviews.reviewTitle": "Course Reviews",
+      "reviews.myReview": "My Review",
+      "reviews.nicknamePlaceholder": "Nickname (optional)",
+      "reviews.commentPlaceholder": "Share your experience…",
+      "reviews.submit": "Submit",
+      "reviews.loading": "Loading courses…",
+      "reviews.cloudDisabled": "Cloud reviews disabled: configure Supabase in assets/cloud-config.js.",
+      "reviews.localExp": "Student Experience Summary",
+      "reviews.localHint": "Compiled from public social media posts. For reference only."
     }
   };
 

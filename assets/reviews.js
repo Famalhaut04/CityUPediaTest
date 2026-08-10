@@ -8,77 +8,10 @@
   "use strict";
 
   const MSDS = window.MSDS || {};
-  const I18N_LANG_KEY = "CITYU-lang";
-  const I18N_STRINGS = {
-    zh: {
-      "reviews.title": "课程评价中心",
-      "reviews.desc": "按学院与院系浏览课程，查看所有使用者的共享评价，也可以直接为心仪的课程提交评价。",
-      "reviews.statCourses": "课程总数",
-      "reviews.statReviews": "评价总数",
-      "reviews.statAvg": "平均评分",
-      "reviews.courseListTitle": "课程列表",
-      "reviews.empty": "该院系暂无课程数据。",
-      "reviews.avg": "平均评分",
-      "reviews.reviews": "条评价",
-      "reviews.noReviews": "暂无评价，来抢首评吧！",
-      "reviews.reviewTitle": "课程评价",
-      "reviews.myReview": "我的评价",
-      "reviews.nicknamePlaceholder": "昵称（不填显示匿名）",
-      "reviews.commentPlaceholder": "分享你的课程体验…",
-      "reviews.submit": "提交评价",
-      "reviews.loading": "正在加载课程…",
-      "reviews.admin": "管理员登录",
-      "reviews.cloudDisabled": "云端共享未启用：管理员需在 assets/cloud-config.js 中配置 Supabase 数据库地址。"
-    },
-    en: {
-      "reviews.title": "Course Reviews",
-      "reviews.desc": "Browse courses by college and department, read shared reviews, or submit your own.",
-      "reviews.statCourses": "Courses",
-      "reviews.statReviews": "Reviews",
-      "reviews.statAvg": "Avg Rating",
-      "reviews.courseListTitle": "Courses",
-      "reviews.empty": "No courses in this department yet.",
-      "reviews.avg": "Avg",
-      "reviews.reviews": "reviews",
-      "reviews.noReviews": "No reviews yet. Be the first!",
-      "reviews.reviewTitle": "Course Reviews",
-      "reviews.myReview": "My Review",
-      "reviews.nicknamePlaceholder": "Nickname (optional)",
-      "reviews.commentPlaceholder": "Share your experience…",
-      "reviews.submit": "Submit",
-      "reviews.loading": "Loading courses…",
-      "reviews.admin": "Admin Login",
-      "reviews.cloudDisabled": "Cloud reviews disabled: configure Supabase in assets/cloud-config.js."
-    }
-  };
 
+  // 复用 shared.js 的国际化（MSDS.t / MSDS.applyLang），避免自建表覆盖全站文本
   function t(key) {
-    const lang = getLang();
-    const table = I18N_STRINGS[lang] || I18N_STRINGS.zh;
-    return table[key] || key;
-  }
-
-  function getLang() {
-    try {
-      return localStorage.getItem(I18N_LANG_KEY) === "en" ? "en" : "zh";
-    } catch {
-      return "zh";
-    }
-  }
-
-  function setLang(lang) {
-    try {
-      localStorage.setItem(I18N_LANG_KEY, lang);
-    } catch {
-      /* 忽略 */
-    }
-    document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      const label = document.getElementById("lang-label");
-      if (label && el.id === "lang-label") return;
-      el.textContent = t(key);
-    });
+    return typeof MSDS.t === "function" ? MSDS.t(key) : key;
   }
 
   // 页面级统计
@@ -139,12 +72,23 @@
   }
 
   // ============ 课程卡片与统计 ============
+  // 卡片同时展示：云端评价（平均分/条数）与本地整理的课程评价摘要（verdict 徽章/口碑分）
   function courseCard(course, codeReviews) {
     const rows = codeReviews || [];
     const count = rows.length;
     const avg = count ? rows.reduce((s, r) => s + (Number(r.rating) || 0), 0) / count : 0;
-    const stars = "★".repeat(Math.round(avg)) + "☆".repeat(Math.max(0, 5 - Math.round(avg)));
+    const rec = course.recommendation && course.recommendation.level !== "unknown"
+      ? course.recommendation
+      : null;
+    // 云端有评价用云端平均分；否则用本地口碑分（3.5 等）
+    const displayScore = avg || (rec && MSDS.ratingFor ? MSDS.ratingFor(rec) : null) || 0;
+    const stars = displayScore
+      ? "★".repeat(Math.round(displayScore)) + "☆".repeat(Math.max(0, 5 - Math.round(displayScore)))
+      : "";
     const programmes = (course.programmes || []).join(" · ");
+    const verdictBadge = rec && typeof MSDS.recommendationBadge === "function"
+      ? MSDS.recommendationBadge(rec, true)
+      : "";
     return `
       <article class="reviews-course-card" data-code="${MSDS.escapeHtml(course.code)}">
         <div class="reviews-course-card-head">
@@ -153,11 +97,30 @@
         </div>
         <h3 class="reviews-course-title">${MSDS.escapeHtml(course.programme_title || course.title || course.code)}</h3>
         <div class="reviews-course-meta">
-          <span class="reviews-course-avg">${MSDS.escapeHtml(stars)} <b>${avg ? avg.toFixed(1) : "—"}</b></span>
+          <span class="reviews-course-avg">${stars ? `${MSDS.escapeHtml(stars)} <b>${displayScore.toFixed(1)}</b>` : '<span class="reviews-course-avg-empty">暂无评分</span>'}</span>
           <span class="reviews-course-count">${count} ${MSDS.escapeHtml(t("reviews.reviews"))}</span>
         </div>
+        ${verdictBadge ? `<div class="reviews-course-badges">${verdictBadge}</div>` : ""}
         <p class="reviews-course-programmes">${MSDS.escapeHtml(programmes)}</p>
       </article>`;
+  }
+
+  // 本地整理的课程评价摘要（学生经验摘要）：verdict + 口碑星级 + 摘要 + 标签
+  function localExperienceBlock(course) {
+    const rec = course?.recommendation;
+    if (!rec || rec.level === "unknown" || (!rec.summary && !rec.verdict)) return "";
+    const rating = typeof MSDS.ratingStars === "function" ? MSDS.ratingStars(rec, { withMeta: false }) : "";
+    return `
+      <div class="detail-section reviews-local-exp">
+        <h3 class="reviews-block-title">${MSDS.escapeHtml(t("reviews.localExp"))}</h3>
+        <div class="review-lead ${MSDS.escapeHtml(rec.level)}">
+          <strong>${MSDS.escapeHtml(rec.verdict || "")}</strong>
+          ${rating || ""}
+          ${rec.summary ? `<p>${MSDS.escapeHtml(rec.summary)}</p>` : ""}
+          ${rec.tags && rec.tags.length ? `<div class="tag-list detail-tags">${rec.tags.map((tag) => `<span class="tag">${MSDS.escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+        </div>
+        <p class="reviews-local-hint">${MSDS.escapeHtml(t("reviews.localHint"))}</p>
+      </div>`;
   }
 
   function renderCourseList(courses, groupedReviews) {
@@ -226,6 +189,7 @@
         ${programmes ? `<p class="reviews-course-programmes">${MSDS.escapeHtml(programmes)}</p>` : ""}
         <a class="text-link" href="course.html?code=${encodeURIComponent(code)}" target="_blank" rel="noopener">查看课程详情与班次 →</a>
       </div>
+      ${localExperienceBlock(course)}
       <div class="admin-panel" id="reviews-admin-panel">
         <form class="admin-login-form" id="reviews-admin-login-form">
           <strong class="admin-panel-title">管理员登录</strong>
@@ -449,14 +413,11 @@
 
   // ============ 初始化 ============
   async function init() {
-    // 语言切换
-    const langBtn = document.getElementById("lang-toggle");
-    if (langBtn) {
-      langBtn.addEventListener("click", () => {
-        setLang(getLang() === "zh" ? "en" : "zh");
-      });
+    // 语言切换由 shared.js 的 initLangToggle 处理（含 applyLang），此处无需重复绑定；
+    // 确保已保存的语言设置生效于静态 data-i18n 元素
+    if (typeof MSDS.applyLang === "function") {
+      MSDS.applyLang();
     }
-    setLang(getLang());
 
     try {
       const data = await MSDS.loadCourseData();

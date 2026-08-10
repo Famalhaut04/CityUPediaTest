@@ -2420,6 +2420,30 @@ body {
   text-overflow: ellipsis;
 }
 
+.reviews-course-badges {
+  margin-bottom: 8px;
+}
+
+.reviews-course-avg-empty {
+  color: var(--faint);
+  font-size: 12px;
+}
+
+/* 本地学生经验摘要（导入自 data/reviews） */
+.reviews-local-exp {
+  margin-bottom: 16px;
+}
+
+.reviews-local-exp .reviews-block-title {
+  margin-bottom: 8px;
+}
+
+.reviews-local-hint {
+  margin: 8px 0 0;
+  color: var(--faint);
+  font-size: 11px;
+}
+
 /* 评价详情区 */
 .reviews-detail {
   margin-top: 26px;
