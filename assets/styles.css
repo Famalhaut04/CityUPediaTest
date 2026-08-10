@@ -2268,6 +2268,270 @@ body {
   font-size: 12.5px;
 }
 
+/* ============ 课程评价中心（reviews.html） ============ */
+.reviews-main .top-title {
+  font-size: clamp(24px, 4vw, 36px);
+}
+
+.reviews-filter {
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.07);
+}
+
+.reviews-filter-inner {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.reviews-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reviews-filter-item .cascade-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.reviews-select {
+  min-width: 240px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.reviews-select:hover {
+  border-color: var(--primary);
+}
+
+.reviews-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-border);
+}
+
+.reviews-course-area {
+  min-height: 120px;
+}
+
+.reviews-course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.reviews-course-card {
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.reviews-course-card:hover {
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-float);
+  transform: translateY(-2px);
+}
+
+.reviews-course-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.reviews-course-code {
+  font-family: var(--font-mono);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.reviews-course-credit {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--card-soft);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.reviews-course-title {
+  margin: 8px 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.reviews-course-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.reviews-course-avg {
+  color: #f59e0b;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.reviews-course-avg b {
+  margin-left: 4px;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.reviews-course-count {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reviews-course-programmes {
+  margin: 0;
+  color: var(--faint);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 评价详情区 */
+.reviews-detail {
+  margin-top: 26px;
+  scroll-margin-top: 20px;
+}
+
+.reviews-detail-head {
+  margin-bottom: 16px;
+}
+
+.reviews-detail-title {
+  margin: 8px 0 6px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.reviews-detail-head .reviews-course-code {
+  font-size: 14px;
+}
+
+.reviews-detail-head .reviews-course-programmes {
+  margin-bottom: 8px;
+  white-space: normal;
+}
+
+.reviews-block-title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.reviews-review-block {
+  margin-bottom: 22px;
+}
+
+/* 星级评分 */
+.star-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #d1d5db;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 120ms ease, transform 120ms ease;
+}
+
+.star-btn:hover,
+.star-btn.is-active {
+  color: #f59e0b;
+}
+
+.star-btn:active {
+  transform: scale(0.92);
+}
+
+.star-rating-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.reviews-detail .my-review-form input[type="text"],
+.reviews-detail .my-review-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg, var(--card));
+  color: var(--ink);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  outline: none;
+  resize: vertical;
+}
+
+.reviews-detail .my-review-form input:focus,
+.reviews-detail .my-review-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-border);
+}
+
+.my-review-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+  .reviews-select {
+    min-width: 100%;
+  }
+
+  .reviews-course-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 .detail-tags {
   margin-top: 14px;
 }

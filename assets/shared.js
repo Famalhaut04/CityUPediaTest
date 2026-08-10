@@ -384,6 +384,30 @@
     if (!response.ok) throw new Error(`删除失败（${response.status}）`);
   }
 
+  // 批量读取多门课程的云端评价（一次请求，用于课程评价中心按系展示）
+  // codes：课程编号数组；返回 { course_code: [rows...] }
+  async function fetchCloudReviewsBatch(codes) {
+    const list = Array.isArray(codes) ? codes.map((c) => String(c).trim()).filter(Boolean) : [];
+    if (!cloudReviewsEnabled() || !list.length) return {};
+    const config = window.CLOUD_CONFIG;
+    const url = `${config.supabaseUrl}/rest/v1/course_reviews?course_code=in.(${list.map((c) => encodeURIComponent(c)).join(",")})&limit=1000`;
+    const response = await fetch(url, {
+      headers: {
+        apikey: config.supabaseAnonKey,
+        Authorization: `Bearer ${config.supabaseAnonKey}`
+      }
+    });
+    if (!response.ok) throw new Error(`云端评价读取失败（${response.status}）`);
+    const rows = await response.json();
+    const grouped = {};
+    (Array.isArray(rows) ? rows : []).forEach((row) => {
+      const code = String(row.course_code || "");
+      if (!grouped[code]) grouped[code] = [];
+      grouped[code].push(row);
+    });
+    return grouped;
+  }
+
   function sectionKey(section) {
     return String(section.crn || `${section.section}-${section.day}-${section.time}`);
   }
@@ -683,6 +707,7 @@
     deleteCloudReview,
     escapeHtml,
     fetchCloudReviews,
+    fetchCloudReviewsBatch,
     findSection,
     formatSection,
     sectionRestrictedProgrammes,
