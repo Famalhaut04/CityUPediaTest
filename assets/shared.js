@@ -203,6 +203,89 @@
     localStorage.setItem(REVIEWS_KEY, JSON.stringify(all));
   }
 
+  // ============ 云端课程评价（Supabase，共享给所有用户） ============
+  // 通过 assets/cloud-config.js 配置 supabaseUrl / supabaseAnonKey 后启用；
+  // 未配置时以下函数自动降级为“不可用”，不影响本地评价功能。
+  const CLOUD_CACHE_KEY = "CITYU-cloud-reviews-cache-v1";
+  const CLOUD_CACHE_TTL = 5 * 60 * 1000; // 会话缓存 5 分钟，降低重复请求流量
+
+  function cloudReviewsEnabled() {
+    try {
+      const config = window.CLOUD_CONFIG;
+      return Boolean(config && config.supabaseUrl && config.supabaseAnonKey);
+    } catch {
+      return false;
+    }
+  }
+
+  // 读取缓存：命中且未过期则直接返回，避免重复拉取云端数据
+  function readCloudCache(code) {
+    try {
+      const raw = sessionStorage.getItem(CLOUD_CACHE_KEY);
+      if (!raw) return null;
+      const cached = JSON.parse(raw);
+      const hit = cached && cached.code === String(code) && cached.reviews && Date.now() - cached.at < CLOUD_CACHE_TTL;
+      return hit ? cached.reviews : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeCloudCache(code, reviews) {
+    try {
+      sessionStorage.setItem(CLOUD_CACHE_KEY, JSON.stringify({ code: String(code), reviews, at: Date.now() }));
+    } catch {
+      // sessionStorage 不可用时忽略缓存，不影响功能
+    }
+  }
+
+  // 读取某门课程的最新云端评价（按时间倒序，最多 20 条；配合 5 分钟会话缓存控制流量）
+  async function fetchCloudReviews(code, options = {}) {
+    if (!cloudReviewsEnabled()) return [];
+    const force = Boolean(options.force);
+    if (!force) {
+      const cached = readCloudCache(code);
+      if (cached) return cached;
+    }
+    const config = window.CLOUD_CONFIG;
+    const url = `${config.supabaseUrl}/rest/v1/course_reviews?course_code=eq.${encodeURIComponent(String(code))}&order=created_at.desc&limit=20`;
+    const response = await fetch(url, {
+      headers: {
+        apikey: config.supabaseAnonKey,
+        Authorization: `Bearer ${config.supabaseAnonKey}`
+      }
+    });
+    if (!response.ok) throw new Error(`云端评价读取失败（${response.status}）`);
+    const rows = await response.json();
+    const reviews = Array.isArray(rows) ? rows : [];
+    writeCloudCache(code, reviews);
+    return reviews;
+  }
+
+  // 提交一条云端评价；成功后返回该条记录（含 id / created_at）
+  async function submitCloudReview(code, review) {
+    if (!cloudReviewsEnabled()) return null;
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/rest/v1/course_reviews`, {
+      method: "POST",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        Authorization: `Bearer ${config.supabaseAnonKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation"
+      },
+      body: JSON.stringify({
+        course_code: String(code),
+        rating: Math.max(1, Math.min(5, Number(review.rating) || 0)),
+        comment: String(review.comment || "").trim(),
+        nickname: String(review.nickname || "").trim() || "匿名"
+      })
+    });
+    if (!response.ok) throw new Error(`云端评价提交失败（${response.status}）`);
+    const rows = await response.json();
+    return Array.isArray(rows) && rows.length ? rows[0] : null;
+  }
+
   function sectionKey(section) {
     return String(section.crn || `${section.section}-${section.day}-${section.time}`);
   }
@@ -494,8 +577,10 @@
     STORAGE_KEY,
     PROGRAMME_KEY,
     clearSelections,
+    cloudReviewsEnabled,
     courseProgrammes,
     escapeHtml,
+    fetchCloudReviews,
     findSection,
     formatSection,
     sectionRestrictedProgrammes,
@@ -522,6 +607,7 @@
     saveSelections,
     sectionKey,
     showToast,
+    submitCloudReview,
     getStoredLang,
     saveLang,
     t,

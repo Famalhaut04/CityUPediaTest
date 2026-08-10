@@ -2042,6 +2042,79 @@ body {
   }
 }
 
+/* ---------------- 大家怎么说（云端共享评价） ---------------- */
+
+.cloud-reviews-section {
+  border-color: var(--primary-border);
+}
+
+.cloud-reviews-list {
+  display: grid;
+  gap: 10px;
+}
+
+.cloud-reviews-loading {
+  padding: 18px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--faint);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.cloud-review-card {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+}
+
+.cloud-review-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.cloud-review-stars {
+  color: #f59e0b;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.cloud-review-score {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cloud-review-nickname {
+  margin-left: auto;
+  color: var(--primary-strong);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cloud-review-time {
+  color: var(--faint);
+  font-size: 11px;
+}
+
+.cloud-review-comment {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cloud-review-comment.is-empty {
+  color: var(--faint);
+  font-style: italic;
+}
+
 .detail-tags {
   margin-top: 14px;
 }

@@ -96,13 +96,16 @@
 
           <section class="detail-section my-review-section">
             <h2>我的评价</h2>
-            <p class="my-review-hint">评分与评语仅保存在当前浏览器本地，仅供自己参考。</p>
+            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "评分与评语会保存到云端共享给所有使用者，也会保留在当前浏览器本地。" : "评分与评语仅保存在当前浏览器本地，仅供自己参考（云端共享未启用）。"}</p>
             <div class="my-review-form">
               <div class="my-review-stars">
                 <span class="my-review-label">课程评分</span>
                 ${ratingPickerHTML(myReview?.rating || 0, false)}
                 <span class="my-review-score" id="my-review-score">${myReview?.rating ? `${myReview.rating} 星` : "未评分"}</span>
               </div>
+              ${MSDS.cloudReviewsEnabled() ? `
+              <label class="my-review-comment-label" for="my-review-nickname">昵称（选填）</label>
+              <input id="my-review-nickname" class="my-review-comment" type="text" maxlength="30" placeholder="不填则显示为「匿名」">` : ""}
               <label class="my-review-comment-label" for="my-review-comment">课程评语（选填）</label>
               <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的选课感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
               <div class="my-review-actions">
@@ -110,6 +113,14 @@
                 ${myReview ? `<button id="my-review-remove" class="button button-quiet" type="button">删除评价</button>` : ""}
                 <span class="my-review-saved" id="my-review-saved" hidden></span>
               </div>
+            </div>
+          </section>
+
+          <section class="detail-section cloud-reviews-section">
+            <h2>大家怎么说</h2>
+            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，实时同步自云端数据库。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
+            <div id="cloud-reviews" class="cloud-reviews-list">
+              <div class="cloud-reviews-loading">正在加载共享评价…</div>
             </div>
           </section>
 
@@ -248,6 +259,19 @@
       savedEl.textContent = `已保存于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
       savedEl.hidden = false;
       MSDS.showToast(`已保存 ${course.code} 的评价`);
+      // 云端共享：若已启用 Supabase，同步提交到云端并刷新“大家怎么说”
+      if (MSDS.cloudReviewsEnabled()) {
+        const nicknameEl = document.getElementById("my-review-nickname");
+        const nickname = nicknameEl ? nicknameEl.value.trim() : "";
+        MSDS.submitCloudReview(course.code, { rating: chosenRating, comment, nickname })
+          .then(() => {
+            MSDS.showToast(`已同步到云端，感谢分享！`);
+            loadCloudReviews(true);
+          })
+          .catch((error) => {
+            savedEl.textContent = `本地已保存，但云端同步失败：${error.message}`;
+          });
+      }
     });
 
     document.getElementById("my-review-remove")?.addEventListener("click", () => {
@@ -278,6 +302,53 @@
         MSDS.showToast(section ? `已切换到 ${section.section}` : "已切换 Tutorial");
       });
     });
+
+    // ============ 大家怎么说：加载并渲染云端共享评价 ============
+    function cloudReviewCard(item) {
+      const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0))) + "☆".repeat(Math.max(0, 5 - Math.min(5, Number(item.rating) || 0)));
+      const when = new Date(item.created_at).toLocaleString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
+      return `
+        <article class="cloud-review-card">
+          <div class="cloud-review-head">
+            <span class="cloud-review-stars" aria-label="${Number(item.rating)} 星">${stars}</span>
+            <span class="cloud-review-score">${Number(item.rating)} 星</span>
+            <span class="cloud-review-nickname">${MSDS.escapeHtml(item.nickname || "匿名")}</span>
+            <span class="cloud-review-time">${MSDS.escapeHtml(when)}</span>
+          </div>
+          ${item.comment ? `<p class="cloud-review-comment">${MSDS.escapeHtml(item.comment)}</p>` : '<p class="cloud-review-comment is-empty">（未填写评语）</p>'}
+        </article>`;
+    }
+
+    function renderCloudReviews(rows) {
+      const container = document.getElementById("cloud-reviews");
+      if (!container) return;
+      if (!MSDS.cloudReviewsEnabled()) {
+        container.innerHTML = '<div class="notice source-empty">云端共享未启用：管理员需在 assets/cloud-config.js 中配置 Supabase 数据库地址。</div>';
+        return;
+      }
+      if (!rows.length) {
+        container.innerHTML = '<div class="notice source-empty">还没有其他使用者的共享评价，来抢首评吧！</div>';
+        return;
+      }
+      container.innerHTML = rows.map(cloudReviewCard).join("");
+    }
+
+    function loadCloudReviews(force) {
+      const container = document.getElementById("cloud-reviews");
+      if (!container) return;
+      if (!MSDS.cloudReviewsEnabled()) {
+        renderCloudReviews([]);
+        return;
+      }
+      container.innerHTML = '<div class="cloud-reviews-loading">正在加载共享评价…</div>';
+      MSDS.fetchCloudReviews(course.code, { force: Boolean(force) })
+        .then(renderCloudReviews)
+        .catch((error) => {
+          container.innerHTML = `<div class="notice source-empty">共享评价加载失败：${MSDS.escapeHtml(error.message)}</div>`;
+        });
+    }
+
+    loadCloudReviews();
   }
 
   if (!code) {
