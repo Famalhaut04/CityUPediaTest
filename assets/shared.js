@@ -208,6 +208,8 @@
   // 未配置时以下函数自动降级为“不可用”，不影响本地评价功能。
   const CLOUD_CACHE_KEY = "CITYU-cloud-reviews-cache-v1";
   const CLOUD_CACHE_TTL = 5 * 60 * 1000; // 会话缓存 5 分钟，降低重复请求流量
+  const USER_KEY_STORAGE = "CITYU-cloud-user-key"; // 个人评价标识，用于“只能删除自己的评价”
+  const ADMIN_SESSION = "CITYU-admin-session"; // 管理员登录会话（access_token 与过期时间）
 
   function cloudReviewsEnabled() {
     try {
@@ -217,6 +219,84 @@
       return false;
     }
   }
+
+  // 生成或读取本机唯一的 user_key（localStorage 持久化）
+  function getUserKey() {
+    try {
+      let key = localStorage.getItem(USER_KEY_STORAGE);
+      if (!key) {
+        key = "uk_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 12);
+        localStorage.setItem(USER_KEY_STORAGE, key);
+      }
+      return key;
+    } catch {
+      return "";
+    }
+  }
+
+  // ============ 管理员（Supabase Auth 邮箱登录） ============
+  function adminEmail() {
+    try {
+      return String(window.CLOUD_CONFIG?.adminEmail || "").trim();
+    } catch {
+      return "";
+    }
+  }
+
+  // 管理员登录：邮箱 + 密码 → access_token（存会话，默认 1 小时）
+  async function adminLogin(email, password) {
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/auth/v1/token?grant_type=password`, {
+      method: "POST",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: String(email).trim(), password: String(password) })
+    });
+    if (!response.ok) throw new Error("管理员登录失败：邮箱或密码错误");
+    const data = await response.json();
+    const session = {
+      token: data.access_token,
+      email: String(data.user?.email || email).trim(),
+      expiresAt: Date.now() + (Number(data.expires_in || 3600) * 1000)
+    };
+    try {
+      sessionStorage.setItem(ADMIN_SESSION, JSON.stringify(session));
+    } catch {
+      /* 忽略 */
+    }
+    return session;
+  }
+
+  function adminLogout() {
+    try {
+      sessionStorage.removeItem(ADMIN_SESSION);
+    } catch {
+      /* 忽略 */
+    }
+  }
+
+  // 当前管理员会话（未过期则返回，否则返回 null）
+  function currentAdmin() {
+    try {
+      const raw = sessionStorage.getItem(ADMIN_SESSION);
+      if (!raw) return null;
+      const session = JSON.parse(raw);
+      if (!session || !session.token || Date.now() > session.expiresAt) return null;
+      return session;
+    } catch {
+      return null;
+    }
+  }
+
+  // 管理员会话是否有效（有效则具备任意删除权限）
+  function isAdminLoggedIn() {
+    return Boolean(currentAdmin());
+  }
+
+  // ============ 云端评价读写 ============
 
   // 读取缓存：命中且未过期则直接返回，避免重复拉取云端数据
   function readCloudCache(code) {
@@ -262,7 +342,7 @@
     return reviews;
   }
 
-  // 提交一条云端评价；成功后返回该条记录（含 id / created_at）
+  // 提交一条云端评价；自动携带本机 user_key，便于后续本人删除
   async function submitCloudReview(code, review) {
     if (!cloudReviewsEnabled()) return null;
     const config = window.CLOUD_CONFIG;
@@ -278,12 +358,30 @@
         course_code: String(code),
         rating: Math.max(1, Math.min(5, Number(review.rating) || 0)),
         comment: String(review.comment || "").trim(),
-        nickname: String(review.nickname || "").trim() || "匿名"
+        nickname: String(review.nickname || "").trim() || "匿名",
+        user_key: getUserKey()
       })
     });
     if (!response.ok) throw new Error(`云端评价提交失败（${response.status}）`);
     const rows = await response.json();
     return Array.isArray(rows) && rows.length ? rows[0] : null;
+  }
+
+  // 删除一条云端评价：
+  // - 本人删除：请求头携带 x-user-key，RLS 校验与记录 user_key 一致
+  // - 管理员删除：请求头携带管理员 access_token，RLS 校验管理员邮箱
+  async function deleteCloudReview(code, id) {
+    if (!cloudReviewsEnabled()) return;
+    const config = window.CLOUD_CONFIG;
+    const admin = currentAdmin();
+    const headers = {
+      apikey: config.supabaseAnonKey,
+      Authorization: admin ? `Bearer ${admin.token}` : `Bearer ${config.supabaseAnonKey}`,
+      "x-user-key": admin ? admin.email : getUserKey()
+    };
+    const url = `${config.supabaseUrl}/rest/v1/course_reviews?id=eq.${encodeURIComponent(String(id))}`;
+    const response = await fetch(url, { method: "DELETE", headers });
+    if (!response.ok) throw new Error(`删除失败（${response.status}）`);
   }
 
   function sectionKey(section) {
@@ -581,11 +679,18 @@
     clearSelections,
     cloudReviewsEnabled,
     courseProgrammes,
+    currentAdmin,
+    deleteCloudReview,
     escapeHtml,
     fetchCloudReviews,
     findSection,
     formatSection,
     sectionRestrictedProgrammes,
+    getUserKey,
+    adminEmail,
+    isAdminLoggedIn,
+    adminLogin,
+    adminLogout,
     getCourseReview,
     getElectiveGroup,
     getElectiveGroupInfo,

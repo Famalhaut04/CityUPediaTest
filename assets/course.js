@@ -119,7 +119,22 @@
 
           <section class="detail-section cloud-reviews-section" id="course-reviews">
             <h2>课程评价</h2>
-            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，实时同步自云端数据库。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
+            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，实时同步自云端数据库。你可以删除自己提交的评价。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
+            ${MSDS.cloudReviewsEnabled() ? `
+            <div class="admin-panel" id="admin-panel">
+              <form class="admin-login-form" id="admin-login-form">
+                <strong class="admin-panel-title">管理员登录</strong>
+                <input id="admin-email" type="email" autocomplete="username" placeholder="管理员邮箱" required>
+                <input id="admin-password" type="password" autocomplete="current-password" placeholder="密码" required>
+                <button class="button button-primary button-small" type="submit">登录</button>
+                <span class="admin-panel-status" id="admin-status"></span>
+              </form>
+              <div class="admin-logged" id="admin-logged" hidden>
+                <strong class="admin-panel-title">管理员模式</strong>
+                <span class="admin-panel-email" id="admin-email-label"></span>
+                <button class="button button-quiet button-small" type="button" id="admin-logout">退出</button>
+              </div>
+            </div>` : ""}
             <div id="cloud-reviews" class="cloud-reviews-list">
               <div class="cloud-reviews-loading">正在加载课程评价…</div>
             </div>
@@ -305,16 +320,22 @@
     });
 
     // ============ 课程评价：加载并渲染云端共享评价 ============
+    // 删除权限：本人（user_key 匹配）可删自己的评价；管理员登录后任意评价可删
     function cloudReviewCard(item) {
       const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0))) + "☆".repeat(Math.max(0, 5 - Math.min(5, Number(item.rating) || 0)));
       const when = new Date(item.created_at).toLocaleString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
+      const isMine = MSDS.getUserKey() && item.user_key === MSDS.getUserKey();
+      const isAdmin = MSDS.isAdminLoggedIn();
+      const canDelete = isMine || isAdmin;
+      const deleteLabel = isAdmin && !isMine ? "管理员删除" : "删除";
       return `
-        <article class="cloud-review-card">
+        <article class="cloud-review-card" data-review-id="${MSDS.escapeHtml(String(item.id))}">
           <div class="cloud-review-head">
             <span class="cloud-review-stars" aria-label="${Number(item.rating)} 星">${stars}</span>
             <span class="cloud-review-score">${Number(item.rating)} 星</span>
-            <span class="cloud-review-nickname">${MSDS.escapeHtml(item.nickname || "匿名")}</span>
+            <span class="cloud-review-nickname">${MSDS.escapeHtml(item.nickname || "匿名")}${isMine ? '<span class="cloud-review-mine">我</span>' : ""}</span>
             <span class="cloud-review-time">${MSDS.escapeHtml(when)}</span>
+            ${canDelete ? `<button class="cloud-review-delete" type="button" data-delete="${MSDS.escapeHtml(String(item.id))}">${deleteLabel}</button>` : ""}
           </div>
           ${item.comment ? `<p class="cloud-review-comment">${MSDS.escapeHtml(item.comment)}</p>` : '<p class="cloud-review-comment is-empty">（未填写评语）</p>'}
         </article>`;
@@ -334,6 +355,48 @@
       container.innerHTML = rows.map(cloudReviewCard).join("");
     }
 
+    function updateAdminPanel() {
+      const panel = document.getElementById("admin-panel");
+      if (!panel) return;
+      const admin = MSDS.currentAdmin();
+      const loginForm = document.getElementById("admin-login-form");
+      const loggedBox = document.getElementById("admin-logged");
+      const emailLabel = document.getElementById("admin-email-label");
+      if (admin) {
+        loginForm.hidden = true;
+        loggedBox.hidden = false;
+        if (emailLabel) emailLabel.textContent = admin.email;
+      } else {
+        loginForm.hidden = false;
+        loggedBox.hidden = true;
+        if (emailLabel) emailLabel.textContent = "";
+      }
+    }
+
+    function bindCloudReviewDelete() {
+      const container = document.getElementById("cloud-reviews");
+      if (!container) return;
+      container.querySelectorAll("[data-delete]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const id = button.getAttribute("data-delete");
+          if (!id) return;
+          const label = MSDS.isAdminLoggedIn() && button.textContent.includes("管理员") ? "删除这条评价" : "删除你提交的这条评价";
+          if (!window.confirm(`确定${label}吗？该操作不可恢复。`)) return;
+          button.disabled = true;
+          button.textContent = "删除中…";
+          try {
+            await MSDS.deleteCloudReview(course.code, id);
+            MSDS.showToast("评价已删除");
+            loadCloudReviews(true);
+          } catch (error) {
+            button.disabled = false;
+            button.textContent = label;
+            MSDS.showToast(`删除失败：${error.message}`);
+          }
+        });
+      });
+    }
+
     function loadCloudReviews(force) {
       const container = document.getElementById("cloud-reviews");
       if (!container) return;
@@ -343,10 +406,54 @@
       }
       container.innerHTML = '<div class="cloud-reviews-loading">正在加载课程评价…</div>';
       MSDS.fetchCloudReviews(course.code, { force: Boolean(force) })
-        .then(renderCloudReviews)
+        .then((rows) => {
+          renderCloudReviews(rows);
+          bindCloudReviewDelete();
+        })
         .catch((error) => {
           container.innerHTML = `<div class="notice source-empty">共享评价加载失败：${MSDS.escapeHtml(error.message)}</div>`;
         });
+    }
+
+    // 管理员登录 / 退出
+    const adminPanel = document.getElementById("admin-panel");
+    if (adminPanel) {
+      const loginForm = document.getElementById("admin-login-form");
+      const statusEl = document.getElementById("admin-status");
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const emailInput = document.getElementById("admin-email");
+        const passwordInput = document.getElementById("admin-password");
+        if (statusEl) {
+          statusEl.textContent = "登录中…";
+          statusEl.classList.remove("is-error");
+        }
+        try {
+          const session = await MSDS.adminLogin(emailInput.value, passwordInput.value);
+          if (MSDS.adminEmail() && session.email !== MSDS.adminEmail()) {
+            // 登录成功但非管理员邮箱：不授予管理员权限（RLS 后端仍会拒绝其删除操作）
+            MSDS.showToast("该账号无管理员权限");
+          } else {
+            MSDS.showToast("管理员登录成功");
+          }
+          updateAdminPanel();
+          loadCloudReviews(true);
+          passwordInput.value = "";
+        } catch (error) {
+          if (statusEl) {
+            statusEl.textContent = error.message;
+            statusEl.classList.add("is-error");
+          }
+        }
+      });
+      const logoutBtn = document.getElementById("admin-logout");
+      logoutBtn.addEventListener("click", () => {
+        MSDS.adminLogout();
+        updateAdminPanel();
+        loadCloudReviews(true);
+        MSDS.showToast("已退出管理员模式");
+      });
+      updateAdminPanel();
     }
 
     loadCloudReviews();
