@@ -77,6 +77,7 @@
         <div class="detail-actions">
           <button id="detail-add" class="button ${isAdded ? "button-quiet" : "button-primary"}" type="button">${isAdded ? "已加入课表" : "加入课表"}</button>
           <a class="button button-quiet" href="index.html">查看课表</a>
+          <a class="button button-reviews" href="#course-reviews">课程评价</a>
           ${courseDocument?.translation ? `<a class="button button-document" href="syllabus.html?code=${encodeURIComponent(course.code)}">查看详细课程介绍</a>` : ""}
           ${courseDocument ? `<a class="button button-document" href="${MSDS.escapeHtml(courseDocument.pdf)}" download>课程详情 PDF</a>` : ""}
         </div>
@@ -116,11 +117,11 @@
             </div>
           </section>
 
-          <section class="detail-section cloud-reviews-section">
-            <h2>大家怎么说</h2>
+          <section class="detail-section cloud-reviews-section" id="course-reviews">
+            <h2>课程评价</h2>
             <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，实时同步自云端数据库。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
             <div id="cloud-reviews" class="cloud-reviews-list">
-              <div class="cloud-reviews-loading">正在加载共享评价…</div>
+              <div class="cloud-reviews-loading">正在加载课程评价…</div>
             </div>
           </section>
 
@@ -259,7 +260,7 @@
       savedEl.textContent = `已保存于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
       savedEl.hidden = false;
       MSDS.showToast(`已保存 ${course.code} 的评价`);
-      // 云端共享：若已启用 Supabase，同步提交到云端并刷新“大家怎么说”
+      // 云端共享：若已启用 Supabase，同步提交到云端并刷新“课程评价”
       if (MSDS.cloudReviewsEnabled()) {
         const nicknameEl = document.getElementById("my-review-nickname");
         const nickname = nicknameEl ? nicknameEl.value.trim() : "";
@@ -303,7 +304,7 @@
       });
     });
 
-    // ============ 大家怎么说：加载并渲染云端共享评价 ============
+    // ============ 课程评价：加载并渲染云端共享评价 ============
     function cloudReviewCard(item) {
       const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0))) + "☆".repeat(Math.max(0, 5 - Math.min(5, Number(item.rating) || 0)));
       const when = new Date(item.created_at).toLocaleString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
@@ -340,7 +341,7 @@
         renderCloudReviews([]);
         return;
       }
-      container.innerHTML = '<div class="cloud-reviews-loading">正在加载共享评价…</div>';
+      container.innerHTML = '<div class="cloud-reviews-loading">正在加载课程评价…</div>';
       MSDS.fetchCloudReviews(course.code, { force: Boolean(force) })
         .then(renderCloudReviews)
         .catch((error) => {

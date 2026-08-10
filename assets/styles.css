@@ -1454,6 +1454,29 @@ body {
   transform: translateY(-1px);
 }
 
+.button-reviews {
+  border-color: color-mix(in srgb, #f59e0b 42%, transparent);
+  background: color-mix(in srgb, #f59e0b 10%, var(--card));
+  color: #b45309;
+}
+
+.button-reviews:hover {
+  border-color: #f59e0b;
+  background: color-mix(in srgb, #f59e0b 16%, var(--card));
+  color: #92400e;
+  transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .button-reviews {
+    color: #fbbf24;
+  }
+
+  .button-reviews:hover {
+    color: #fcd34d;
+  }
+}
+
 .conflict-status {
   padding: 5px 11px;
   border-radius: 999px;

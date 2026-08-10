@@ -400,6 +400,7 @@
     zh: {
       "nav.courses": "课程表",
       "nav.cityu": "城大官网",
+      "nav.reviews": "课程评价",
       "intro.eyebrow": "我的课表",
       "intro.title": "自助排课台",
       "intro.desc": "先选择学院，再选择院系与硕士项目，即可按对应培养方案浏览课程、比较班次并规划每周课表；左侧悬停可预览课程评价与时段。",
@@ -457,6 +458,7 @@
     en: {
       "nav.courses": "Courses",
       "nav.cityu": "CityU",
+      "nav.reviews": "Course Reviews",
       "intro.eyebrow": "My Timetable",
       "intro.title": "Course Planner",
       "intro.desc": "Pick a college, then a department and a master's programme to browse courses, compare sections, and plan your weekly schedule. Hover on the left panel to preview course reviews and time slots.",
