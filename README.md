@@ -1,12 +1,12 @@
-# CityU 选课助手 · 测试版 4.0
+# CityU 课程评价系统 · 测试版 4.0
 
 > **当前版本：测试版 4.0（Test v4.0）**
 > 本次更新为网页版功能增强，**不包含微信小程序包体**。小程序版本将在后续独立发布。
 > 完整的版本变更记录请查看 [更新日志（CHANGELOG.md）](CHANGELOG.md)。
 
-CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生**打造的一站式选课参考平台。整合课程时间表查询与学生评价汇总，帮你在选课前做出更明智的决定。
+CityU 课程评价系统是一个为**香港城市大学（CityU）授课型硕士生**打造的课程评价与参考平台。整合课程时间表查询与学生评价汇总，帮你做出更明智的决定。
 
-> ⚠️ **免责声明：** 课程评价内容均整理自公开社交平台（小红书、知乎、Reddit 等），仅供参考，不构成选课建议。请以学校官方信息为准。
+> ⚠️ **免责声明：** 课程评价内容均整理自公开社交平台（小红书、知乎、Reddit 等），仅供参考，不构成建议。请以学校官方信息为准。
 >
 > 当前数据适用于 **Semester A 2026/27**。课表快照时间为 **2026-08-05 12:00（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
 
@@ -36,12 +36,12 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 
 | 项目代码 | 项目名称 | 所属院系 |
 | --- | --- | --- |
-| MSDS | 数据科学理学硕士（MSc Data Science） | Department of Data Science |
+| MSBIOS | 生物统计学理学硕士（MSc Biostatistics） | Department of Biostatistics |
 | MSCS | 计算机科学理学硕士（MSc Computer Science） | Department of Computer Science |
 | MSAI | 人工智能理学硕士（MSc Artificial Intelligence） | Department of Computer Science |
 | MSCY | 网络安全理学硕士（MSc Cybersecurity） | Department of Computer Science |
-| MSBIOS | 生物统计学理学硕士（MSc Biostatistics） | Department of Biostatistics |
 | MSEC | 电子商贸理学硕士（MSc Electronic Commerce） | Department of Computer Science |
+| MSDS | 数据科学理学硕士（MSc Data Science） | Department of Data Science |
 | MSAIFS | 人工智能与科学理学硕士（MSc AI for Sciences） | Department of Data Science |
 
 ## 网页版主要功能
@@ -56,7 +56,7 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 ### 可视化课表规划
 
 - 将课程加入每周课表，并分别选择主课和 Tutorial 班次
-- 自动统计已选课程数量、核心课/选修课数量及总学分
+- 自动统计已加入课表的课程数量、核心课/选修课数量及总学分
 - 自动检测时间冲突，并在课表中标记冲突课程
 - 各项目课表在本地独立保存
 
@@ -64,7 +64,7 @@ CityU 选课助手是一个为**香港城市大学（CityU）授课型硕士生*
 
 - 展示课程类型、所属项目、学分、先修要求等
 - 展示班次时间、日期、地点、教师、CRN 及网页注册状态
-- 汇总学生评价、星级口碑分、课程特点和选课提示
+- 汇总学生评价、星级口碑分、课程特点和课程提示
 
 ### 详细课程文件与中文翻译
 
@@ -98,7 +98,7 @@ python -m http.server 8090
 ├── assets/
 │   ├── styles.css             # 全站样式与响应式布局
 │   ├── shared.js              # 数据加载、存储、i18n 和公共工具
-│   ├── planner.js             # 项目切换、课程筛选、选课和课表逻辑
+│   ├── planner.js             # 项目切换、课程筛选、课表规划逻辑
 │   ├── course.js              # 课程详情渲染逻辑
 │   ├── syllabus.js            # 课程文件与翻译渲染逻辑
 │   ├── cssa-logo.png          # CSSA 官方 Logo
@@ -129,7 +129,7 @@ python -m http.server 8090
 
 ## 使用提示与免责声明
 
-- 本系统仅为选课排课参考工具，个人最终课表需要在香港城市大学选课界面中自行完成
+- 本系统仅为课程评价与课表参考工具，个人最终课表需要在香港城市大学系统中自行确认
 - 课程名额、教师、地点、考核方式和注册规则可能变化，请以 CityU 官方系统和课程文件为准
-- 学生评价具有主观性，且可能对应往届教学安排，不应作为唯一选课依据
+- 学生评价具有主观性，且可能对应往届教学安排，不应作为唯一课程依据
 - 原始评价与课程资料的相关权利归各自作者或发布机构所有

@@ -592,14 +592,14 @@
       "reviews.loading": "正在加载课程…",
       "reviews.cloudDisabled": "云端共享未启用：管理员需在 assets/cloud-config.js 中配置 Supabase 数据库地址。",
       "reviews.localExp": "学生经验摘要",
-      "reviews.localHint": "以下内容整理自公开社交平台的学生分享，仅供参考，不构成选课建议。"
+      "reviews.localHint": "以下内容整理自公开社交平台的学生分享，仅供参考，不构成课程建议。"
     },
     en: {
       "nav.courses": "Courses",
       "nav.cityu": "CityU",
       "nav.reviews": "Course Reviews",
       "intro.eyebrow": "My Timetable",
-      "intro.title": "Course Planner",
+      "intro.title": "Course Reviews",
       "intro.desc": "Pick a college, then a department and a master's programme to browse courses, compare sections, and plan your weekly schedule. Hover on the left panel to preview course reviews and time slots.",
       "stat.graduation": "Graduation Credits",
       "stat.requirement": "Core + Elective",

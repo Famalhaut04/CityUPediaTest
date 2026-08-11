@@ -591,10 +591,10 @@
     MSDS.showToast(`已切换至 ${currentProgramme().name_zh}`);
   }
 
-  // ==================== 选课结果导出 / 导入（纯文本） ====================
+  // ==================== 课表结果导出 / 导入（纯文本） ====================
   function selectionsToText() {
     const lines = [
-      "# CityU 选课结果导出",
+      "# CityU 课表结果导出",
       `# Programme: ${activeProgramme}`,
       `# Exported: ${new Date().toISOString()}`,
       ""
@@ -613,7 +613,7 @@
 
   function exportSelectionsAsText() {
     if (!Object.keys(selections).length) {
-      MSDS.showToast("还没有选课，无法导出");
+      MSDS.showToast("还没有加入课程，无法导出");
       return;
     }
     const text = selectionsToText();
@@ -626,7 +626,7 @@
     link.click();
     link.remove();
     URL.revokeObjectURL(url);
-    MSDS.showToast("已导出选课结果");
+    MSDS.showToast("已导出课表结果");
   }
 
   // 解析形如 "COMP5111 | Primary=12345 | Tutorial=12346" 的行；# 开头为注释，行内 # 之后的内容视为备注忽略
@@ -652,7 +652,7 @@
       MSDS.showToast("文件内容为空或格式不正确");
       return;
     }
-    if (!window.confirm(`将导入 ${parsed.length} 门课程，覆盖当前「${activeProgramme}」的选课结果，确定继续吗？`)) return;
+    if (!window.confirm(`将导入 ${parsed.length} 门课程，覆盖当前「${activeProgramme}」的课表结果，确定继续吗？`)) return;
 
     const nextSelections = {};
     const skipped = [];
@@ -674,7 +674,7 @@
     renderAll();
     const successCount = Object.keys(nextSelections).length;
     MSDS.showToast(`已导入 ${successCount} 门课程${skipped.length ? `，跳过 ${skipped.length} 项` : ""}`);
-    if (skipped.length) console.warn("导入选课结果时跳过的记录：", skipped);
+    if (skipped.length) console.warn("导入课表结果时跳过的记录：", skipped);
   }
 
   function switchProgramme(code) {

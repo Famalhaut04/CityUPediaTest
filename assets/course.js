@@ -60,7 +60,7 @@
       return `<span class="programme-badge" title="${MSDS.escapeHtml(programme.name_en)}">${MSDS.escapeHtml(programme.code)}<small>${type === "core" ? "核心" : "选修"}</small></span>`;
     }).join("");
 
-    document.title = `${course.code} ${course.programme_title} · CityU 选课板`;
+    document.title = `${course.code} ${course.programme_title} · CityU 课程评价系统`;
     detail.innerHTML = `
       <a class="back-link" href="index.html">← 返回课程表</a>
       <section class="detail-hero">
@@ -108,7 +108,7 @@
               <label class="my-review-comment-label" for="my-review-nickname">昵称（选填）</label>
               <input id="my-review-nickname" class="my-review-comment" type="text" maxlength="30" placeholder="不填则显示为「匿名」">` : ""}
               <label class="my-review-comment-label" for="my-review-comment">课程评语（选填）</label>
-              <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的选课感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
+              <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的课程感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
               <div class="my-review-actions">
                 <button id="my-review-save" class="button button-primary" type="button">${myReview ? "更新评价" : "保存评价"}</button>
                 ${myReview ? `<button id="my-review-remove" class="button button-quiet" type="button">删除评价</button>` : ""}

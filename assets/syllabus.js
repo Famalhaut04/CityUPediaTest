@@ -117,7 +117,7 @@
     const backUrl = `course.html?code=${encodeURIComponent(course.code)}`;
     const pageCount = translationPages.length;
 
-    document.title = `${course.code} 详细课程介绍 · CityU 选课板`;
+    document.title = `${course.code} 详细课程介绍 · CityU 课程评价系统`;
     detail.innerHTML = `
       <a class="back-link" href="${backUrl}">← 返回 ${MSDS.escapeHtml(course.code)} 课程详情</a>
 
@@ -172,7 +172,7 @@
           </article>
         </div>
 
-        <div class="translation-notice"><strong>阅读说明：</strong>中文内容按英文原文逐页整理，仅供理解与选课参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
+        <div class="translation-notice"><strong>阅读说明：</strong>中文内容按英文原文逐页整理，仅供理解与课程参考；课程要求、考核规则及阅读资料以英文原文为准。</div>
         ${renderPager(pageCount, true)}
         <p class="pdf-fallback">网页默认加载课程页图，不再使用 PDF.js 或浏览器内置 PDF 阅读器；原 PDF 仅作为备用和下载入口。</p>
       </section>`;
