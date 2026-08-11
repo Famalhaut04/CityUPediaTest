@@ -599,7 +599,7 @@
       "nav.cityu": "CityU",
       "nav.reviews": "Course Reviews",
       "intro.eyebrow": "My Timetable",
-      "intro.title": "Course Reviews",
+      "intro.title": "Course Hub",
       "intro.desc": "Pick a college, then a department and a master's programme to browse courses, compare sections, and plan your weekly schedule. Hover on the left panel to preview course reviews and time slots.",
       "stat.graduation": "Graduation Credits",
       "stat.requirement": "Core + Elective",
