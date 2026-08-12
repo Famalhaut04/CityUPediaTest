@@ -1,6 +1,6 @@
-# CityU 课程综合系统 · 测试版 4.1
+# CityU 课程综合系统 · 测试版 4.2
 
-> **当前版本：测试版 4.1（Test v4.1）**
+> **当前版本：测试版 4.2（Test v4.2）**
 > 本次更新为网页版功能增强，**不包含微信小程序包体**。小程序版本将在后续独立发布。
 > 完整的版本变更记录请查看 [更新日志（CHANGELOG.md）](CHANGELOG.md)。
 
@@ -14,9 +14,9 @@ CityU 课程综合系统是一个为**香港城市大学（CityU）授课型硕�
 
 **https://Famalhaut04.github.io/Cityu-course-selection/**
 
-## 测试版 4.1 更新内容
+## 测试版 4.2 更新内容
 
-> 课程评价中心界面改版（参考 [cupedia.org/courses](https://cupedia.org/courses)）并优化使用逻辑，提交评价统一跳转到课程详情页；新增登录体系，登录后才能提交云端评价。
+> 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版（参考 [cupedia.org/courses](https://cupedia.org/courses)）并优化使用逻辑。
 
 ### 登录体系（新增）
 
