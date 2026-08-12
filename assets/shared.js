@@ -411,6 +411,53 @@
     return final;
   }
 
+  // 忘记密码：向注册邮箱发送密码重置邮件（邮件内容由 Supabase Auth 模板控制）
+  async function studentSendResetEmail(email) {
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/auth/v1/recover`, {
+      method: "POST",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: String(email).trim() })
+    });
+    if (!response.ok) {
+      let message = "发送失败";
+      try {
+        const err = await response.json();
+        message = String(err.error_description || err.msg || err.message || message);
+      } catch { /* ignore */ }
+      throw new Error(message);
+    }
+    return true;
+  }
+
+  // 使用重置邮件中的 access_token 设置新密码（替换原密码）
+  async function studentUpdatePassword(token, newPassword) {
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/auth/v1/user`, {
+      method: "PUT",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password: String(newPassword) })
+    });
+    if (!response.ok) {
+      let message = "密码更新失败";
+      try {
+        const err = await response.json();
+        message = String(err.error_description || err.msg || err.message || message);
+      } catch { /* ignore */ }
+      throw new Error(message);
+    }
+    return true;
+  }
+
   // ============ 云端评价读写 ============
 
   // 读取缓存：命中且未过期则直接返回，避免重复拉取云端数据
@@ -732,6 +779,14 @@
       "login.toLogin": "直接登录",
       "login.studentHint": "登录后即可为课程提交评价；你的评价会同步到云端并显示昵称。",
       "login.adminHint": "管理员登录后可删除任意云端评价；仅限指定管理员邮箱。",
+      "login.forgot": "忘记密码？",
+      "login.sendReset": "发送重置邮件",
+      "login.backToLogin": "← 返回登录",
+      "login.forgotHint": "输入注册邮箱后，我们会发送一封密码重置邮件，点击邮件中的链接即可设置新密码。",
+      "login.newPassword": "新密码",
+      "login.confirmPassword": "确认新密码",
+      "login.resetPassword": "设置新密码",
+      "login.resetHint": "设置成功后即可用新密码登录。",
       "reviews.title": "课程评价中心",
       "reviews.desc": "按学院与院系浏览课程，查看所有使用者的共享评价，也可以直接为心仪的课程提交评价。",
       "reviews.statCourses": "课程总数",
@@ -827,6 +882,14 @@
       "login.toLogin": "Sign in",
       "login.studentHint": "Sign in to submit course reviews. Your review syncs to the cloud with your nickname.",
       "login.adminHint": "Admins can delete any cloud review. Restricted to the designated admin email.",
+      "login.forgot": "Forgot password?",
+      "login.sendReset": "Send reset email",
+      "login.backToLogin": "← Back to sign in",
+      "login.forgotHint": "Enter your registered email and we will send a password reset link.",
+      "login.newPassword": "New password",
+      "login.confirmPassword": "Confirm new password",
+      "login.resetPassword": "Set new password",
+      "login.resetHint": "Sign in with your new password once it is set.",
       "reviews.title": "Course Reviews",
       "reviews.desc": "Browse courses by college and department, read shared reviews, or submit your own.",
       "reviews.statCourses": "Courses",
@@ -941,6 +1004,8 @@
     currentStudent,
     isStudentLoggedIn,
     saveUserNickname,
+    studentSendResetEmail,
+    studentUpdatePassword,
     getCourseReview,
     getElectiveGroup,
     getElectiveGroupInfo,

@@ -4546,6 +4546,11 @@ body {
   font-size: 12.5px;
 }
 
+.login-switch-sep {
+  color: var(--border-strong);
+  user-select: none;
+}
+
 .login-status {
   min-height: 18px;
   margin: 0;

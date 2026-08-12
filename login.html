@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="assets/styles.css?v=20260812d">
+    <link rel="stylesheet" href="assets/styles.css?v=20260812e">
   </head>
   <body data-page="login">
     <aside class="sidebar" id="sidebar">
@@ -107,10 +107,49 @@
             <div class="login-switch">
               <span id="student-switch-hint" data-i18n="login.noAccount">还没有账号？</span>
               <button class="text-link" type="button" id="student-switch">注册新账号</button>
+              <span class="login-switch-sep" aria-hidden="true">·</span>
+              <button class="text-link" type="button" id="student-forgot" data-i18n="login.forgot">忘记密码？</button>
             </div>
             <p class="login-status" id="student-status" role="status"></p>
           </form>
           <p class="login-hint" data-i18n="login.studentHint">登录后即可为课程提交评价；你的评价会同步到云端并显示昵称。</p>
+        </div>
+
+        <!-- 忘记密码：输入邮箱发送重置邮件 -->
+        <div class="login-panel" id="login-panel-forgot" role="tabpanel">
+          <form class="login-form" id="forgot-form" novalidate>
+            <label class="login-field">
+              <span class="login-label" data-i18n="login.email">邮箱</span>
+              <input id="forgot-email" type="email" autocomplete="username" placeholder="注册时使用的邮箱" required>
+            </label>
+            <div class="login-actions">
+              <button class="button button-primary button-wide" type="submit" id="forgot-submit" data-i18n="login.sendReset">发送重置邮件</button>
+            </div>
+            <div class="login-switch">
+              <button class="text-link" type="button" id="forgot-back" data-i18n="login.backToLogin">← 返回登录</button>
+            </div>
+            <p class="login-status" id="forgot-status" role="status"></p>
+          </form>
+          <p class="login-hint" data-i18n="login.forgotHint">输入注册邮箱后，我们会发送一封密码重置邮件，点击邮件中的链接即可设置新密码。</p>
+        </div>
+
+        <!-- 设置新密码：邮箱重置链接回跳后使用 -->
+        <div class="login-panel" id="login-panel-reset" role="tabpanel">
+          <form class="login-form" id="reset-form" novalidate>
+            <label class="login-field">
+              <span class="login-label" data-i18n="login.newPassword">新密码</span>
+              <input id="reset-password" type="password" autocomplete="new-password" placeholder="至少 6 位" minlength="6" required>
+            </label>
+            <label class="login-field">
+              <span class="login-label" data-i18n="login.confirmPassword">确认新密码</span>
+              <input id="reset-password-confirm" type="password" autocomplete="new-password" placeholder="再次输入新密码" minlength="6" required>
+            </label>
+            <div class="login-actions">
+              <button class="button button-primary button-wide" type="submit" id="reset-submit" data-i18n="login.resetPassword">设置新密码</button>
+            </div>
+            <p class="login-status" id="reset-status" role="status"></p>
+          </form>
+          <p class="login-hint" data-i18n="login.resetHint">设置成功后即可用新密码登录。</p>
         </div>
 
         <!-- 管理员登录 -->
@@ -135,8 +174,8 @@
     </main>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="assets/cloud-config.js?v=20260812d"></script>
-    <script src="assets/shared.js?v=20260812d"></script>
-    <script src="assets/login.js?v=20260812d"></script>
+    <script src="assets/cloud-config.js?v=20260812e"></script>
+    <script src="assets/shared.js?v=20260812e"></script>
+    <script src="assets/login.js?v=20260812e"></script>
   </body>
 </html>

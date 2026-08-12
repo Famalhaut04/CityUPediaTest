@@ -2,6 +2,7 @@
    CityU 课程综合系统 · 登录页（login.html）
    双模式：学生登录（可注册，登录后提交评价）与管理员登录
    （登录后可删除任意云端评价）。登录成功后跳转到来源页面。
+   支持：忘记密码（邮箱发送重置邮件）与设置新密码（邮件回跳）。
    ============================================================ */
 (function () {
   "use strict";
@@ -29,20 +30,29 @@
     window.location.href = getNextUrl();
   }
 
+  // 显示指定登录面板（学生 / 忘记密码 / 设置新密码 / 管理员）
+  function showPanel(id) {
+    document.querySelectorAll(".login-tab").forEach((tab) => {
+      tab.classList.remove("is-active");
+      tab.setAttribute("aria-selected", "false");
+    });
+    document.querySelectorAll(".login-panel").forEach((p) => p.classList.remove("is-active"));
+    const panel = document.getElementById(id);
+    if (panel) panel.classList.add("is-active");
+    const mode = id.replace("login-panel-", "");
+    const tab = document.querySelector(`.login-tab[data-login-mode="${mode}"]`);
+    if (tab) {
+      tab.classList.add("is-active");
+      tab.setAttribute("aria-selected", "true");
+    }
+  }
+
   // ============ Tab 切换：学生 / 管理员 ============
   function initTabs() {
     const tabs = document.querySelectorAll(".login-tab");
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
-        tabs.forEach((x) => {
-          x.classList.remove("is-active");
-          x.setAttribute("aria-selected", "false");
-        });
-        document.querySelectorAll(".login-panel").forEach((p) => p.classList.remove("is-active"));
-        tab.classList.add("is-active");
-        tab.setAttribute("aria-selected", "true");
-        const panel = document.getElementById(`login-panel-${tab.getAttribute("data-login-mode")}`);
-        if (panel) panel.classList.add("is-active");
+        showPanel(`login-panel-${tab.getAttribute("data-login-mode")}`);
       });
     });
   }
@@ -58,6 +68,7 @@
     const statusEl = document.getElementById("student-status");
     const switchBtn = document.getElementById("student-switch");
     const switchHint = document.getElementById("student-switch-hint");
+    const forgotBtn = document.getElementById("student-forgot");
 
     let mode = "login"; // login | register
 
@@ -86,6 +97,13 @@
       setStatus("", false);
     });
 
+    // 忘记密码：切换到发送重置邮件面板
+    forgotBtn.addEventListener("click", () => {
+      showPanel("login-panel-forgot");
+      const emailEl = document.getElementById("forgot-email");
+      if (emailEl && emailInput.value) emailEl.value = emailInput.value;
+    });
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const email = emailInput.value.trim();
@@ -101,6 +119,8 @@
           const result = await MSDS.studentRegister(email, password, nicknameInput.value.trim());
           if (result.needVerify) {
             setStatus("注册成功！请前往邮箱点击确认链接后再登录。", false);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "注 册";
           } else {
             showToast("注册成功，已自动登录");
             goNext();
@@ -119,6 +139,102 @@
 
     // 默认显示登录模式
     setMode("login");
+  }
+
+  // ============ 忘记密码：发送重置邮件 ============
+  function initForgotForm() {
+    const form = document.getElementById("forgot-form");
+    const emailInput = document.getElementById("forgot-email");
+    const submitBtn = document.getElementById("forgot-submit");
+    const statusEl = document.getElementById("forgot-status");
+    const backBtn = document.getElementById("forgot-back");
+
+    backBtn.addEventListener("click", () => {
+      showPanel("login-panel-student");
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      if (!email) {
+        statusEl.textContent = "请输入注册邮箱";
+        statusEl.classList.add("is-error");
+        return;
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "发送中…";
+      statusEl.textContent = "";
+      statusEl.classList.remove("is-error");
+      try {
+        await MSDS.studentSendResetEmail(email);
+        statusEl.textContent = "重置邮件已发送，请前往邮箱查收（注意检查垃圾箱）。";
+        statusEl.classList.remove("is-error");
+      } catch (error) {
+        statusEl.textContent = error.message;
+        statusEl.classList.add("is-error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = t("login.sendReset") || "发送重置邮件";
+      }
+    });
+  }
+
+  // ============ 设置新密码：邮箱重置链接回跳后使用 ============
+  // Supabase 重置邮件链接形如：
+  //   https://<site>/login.html#access_token=xxx&type=recovery&expires_at=...
+  function initResetForm() {
+    const form = document.getElementById("reset-form");
+    const passwordInput = document.getElementById("reset-password");
+    const confirmInput = document.getElementById("reset-password-confirm");
+    const submitBtn = document.getElementById("reset-submit");
+    const statusEl = document.getElementById("reset-status");
+
+    // 从 URL hash 中提取重置 access_token
+    let resetToken = "";
+    try {
+      const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      if (hash.get("type") === "recovery" && hash.get("access_token")) {
+        resetToken = hash.get("access_token");
+      }
+    } catch { /* ignore */ }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const pw = passwordInput.value;
+      const confirm = confirmInput.value;
+      if (!resetToken) {
+        statusEl.textContent = "重置链接无效或已过期，请重新申请。";
+        statusEl.classList.add("is-error");
+        return;
+      }
+      if (pw.length < 6) {
+        statusEl.textContent = "密码至少 6 位";
+        statusEl.classList.add("is-error");
+        return;
+      }
+      if (pw !== confirm) {
+        statusEl.textContent = "两次输入的密码不一致";
+        statusEl.classList.add("is-error");
+        return;
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "保存中…";
+      statusEl.textContent = "";
+      statusEl.classList.remove("is-error");
+      try {
+        await MSDS.studentUpdatePassword(resetToken, pw);
+        statusEl.textContent = "新密码已设置，请用新密码登录。";
+        statusEl.classList.remove("is-error");
+        // 清空 URL hash，避免刷新后重复提交
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+        setTimeout(() => showPanel("login-panel-student"), 1200);
+      } catch (error) {
+        statusEl.textContent = error.message;
+        statusEl.classList.add("is-error");
+        submitBtn.disabled = false;
+        submitBtn.textContent = t("login.resetPassword") || "设置新密码";
+      }
+    });
   }
 
   // ============ 管理员登录 ============
@@ -177,7 +293,17 @@
 
     initTabs();
     initStudentForm();
+    initForgotForm();
+    initResetForm();
     initAdminForm();
+
+    // 重置邮件回跳：URL hash 含 recovery token 时，直接显示设置新密码面板
+    try {
+      const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      if (hash.get("type") === "recovery" && hash.get("access_token")) {
+        showPanel("login-panel-reset");
+      }
+    } catch { /* ignore */ }
   }
 
   if (document.readyState === "loading") {
