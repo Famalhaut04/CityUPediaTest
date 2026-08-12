@@ -1,8 +1,8 @@
 # 更新日志 / Changelog
 
-## 测试版 4.2（Test v4.2）· 2026-08-12
+## 测试版 4.3（Test v4.3）· 2026-08-12
 
-> 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版（参考 cupedia.org/courses 的课程评价模式）并优化使用逻辑；导入数据科学（DS）选修课程数据。
+> 导入数据科学（DS）选修课程数据与课程大纲 PDF，课程总数扩充至 80 门；修正 SemB 学期标记并按培养方案规整专业归属。
 
 ### 课程数据扩充（DS 选修课导入）
 
@@ -13,6 +13,10 @@
 - **PDF 提取补全课程**：从课程大纲 PDF 提取信息补建 4 门课程条目——CS5182（Computer Graphics 计算机图形学，MSCS 选修 Group II）、CS5493（Topics in Autonomous Driving 自动驾驶专题，MSAI 选修 Group I/AD 方向核心）、CS6487（Topics in Machine Learning 机器学习专题，MSCS Group I + MSAI Group II）、CS6491（Topics in Optimization 优化专题，MSCS Group II + MSAI Group II），均含学分、先修要求等大纲信息
 - **课程总数**：扩充至 80 门，专业归属按 CityU 计算机系官网课程体系规整（MSCS/MSAI 选修分组）
 - **来源**：数据来自 CityU AIMS 课表快照（由选课板整理）与课程大纲 PDF，评价数据暂缺的学生评价来源保持"暂无评价"状态，不编造内容
+
+## 测试版 4.2（Test v4.2）· 2026-08-12
+
+> 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版（参考 cupedia.org/courses 的课程评价模式）并优化使用逻辑。
 
 ### 登录体系（新增）
 
@@ -63,4 +67,3 @@
 ### 说明
 
 - 本次仍为网页版更新，**不包含微信小程序包体**
-
