@@ -4393,3 +4393,186 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   }
 }
+
+/* ============ 登录状态横幅（课程详情页） ============ */
+.auth-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card-soft);
+}
+
+.auth-banner-user {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.auth-banner-user strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ============ 登录页（login.html） ============ */
+.login-main {
+  align-items: center;
+  padding: 40px 20px 64px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 18px);
+  background: var(--card);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08);
+}
+
+.login-session-hint {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+  color: var(--ink);
+  font-size: 12.5px;
+}
+
+.login-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card-soft);
+}
+
+.login-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 9px 12px;
+  border: none;
+  border-radius: calc(var(--radius-md) - 4px);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+.login-tab:hover {
+  color: var(--ink);
+}
+
+.login-tab.is-active {
+  background: var(--card);
+  color: var(--primary-strong);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+}
+
+.login-panel {
+  display: none;
+}
+
+.login-panel.is-active {
+  display: block;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.login-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg, var(--card));
+  color: var(--ink);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.login-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-border);
+}
+
+.login-actions {
+  margin-top: 2px;
+}
+
+.button-wide {
+  width: 100%;
+  justify-content: center;
+}
+
+.login-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.login-status {
+  min-height: 18px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.login-status.is-error {
+  color: #dc2626;
+}
+
+.login-hint {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  color: var(--faint);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .login-main {
+    padding: 24px 14px 48px;
+  }
+
+  .login-card {
+    padding: 16px;
+  }
+}

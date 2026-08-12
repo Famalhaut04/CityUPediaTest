@@ -100,6 +100,7 @@
 
           <section class="detail-section my-review-section">
             <h2>我的评价</h2>
+            <div class="auth-banner" id="course-auth-banner"></div>
             <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "评分与评语会保存到云端共享给所有使用者，也会保留在当前浏览器本地。" : "评分与评语仅保存在当前浏览器本地，仅供自己参考（云端共享未启用）。"}</p>
             <div class="my-review-form">
               <div class="my-review-stars">
@@ -109,7 +110,7 @@
               </div>
               ${MSDS.cloudReviewsEnabled() ? `
               <label class="my-review-comment-label" for="my-review-nickname">昵称（选填）</label>
-              <input id="my-review-nickname" class="my-review-comment" type="text" maxlength="30" placeholder="不填则显示为「匿名」">` : ""}
+              <input id="my-review-nickname" class="my-review-comment" type="text" maxlength="30" placeholder="不填则使用登录账号默认昵称">` : ""}
               <label class="my-review-comment-label" for="my-review-comment">课程评语（选填）</label>
               <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的课程感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
               <div class="my-review-actions">
@@ -241,6 +242,48 @@
     const scoreEl = document.getElementById("my-review-score");
     const starsContainer = document.querySelector(".rating-picker");
 
+    // 登录状态横幅：未登录提示去登录；已登录显示账号与退出按钮
+    function renderAuthBanner() {
+      const banner = document.getElementById("course-auth-banner");
+      if (!banner) return;
+      const student = MSDS.currentStudent ? MSDS.currentStudent() : null;
+      const admin = MSDS.currentAdmin ? MSDS.currentAdmin() : null;
+      if (admin) {
+        banner.innerHTML = `
+          <span class="auth-banner-user">管理员已登录：<strong>${MSDS.escapeHtml(admin.email)}</strong></span>
+          <button class="button button-quiet button-small" type="button" id="auth-admin-logout">退出登录</button>`;
+        const btn = document.getElementById("auth-admin-logout");
+        if (btn) btn.addEventListener("click", () => {
+          MSDS.adminLogout();
+          MSDS.showToast("已退出管理员登录");
+          renderAuthBanner();
+          loadCloudReviews(true);
+        });
+        return;
+      }
+      if (student) {
+        const nickname = MSDS.getStoredUserNickname ? MSDS.getStoredUserNickname() : "";
+        const name = nickname || student.email.split("@")[0];
+        banner.innerHTML = `
+          <span class="auth-banner-user">学生已登录：<strong>${MSDS.escapeHtml(name)}</strong>（${MSDS.escapeHtml(student.email)}）</span>
+          <button class="button button-quiet button-small" type="button" id="auth-student-logout">退出登录</button>`;
+        const btn = document.getElementById("auth-student-logout");
+        if (btn) btn.addEventListener("click", () => {
+          MSDS.studentLogout();
+          MSDS.showToast("已退出登录");
+          renderAuthBanner();
+          loadCloudReviews(true);
+        });
+        return;
+      }
+      const next = encodeURIComponent(`course.html?code=${encodeURIComponent(course.code)}#course-reviews`);
+      banner.innerHTML = `
+        <span class="auth-banner-user">未登录：提交评价需登录账号</span>
+        <a class="button button-primary button-small" href="login.html?next=${next}">去登录</a>`;
+    }
+
+    renderAuthBanner();
+
     function refreshStarState() {
       starsContainer.querySelectorAll(".rate-star").forEach((star) => {
         star.classList.toggle("is-filled", Number(star.dataset.rate) <= chosenRating);
@@ -288,6 +331,12 @@
             loadCloudReviews(true);
           })
           .catch((error) => {
+            if (String(error.message).includes("请先登录")) {
+              // 未登录：提示并跳转登录页（登录后回跳本课程评价区）
+              MSDS.showToast("登录后才能提交云端评价");
+              window.location.href = `login.html?next=${encodeURIComponent(`course.html?code=${encodeURIComponent(course.code)}#course-reviews`)}`;
+              return;
+            }
             savedEl.textContent = `本地已保存，但云端同步失败：${error.message}`;
           });
       }
@@ -323,11 +372,13 @@
     });
 
     // ============ 课程评价：加载并渲染云端共享评价 ============
-    // 删除权限：本人（user_key 匹配）可删自己的评价；管理员登录后任意评价可删
+    // 删除权限：本人（登录学生 user_id 或 user_key 匹配）可删自己的评价；管理员登录后任意评价可删
     function cloudReviewCard(item) {
       const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0))) + "☆".repeat(Math.max(0, 5 - Math.min(5, Number(item.rating) || 0)));
       const when = new Date(item.created_at).toLocaleString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
-      const isMine = MSDS.getUserKey() && item.user_key === MSDS.getUserKey();
+      const student = MSDS.currentStudent ? MSDS.currentStudent() : null;
+      const isMine = (student && student.userId && item.user_id && String(item.user_id) === String(student.userId))
+        || (MSDS.getUserKey() && item.user_key && item.user_key === MSDS.getUserKey());
       const isAdmin = MSDS.isAdminLoggedIn();
       const canDelete = isMine || isAdmin;
       const deleteLabel = isAdmin && !isMine ? "管理员删除" : "删除";

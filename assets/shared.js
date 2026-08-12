@@ -210,6 +210,8 @@
   const CLOUD_CACHE_TTL = 5 * 60 * 1000; // 会话缓存 5 分钟，降低重复请求流量
   const USER_KEY_STORAGE = "CITYU-cloud-user-key"; // 个人评价标识，用于“只能删除自己的评价”
   const ADMIN_SESSION = "CITYU-admin-session"; // 管理员登录会话（access_token 与过期时间）
+  const USER_SESSION = "CITYU-user-session"; // 学生登录会话（access_token 与过期时间）
+  const USER_NICKNAME = "CITYU-user-nickname"; // 学生昵称（登录/注册时填写，评价默认显示）
 
   function cloudReviewsEnabled() {
     try {
@@ -296,6 +298,119 @@
     return Boolean(currentAdmin());
   }
 
+  // ============ 学生（Supabase Auth 邮箱登录，登录后可提交评价） ============
+  function getStoredUserNickname() {
+    try {
+      return String(localStorage.getItem(USER_NICKNAME) || "").trim();
+    } catch {
+      return "";
+    }
+  }
+
+  // 学生注册：邮箱 + 密码 + 昵称（选填）→ 创建账号并自动登录
+  async function studentRegister(email, password, nickname) {
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/auth/v1/signup`, {
+      method: "POST",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: String(email).trim(),
+        password: String(password)
+      })
+    });
+    if (!response.ok) {
+      let message = "注册失败";
+      try {
+        const err = await response.json();
+        message = String(err.error_description || err.msg || err.message || message);
+      } catch { /* ignore */ }
+      throw new Error(message);
+    }
+    const data = await response.json();
+    // 保存昵称（注册后评价默认显示）
+    const finalNickname = String(nickname || "").trim();
+    if (finalNickname) {
+      try {
+        localStorage.setItem(USER_NICKNAME, finalNickname);
+      } catch { /* ignore */ }
+    }
+    // signup 默认返回 session（未开启邮箱验证时）；若开启验证则返回 null，提示先验证邮箱
+    if (data.session) {
+      saveUserSession(data.session);
+      return { session: data.session, needVerify: false };
+    }
+    return { session: null, needVerify: true };
+  }
+
+  // 学生登录：邮箱 + 密码 → access_token（存会话，默认 1 小时）
+  async function studentLogin(email, password) {
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
+    const config = window.CLOUD_CONFIG;
+    const response = await fetch(`${config.supabaseUrl}/auth/v1/token?grant_type=password`, {
+      method: "POST",
+      headers: {
+        apikey: config.supabaseAnonKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: String(email).trim(), password: String(password) })
+    });
+    if (!response.ok) throw new Error("登录失败：邮箱或密码错误");
+    const data = await response.json();
+    saveUserSession(data);
+    return data;
+  }
+
+  function saveUserSession(data) {
+    const session = {
+      token: data.access_token,
+      refreshToken: data.refresh_token || "",
+      email: String(data.user?.email || "").trim(),
+      userId: String(data.user?.id || "").trim(),
+      expiresAt: Date.now() + (Number(data.expires_in || 3600) * 1000)
+    };
+    try {
+      sessionStorage.setItem(USER_SESSION, JSON.stringify(session));
+    } catch { /* ignore */ }
+    return session;
+  }
+
+  function studentLogout() {
+    try {
+      sessionStorage.removeItem(USER_SESSION);
+    } catch { /* ignore */ }
+  }
+
+  // 当前学生会话（未过期则返回，否则返回 null）
+  function currentStudent() {
+    try {
+      const raw = sessionStorage.getItem(USER_SESSION);
+      if (!raw) return null;
+      const session = JSON.parse(raw);
+      if (!session || !session.token || Date.now() > session.expiresAt) return null;
+      return session;
+    } catch {
+      return null;
+    }
+  }
+
+  function isStudentLoggedIn() {
+    return Boolean(currentStudent());
+  }
+
+  // 学生修改昵称（评价默认显示）
+  function saveUserNickname(nickname) {
+    const final = String(nickname || "").trim();
+    try {
+      if (final) localStorage.setItem(USER_NICKNAME, final);
+      else localStorage.removeItem(USER_NICKNAME);
+    } catch { /* ignore */ }
+    return final;
+  }
+
   // ============ 云端评价读写 ============
 
   // 读取缓存：命中且未过期则直接返回，避免重复拉取云端数据
@@ -342,15 +457,25 @@
     return reviews;
   }
 
-  // 提交一条云端评价；自动携带本机 user_key，便于后续本人删除
+  // 提交一条云端评价：
+  // - 学生已登录：携带学生 access_token 与昵称（RLS 校验登录身份）
+  // - 管理员已登录：携带管理员 token
+  // - 均未登录：抛错提示先登录（登录后才能提交评价）
   async function submitCloudReview(code, review) {
-    if (!cloudReviewsEnabled()) return null;
+    if (!cloudReviewsEnabled()) throw new Error("云端评价未启用");
     const config = window.CLOUD_CONFIG;
+    const student = currentStudent();
+    const admin = currentAdmin();
+    const token = student?.token || admin?.token || "";
+    if (!token) {
+      throw new Error("请先登录后再提交评价（登录后可分享到云端）");
+    }
+    const nickname = String(review.nickname || "").trim() || (student ? getStoredUserNickname() : "") || (student ? student.email.split("@")[0] : "") || "匿名";
     const response = await fetch(`${config.supabaseUrl}/rest/v1/course_reviews`, {
       method: "POST",
       headers: {
         apikey: config.supabaseAnonKey,
-        Authorization: `Bearer ${config.supabaseAnonKey}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
         Prefer: "return=representation"
       },
@@ -358,30 +483,48 @@
         course_code: String(code),
         rating: Math.max(1, Math.min(5, Number(review.rating) || 0)),
         comment: String(review.comment || "").trim(),
-        nickname: String(review.nickname || "").trim() || "匿名",
-        user_key: getUserKey()
+        nickname,
+        user_key: getUserKey(),
+        user_id: (student && student.userId) || null
       })
     });
-    if (!response.ok) throw new Error(`云端评价提交失败（${response.status}）`);
+    if (!response.ok) {
+      let message = `云端评价提交失败（${response.status}）`;
+      try {
+        const err = await response.json();
+        message = String(err.message || err.error_description || message);
+      } catch { /* ignore */ }
+      throw new Error(message);
+    }
     const rows = await response.json();
     return Array.isArray(rows) && rows.length ? rows[0] : null;
   }
 
   // 删除一条云端评价：
-  // - 本人删除：请求头携带 x-user-key，RLS 校验与记录 user_key 一致
+  // - 本人删除（学生登录）：携带学生 access_token + x-user-key，RLS 校验 user_id/user_key 与记录一致
+  // - 本人删除（匿名历史评价）：携带 x-user-key，RLS 校验与记录 user_key 一致
   // - 管理员删除：请求头携带管理员 access_token，RLS 校验管理员邮箱
   async function deleteCloudReview(code, id) {
     if (!cloudReviewsEnabled()) return;
     const config = window.CLOUD_CONFIG;
     const admin = currentAdmin();
+    const student = currentStudent();
+    const token = admin?.token || student?.token || config.supabaseAnonKey;
     const headers = {
       apikey: config.supabaseAnonKey,
-      Authorization: admin ? `Bearer ${admin.token}` : `Bearer ${config.supabaseAnonKey}`,
+      Authorization: `Bearer ${token}`,
       "x-user-key": admin ? admin.email : getUserKey()
     };
     const url = `${config.supabaseUrl}/rest/v1/course_reviews?id=eq.${encodeURIComponent(String(id))}`;
     const response = await fetch(url, { method: "DELETE", headers });
-    if (!response.ok) throw new Error(`删除失败（${response.status}）`);
+    if (!response.ok) {
+      let message = `删除失败（${response.status}）`;
+      try {
+        const err = await response.json();
+        message = String(err.message || err.error_description || message);
+      } catch { /* ignore */ }
+      throw new Error(message);
+    }
   }
 
   // 批量读取多门课程的云端评价（一次请求，用于课程评价中心按系展示）
@@ -576,6 +719,19 @@
       "feedback.result.copy": "复制内容",
       "feedback.result.github": "提交到 GitHub",
       "feedback.result.close": "关闭",
+      "login.title": "登录",
+      "login.desc": "学生登录后可提交课程评价；管理员登录后可管理云端评价。",
+      "login.student": "学生登录",
+      "login.admin": "管理员登录",
+      "login.email": "邮箱",
+      "login.password": "密码",
+      "login.nickname": "昵称（选填）",
+      "login.noAccount": "还没有账号？",
+      "login.toRegister": "注册新账号",
+      "login.hasAccount": "已有账号？",
+      "login.toLogin": "直接登录",
+      "login.studentHint": "登录后即可为课程提交评价；你的评价会同步到云端并显示昵称。",
+      "login.adminHint": "管理员登录后可删除任意云端评价；仅限指定管理员邮箱。",
       "reviews.title": "课程评价中心",
       "reviews.desc": "按学院与院系浏览课程，查看所有使用者的共享评价，也可以直接为心仪的课程提交评价。",
       "reviews.statCourses": "课程总数",
@@ -658,6 +814,19 @@
       "feedback.result.copy": "Copy Content",
       "feedback.result.github": "Submit to GitHub",
       "feedback.result.close": "Close",
+      "login.title": "Sign In",
+      "login.desc": "Students sign in to submit course reviews; admins sign in to manage cloud reviews.",
+      "login.student": "Student Login",
+      "login.admin": "Admin Login",
+      "login.email": "Email",
+      "login.password": "Password",
+      "login.nickname": "Nickname (optional)",
+      "login.noAccount": "No account yet?",
+      "login.toRegister": "Sign up",
+      "login.hasAccount": "Already have an account?",
+      "login.toLogin": "Sign in",
+      "login.studentHint": "Sign in to submit course reviews. Your review syncs to the cloud with your nickname.",
+      "login.adminHint": "Admins can delete any cloud review. Restricted to the designated admin email.",
       "reviews.title": "Course Reviews",
       "reviews.desc": "Browse courses by college and department, read shared reviews, or submit your own.",
       "reviews.statCourses": "Courses",
@@ -764,6 +933,14 @@
     isAdminLoggedIn,
     adminLogin,
     adminLogout,
+    currentAdmin,
+    getStoredUserNickname,
+    studentRegister,
+    studentLogin,
+    studentLogout,
+    currentStudent,
+    isStudentLoggedIn,
+    saveUserNickname,
     getCourseReview,
     getElectiveGroup,
     getElectiveGroupInfo,
