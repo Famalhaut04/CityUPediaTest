@@ -810,8 +810,8 @@
                                                             "MSCY":  "elective"
                                                         },
                         "requirement_type":  "core",
-                        "programme_title":  "Computer Networks & Internets",
-                        "schedule_title":  "Computer Networks & Internets",
+                        "programme_title":  "Computer Networks \u0026 Internets",
+                        "schedule_title":  "Computer Networks \u0026 Internets",
                         "title_changed":  false,
                         "credits":  3,
                         "remarks":  "CC",
@@ -872,8 +872,8 @@
                                                             "MSCS":  "elective"
                                                         },
                         "requirement_type":  "elective",
-                        "programme_title":  "Cybersecurity Audits & Compliance",
-                        "schedule_title":  "Cybersecurity Audits & Compliance",
+                        "programme_title":  "Cybersecurity Audits \u0026 Compliance",
+                        "schedule_title":  "Cybersecurity Audits \u0026 Compliance",
                         "title_changed":  false,
                         "credits":  3,
                         "remarks":  "CC",
@@ -2019,6 +2019,281 @@
                                     },
                         "section_count":  0,
                         "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS5487",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Machine Learning: Principles and Practice",
+                        "schedule_title":  "Machine Learning: Principles and Practice",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "340",
+                                        "capacity":  "340",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  2,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "CS6493",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Natural Language Processing",
+                        "schedule_title":  "Natural Language Processing",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "40",
+                                        "capacity":  "40",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  2,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC6003",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Bayesian Data Analysis",
+                        "schedule_title":  "Bayesian Data Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "200",
+                                        "capacity":  "200",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC6007",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Dynamic Programming and Reinforcement Learning",
+                        "schedule_title":  "Dynamic Programming and Reinforcement Learning",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "190",
+                                        "capacity":  "190",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC6015",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Stochastic Optimization for Machine Learning",
+                        "schedule_title":  "Stochastic Optimization for Machine Learning",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "200",
+                                        "capacity":  "200",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC6019",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Embodied AI and Applications",
+                        "schedule_title":  "Embodied AI and Applications",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "100",
+                                        "capacity":  "100",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC6032",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "project"
+                                                        },
+                        "requirement_type":  "project",
+                        "programme_title":  "Internship Project (S)",
+                        "schedule_title":  "Internship Project (S)",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "DSC6017",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC8007",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Deep Learning",
+                        "schedule_title":  "Deep Learning",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "230",
+                                        "capacity":  "230",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC8009",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data Mining and Knowledge Discovery",
+                        "schedule_title":  "Data Mining and Knowledge Discovery",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "160",
+                                        "capacity":  "160",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC8013",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Statistical Methods for Categorical Data Analysis",
+                        "schedule_title":  "Statistical Methods for Categorical Data Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "165",
+                                        "capacity":  "165",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "DSC8014",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Online Learning and Optimization",
+                        "schedule_title":  "Online Learning and Optimization",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "SD",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "140",
+                                        "capacity":  "140",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  1,
+                        "semester_tag":  "SemA"
                     }
                 ]
 }
