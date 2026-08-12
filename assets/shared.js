@@ -592,7 +592,14 @@
       "reviews.loading": "正在加载课程…",
       "reviews.cloudDisabled": "云端共享未启用：管理员需在 assets/cloud-config.js 中配置 Supabase 数据库地址。",
       "reviews.localExp": "学生经验摘要",
-      "reviews.localHint": "以下内容整理自公开社交平台的学生分享，仅供参考，不构成课程建议。"
+      "reviews.localHint": "以下内容整理自公开社交平台的学生分享，仅供参考，不构成课程建议。",
+      "reviews.recommendIndex": "综合推荐指数",
+      "reviews.studentsReviews": "同学测评",
+      "reviews.submitTab": "提交评价",
+      "reviews.back": "返回课程列表",
+      "reviews.heroStats": "次评分 · 条评论",
+      "reviews.localScore": "本地口碑分",
+      "reviews.writeReview": "写评价"
     },
     en: {
       "nav.courses": "Courses",
@@ -667,7 +674,14 @@
       "reviews.loading": "Loading courses…",
       "reviews.cloudDisabled": "Cloud reviews disabled: configure Supabase in assets/cloud-config.js.",
       "reviews.localExp": "Student Experience Summary",
-      "reviews.localHint": "Compiled from public social media posts. For reference only."
+      "reviews.localHint": "Compiled from public social media posts. For reference only.",
+      "reviews.recommendIndex": "Overall Rating",
+      "reviews.studentsReviews": "Student Reviews",
+      "reviews.submitTab": "Submit Review",
+      "reviews.back": "Back to course list",
+      "reviews.heroStats": "ratings · reviews",
+      "reviews.localScore": "Community score",
+      "reviews.writeReview": "Write a review"
     }
   };
 

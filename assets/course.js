@@ -3,6 +3,9 @@
 
   const detail = document.getElementById("course-detail");
   const code = new URLSearchParams(window.location.search).get("code")?.toUpperCase();
+  const fromReviews = new URLSearchParams(window.location.search).get("from") === "reviews";
+  const backHref = fromReviews ? "reviews.html" : "index.html";
+  const backLabel = fromReviews ? "← 返回课程评价" : "← 返回课程表";
 
   function fact(label, value) {
     return `<div class="fact"><span>${MSDS.escapeHtml(label)}</span><strong>${MSDS.escapeHtml(value || "无")}</strong></div>`;
@@ -62,7 +65,7 @@
 
     document.title = `${course.code} ${course.programme_title} · CityU 课程综合系统`;
     detail.innerHTML = `
-      <a class="back-link" href="index.html">← 返回课程表</a>
+      <a class="back-link" href="${backHref}">${backLabel}</a>
       <section class="detail-hero">
         <div>
           <div class="detail-code-row">
@@ -474,6 +477,16 @@
     const course = data.courses.find((item) => item.code === code);
     if (!course) throw new Error("没有找到这门课程");
     renderCourse(data, course, courseDocuments[course.code]);
+    // 支持从评价中心跳转：#course-reviews 锚点定位到评价区并高亮提示
+    if (window.location.hash === "#course-reviews") {
+      requestAnimationFrame(() => {
+        const target = document.getElementById("course-reviews");
+        if (!target) return;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.classList.add("is-highlight");
+        setTimeout(() => target.classList.remove("is-highlight"), 1600);
+      });
+    }
   }).catch((error) => {
     detail.innerHTML = `<div class="error-state">${MSDS.escapeHtml(error.message)}<br><a class="text-link" href="index.html">返回课程表</a></div>`;
   });
