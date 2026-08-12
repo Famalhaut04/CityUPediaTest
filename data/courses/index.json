@@ -769,6 +769,34 @@
                         "semester_tag":  "SemA"
                     },
                     {
+                        "code":  "CS5182",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Computer Graphics",
+                        "schedule_title":  "Computer Graphics",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS2303 Data Structures for Media or CS3334 Data Structures or EE3206 Java Programming and Applications",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS5187",
                         "programmes":  [
                                            "MSAI",
@@ -1128,6 +1156,34 @@
                                                           "MSCS":  "group1"
                                                       },
                         "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "CS5493",
+                        "programmes":  [
+                                           "MSAI"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAI":  "elective"
+                                                        },
+                        "programme_elective_groups":  {
+                                                               "MSAI":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Topics in Autonomous Driving",
+                        "schedule_title":  "Topics in Autonomous Driving",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
                     },
                     {
                         "code":  "CS5494",
@@ -2043,6 +2099,68 @@
                                         "medium":  "English"
                                     },
                         "section_count":  2,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6491",
+                        "programmes":  [
+                                           "MSCS",
+                                           "MSAI"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective",
+                                                            "MSAI":  "elective"
+                                                        },
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2",
+                                                               "MSAI":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Topics in Optimization and its Applications in Computer Science",
+                        "schedule_title":  "Topics in Optimization and its Applications in Computer Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS4335 Design and Analysis of Algorithms and (MA2170 Linear Algebra and Multi-variable Calculus or MA2176 Basic Calculus and Linear Algebra)",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6487",
+                        "programmes":  [
+                                           "MSCS",
+                                           "MSAI"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective",
+                                                            "MSAI":  "elective"
+                                                        },
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1",
+                                                               "MSAI":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Topics in Machine Learning",
+                        "schedule_title":  "Topics in Machine Learning",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS5487 Machine Learning: Principles and Practice or CS5489 Machine Learning: Algorithms and Applications or CS5491 Artificial Intelligence",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
                         "semester_tag":  "SemB"
                     },
                     {

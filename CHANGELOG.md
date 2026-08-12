@@ -10,7 +10,9 @@
 - **课程总数**：由 65 门扩充至 76 门，含班次（sections）与评价（reviews）数据文件，可在课程详情页正常浏览班次与选课信息
 - **学期修正**：以上 11 门课程均为 **SemB（第二学期）** 课程，`semester_tag` 已统一标记为 SemB
 - **课程大纲 PDF**：导入桌面「课程文件」文件夹中的 17 份课程大纲 PDF（CS5182、CS5281、CS5288、CS5291、CS5293、CS5296、CS5297、CS5483、CS5487、CS5491、CS5493、CS6283、CS6284、CS6290、CS6487、CS6491、CS6493）至 `docs/`，并在课程详情页显示「课程详情 PDF」下载入口
-- **来源**：数据来自 CityU AIMS 课表快照（由选课板整理），评价数据暂缺的学生评价来源保持"暂无评价"状态，不编造内容
+- **PDF 提取补全课程**：从课程大纲 PDF 提取信息补建 4 门课程条目——CS5182（Computer Graphics 计算机图形学，MSCS 选修 Group II）、CS5493（Topics in Autonomous Driving 自动驾驶专题，MSAI 选修 Group I/AD 方向核心）、CS6487（Topics in Machine Learning 机器学习专题，MSCS Group I + MSAI Group II）、CS6491（Topics in Optimization 优化专题，MSCS Group II + MSAI Group II），均含学分、先修要求等大纲信息
+- **课程总数**：扩充至 80 门，专业归属按 CityU 计算机系官网课程体系规整（MSCS/MSAI 选修分组）
+- **来源**：数据来自 CityU AIMS 课表快照（由选课板整理）与课程大纲 PDF，评价数据暂缺的学生评价来源保持"暂无评价"状态，不编造内容
 
 ### 登录体系（新增）
 
