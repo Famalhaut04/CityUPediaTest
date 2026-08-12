@@ -14,6 +14,11 @@ CityU 课程综合系统是一个为**香港城市大学（CityU）授课型硕�
 
 **https://Famalhaut04.github.io/Cityu-course-selection/**
 
+## 运维文档
+
+- [云端数据库接入说明（CLOUD_DATABASE.md）](CLOUD_DATABASE.md)：Supabase 配置、RLS 策略、SMTP 邮件
+- [管理员手动重置密码指南（ADMIN_PASSWORD_RESET.md）](ADMIN_PASSWORD_RESET.md)：学生忘记密码时如何在 Supabase 后台重置
+
 ## 测试版 4.2 更新内容
 
 > 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版（参考 [cupedia.org/courses](https://cupedia.org/courses)）并优化使用逻辑。
