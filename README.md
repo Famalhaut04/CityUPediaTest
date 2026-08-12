@@ -1,7 +1,7 @@
-# CityU 课程综合系统 · 测试版 4.2
+# CityU 课程综合系统 · 测试版 4.3
 
-> **当前版本：测试版 4.2（Test v4.2）**
-> 本次更新为网页版功能增强，**不包含微信小程序包体**。小程序版本将在后续独立发布。
+> **当前版本：测试版 4.3（Test v4.3）**
+> 本次更新扩充课程数据并导入课程大纲 PDF，**不包含微信小程序包体**。小程序版本将在后续独立发布。
 > 完整的版本变更记录请查看 [更新日志（CHANGELOG.md）](CHANGELOG.md)。
 
 CityU 课程综合系统是一个为**香港城市大学（CityU）授课型硕士生**打造的一站式课程综合平台，涵盖排课规划与课程评价两大核心功能。整合课程时间表查询、班次选择与学生评价汇总，帮你做出更明智的决定。
@@ -18,6 +18,18 @@ CityU 课程综合系统是一个为**香港城市大学（CityU）授课型硕�
 
 - [云端数据库接入说明（CLOUD_DATABASE.md）](CLOUD_DATABASE.md)：Supabase 配置、RLS 策略、SMTP 邮件
 - [管理员手动重置密码指南（ADMIN_PASSWORD_RESET.md）](ADMIN_PASSWORD_RESET.md)：学生忘记密码时如何在 Supabase 后台重置
+
+## 测试版 4.3 更新内容
+
+> 导入数据科学（DS）选修课程数据与课程大纲 PDF，课程总数扩充至 80 门；修正 SemB 学期标记并按培养方案规整专业归属。
+
+### 课程数据扩充（DS 选修课导入）
+
+- **新增 11 门课程**：从 [fluffywood.github.io/cityuds](https://fluffywood.github.io/cityuds)（MSDS 选课板）导入缺失的 DS 选修课程——CS5487、CS6493、DSC6003、DSC6007、DSC6015、DSC6019、DSC6032、DSC8007、DSC8009、DSC8013、DSC8014，含班次与评价数据
+- **学期修正**：以上 11 门课程均为 SemB，`semester_tag` 已统一标记
+- **课程大纲 PDF**：导入 17 份课程大纲 PDF 至 `docs/`，课程详情页显示「课程详情 PDF」下载入口
+- **PDF 提取补全课程**：从课程大纲 PDF 提取信息补建 4 门课程条目——CS5182（Computer Graphics）、CS5493（Topics in Autonomous Driving）、CS6487（Topics in Machine Learning）、CS6491（Topics in Optimization），专业归属按 CityU 计算机系官网课程体系规整（MSCS/MSAI 选修分组）
+- **课程总数**：由 65 门扩充至 80 门
 
 ## 测试版 4.2 更新内容
 
