@@ -17,13 +17,14 @@
   let courses = [];
   let programmes = [];
   let activeProgramme = MSDS.getStoredProgramme() || MSDS.DEFAULT_PROGRAMME;
+  let activeSemester = MSDS.getStoredSemester ? MSDS.getStoredSemester() : "SemA";
   let activeCollege = "";
   let activeDepartment = "";
   let selections = {};
   let searchTerm = "";
   let activeFilter = "all";
   let activeDay = "all";
-  let activeSemester = "all";
+  let activeSemesterFilter = "all";
 
   const listElement = document.getElementById("course-list");
   const selectedListElement = document.getElementById("selected-list");
@@ -46,7 +47,7 @@
   }
 
   function reloadSelections() {
-    selections = MSDS.getStoredSelections(activeProgramme);
+    selections = MSDS.getStoredSelections(activeProgramme, activeSemester);
   }
 
   function filterCourses() {
@@ -61,7 +62,7 @@
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
       const matchesDay = activeDay === "all" || primaryDays.includes(activeDay);
-      const matchesSemester = activeSemester === "all" || course.semester_tag === activeSemester;
+      const matchesSemester = activeSemesterFilter === "all" || course.semester_tag === activeSemesterFilter;
       return matchesSearch && matchesFilter && matchesDay && matchesSemester;
     });
   }
@@ -230,13 +231,13 @@
     if (!terms.length) {
       container.hidden = true;
       row.innerHTML = "";
-      activeSemester = "all";
+      activeSemesterFilter = "all";
       return;
     }
     container.hidden = false;
-    if (!["all", ...terms].includes(activeSemester)) activeSemester = "all";
-    row.innerHTML = [`<button class="term-filter-pill ${activeSemester === "all" ? "active" : ""}" type="button" data-term-filter="all">全部</button>`]
-      .concat(terms.map((term) => `<button class="term-filter-pill ${term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : ""} ${activeSemester === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
+    if (!["all", ...terms].includes(activeSemesterFilter)) activeSemesterFilter = "all";
+    row.innerHTML = [`<button class="term-filter-pill ${activeSemesterFilter === "all" ? "active" : ""}" type="button" data-term-filter="all">全部</button>`]
+      .concat(terms.map((term) => `<button class="term-filter-pill ${term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : ""} ${activeSemesterFilter === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
       .join("");
   }
 
@@ -510,7 +511,7 @@
   }
 
   function renderAll() {
-    MSDS.saveSelections(selections, activeProgramme);
+    MSDS.saveSelections(selections, activeProgramme, activeSemester);
     renderCourseList();
     renderSelectedList();
     renderSelectedChips();
@@ -524,7 +525,30 @@
     const hasStored = Object.keys(selections).length > 0;
     if (hasStored) return;
     selections = {};
-    MSDS.saveSelections(selections, activeProgramme);
+    MSDS.saveSelections(selections, activeProgramme, activeSemester);
+  }
+
+  // 切换课表学期（SemA / SemB），各自独立保存课表
+  function switchSemester(semester) {
+    if (semester === activeSemester) return;
+    activeSemester = semester;
+    if (typeof MSDS.saveSemester === "function") MSDS.saveSemester(semester);
+    reloadSelections();
+    applyDefaultSelections();
+    renderProgrammeStats();
+    renderAll();
+    updateSemesterSwitchUI();
+    MSDS.showToast(`已切换到 ${semester} 课表`);
+  }
+
+  function updateSemesterSwitchUI() {
+    document.querySelectorAll("[data-semester-switch]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.semesterSwitch === activeSemester);
+    });
+    const label = document.getElementById("semester-summary-name");
+    if (label) label.textContent = activeSemester;
+    const summary = document.getElementById("programme-summary-name");
+    if (summary) summary.textContent = `${currentProgramme().name_zh} · ${activeSemester}`;
   }
 
   function selectionForPrimary(course, primaryCrn, tutorialCrn) {
@@ -591,7 +615,182 @@
     MSDS.showToast(`已切换至 ${currentProgramme().name_zh}`);
   }
 
-  // ==================== 课表结果导出 / 导入（纯文本） ====================
+  // ==================== 课表导出为图片型 PDF ====================
+  // 用 Canvas 按周课表网格绘制当前学期课表，导出单页图片型 PDF（无第三方依赖）
+  function exportTimetableAsPdf() {
+    const events = selectedEvents();
+    if (!events.length) {
+      MSDS.showToast("当前学期还没有加入课程，无法导出 PDF");
+      return;
+    }
+
+    const canvas = document.createElement("canvas");
+    const scale = 2;
+    const colWidth = 200;
+    const hourHeight = 92;
+    const headerHeight = 110;
+    const titleHeight = 78;
+    const timeColWidth = 72;
+    const canvasHeight = Math.ceil((headerHeight + titleHeight + (END_HOUR - START_HOUR) * hourHeight) / 10) * 10;
+    const canvasWidth = Math.ceil((timeColWidth + DAYS.length * colWidth) / 10) * 10;
+    canvas.width = canvasWidth * scale;
+    canvas.height = canvasHeight * scale;
+    const ctx = canvas.getContext("2d");
+    ctx.scale(scale, scale);
+
+    // 背景
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // 标题区
+    ctx.fillStyle = "#0f172a";
+    ctx.font = "700 26px 'Inter','Noto Sans SC',sans-serif";
+    ctx.textBaseline = "middle";
+    const progName = currentProgramme().name_zh || currentProgramme().name_en;
+    ctx.fillText(`CityU 课表 · ${progName}（${activeSemester}）`, 24, 34);
+    ctx.font = "400 15px 'Inter','Noto Sans SC',sans-serif";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText(`Programme: ${activeProgramme} · Semester: ${activeSemester} · ${new Date().toLocaleDateString("zh-CN")}`, 24, 62);
+
+    const gridTop = titleHeight;
+    // 表头
+    ctx.fillStyle = "#f1f5f9";
+    ctx.fillRect(0, gridTop, canvasWidth, headerHeight);
+    ctx.fillStyle = "#0f172a";
+    ctx.font = "700 17px 'Inter','Noto Sans SC',sans-serif";
+    ctx.fillText("GMT+8", timeColWidth / 2, gridTop + headerHeight / 2);
+    DAYS.forEach((day, index) => {
+      const x = timeColWidth + index * colWidth;
+      ctx.fillStyle = "#f8fafc";
+      ctx.fillRect(x, gridTop, colWidth, headerHeight);
+      ctx.fillStyle = "#0f172a";
+      ctx.textAlign = "center";
+      ctx.font = "700 18px 'Inter','Noto Sans SC',sans-serif";
+      ctx.fillText(MSDS.DAY_NAMES[day], x + colWidth / 2, gridTop + 32);
+      ctx.font = "500 13px 'Inter',sans-serif";
+      ctx.fillStyle = "#94a3b8";
+      ctx.fillText(day, x + colWidth / 2, gridTop + 58);
+      ctx.textAlign = "left";
+    });
+
+    // 时间轴与网格线
+    for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
+      const y = gridTop + headerHeight + (hour - START_HOUR) * hourHeight;
+      ctx.strokeStyle = "#e2e8f0";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvasWidth, y);
+      ctx.stroke();
+      ctx.fillStyle = "#475569";
+      ctx.font = "500 12px 'Inter',sans-serif";
+      ctx.fillText(`${String(hour).padStart(2, "0")}:00`, 8, y + 16);
+    }
+    DAYS.forEach((day, index) => {
+      const x = timeColWidth + index * colWidth;
+      ctx.strokeStyle = "#e2e8f0";
+      ctx.beginPath();
+      ctx.moveTo(x, gridTop + headerHeight);
+      ctx.lineTo(x, canvasHeight);
+      ctx.stroke();
+    });
+
+    // 课程块
+    events.forEach((event) => {
+      const dayIndex = DAYS.indexOf(event.section.day);
+      if (dayIndex < 0) return;
+      const x = timeColWidth + dayIndex * colWidth + event.lane * (colWidth / event.laneCount);
+      const y = gridTop + headerHeight + ((event.start - START_HOUR * 60) / 60) * hourHeight;
+      const height = Math.max(26, ((event.end - event.start) / 60) * hourHeight);
+      const width = colWidth / event.laneCount;
+      ctx.fillStyle = event.color[0];
+      ctx.fillRect(x + 2, y + 2, width - 4, height - 4);
+      ctx.fillStyle = event.color[2];
+      ctx.font = "700 13px 'Inter',sans-serif";
+      ctx.fillText(`${event.course.code} · ${event.section.section}`, x + 8, y + 16);
+      ctx.font = "500 11px 'Inter',sans-serif";
+      ctx.fillText(event.section.time, x + 8, y + 33);
+      const room = [event.section.building, event.section.room].filter(Boolean).join(" ");
+      if (room) ctx.fillText(room, x + 8, y + 50);
+    });
+
+    // 转 JPEG → 手写最小 PDF（单页图片型）
+    const jpegDataUrl = canvas.toDataURL("image/jpeg", 0.92);
+    const jpegBase64 = jpegDataUrl.split(",")[1];
+    const pdfBytes = jpegImageToPdf(jpegBase64, canvasWidth, canvasHeight);
+
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `cityu-timetable-${activeProgramme}-${activeSemester}-${new Date().toISOString().slice(0, 10)}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    MSDS.showToast("已导出课表 PDF（图片型）");
+  }
+
+  // 将 JPEG 图片（base64）打包为单页 PDF（PDF 1.4 最小结构，DCTDecode 内嵌图片）
+  function jpegImageToPdf(jpegBase64, widthPx, heightPx) {
+    const binary = atob(jpegBase64);
+    const imgData = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) imgData[i] = binary.charCodeAt(i);
+
+    const wPt = 595; // A4 宽（pt）
+    const hPt = Math.round(wPt * (heightPx / widthPx));
+
+    // 兼容无 TextEncoder 的环境：用 charCodeAt 逐字节编码
+    const enc = (s) => {
+      const bytes = new Uint8Array(s.length);
+      for (let i = 0; i < s.length; i++) bytes[i] = s.charCodeAt(i) & 0xff;
+      return bytes;
+    };
+    const content = `q ${wPt} 0 0 ${hPt} 0 0 cm /Im0 Do Q`;
+
+    // 对象：1 Catalog, 2 Pages, 3 Page, 4 Contents, 5 Image
+    const objects = [];
+    objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+    objects[2] = "<< /Type /Pages /Kids [3 0 R] /Count 1 >>";
+    objects[3] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${wPt} ${hPt}] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>`;
+    objects[4] = `<< /Length ${content.length} >>\nstream\n${content}\nendstream`;
+    objects[5] = `<< /Type /XObject /Subtype /Image /Width ${widthPx} /Height ${heightPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgData.length} >>\nstream\n`;
+
+    let pdf = new Uint8Array(1024 + imgData.length + 2048);
+    let pos = 0;
+    const offsets = [];
+
+    function write(bytes) {
+      if (pos + bytes.length > pdf.length) {
+        const bigger = new Uint8Array(Math.max(pdf.length * 2, pos + bytes.length + 4096));
+        bigger.set(pdf);
+        pdf = bigger;
+      }
+      pdf.set(bytes, pos);
+      pos += bytes.length;
+    }
+
+    write(enc("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n"));
+    for (let i = 1; i <= 5; i++) {
+      offsets[i] = pos;
+      write(enc(`${i} 0 obj\n`));
+      write(enc(objects[i]));
+      write(enc("\n"));
+      if (i === 5) {
+        write(imgData);
+        write(enc("\nendstream"));
+      }
+      write(enc("\nendobj\n"));
+    }
+    const xrefPos = pos;
+    write(enc("xref\n0 6\n0000000000 65535 f \n"));
+    for (let i = 1; i <= 5; i++) {
+      write(enc(`${String(offsets[i]).padStart(10, "0")} 00000 n \n`));
+    }
+    write(enc(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`));
+    return pdf.slice(0, pos);
+  }
+
   function selectionsToText() {
     const lines = [
       "# CityU 课表结果导出",
@@ -621,7 +820,7 @@
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `cityu-selection-${activeProgramme}-${new Date().toISOString().slice(0, 10)}.txt`;
+    link.download = `cityu-selection-${activeProgramme}-${activeSemester}-${new Date().toISOString().slice(0, 10)}.txt`;
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -720,7 +919,7 @@
     document.getElementById("term-filter-row")?.addEventListener("click", (event) => {
       const button = event.target.closest(".term-filter-pill");
       if (!button) return;
-      activeSemester = button.dataset.termFilter;
+      activeSemesterFilter = button.dataset.termFilter;
       document.querySelectorAll("#term-filter-row .term-filter-pill").forEach((item) => item.classList.toggle("active", item === button));
       renderCourseList();
     });
@@ -821,7 +1020,12 @@
       MSDS.showToast("课表已清空");
     });
 
+    document.querySelectorAll("[data-semester-switch]").forEach((button) => {
+      button.addEventListener("click", () => switchSemester(button.dataset.semesterSwitch));
+    });
+
     document.getElementById("export-selection").addEventListener("click", exportSelectionsAsText);
+    document.getElementById("export-pdf").addEventListener("click", exportTimetableAsPdf);
 
     const importFileInput = document.getElementById("import-selection-file");
     document.getElementById("import-selection").addEventListener("click", () => {
@@ -851,6 +1055,7 @@
     renderTimeAxis();
     bindEvents();
     applyDefaultSelections();
+    updateSemesterSwitchUI();
     renderAll();
   }).catch((error) => {
     listElement.innerHTML = `<div class="empty-list">${MSDS.escapeHtml(error.message)}<br>请通过本地服务器打开网站。</div>`;

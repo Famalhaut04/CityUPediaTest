@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="assets/styles.css?v=20260812e">
+    <link rel="stylesheet" href="assets/styles.css?v=20260812f">
   </head>
   <body data-page="reviews">
     <aside class="sidebar" id="sidebar">
@@ -92,6 +92,13 @@
             <select id="department-select" class="reviews-select"></select>
           </label>
         </div>
+        <div class="reviews-search">
+          <label class="search-box reviews-search-box" for="reviews-course-search">
+            <span class="sr-only">按课程代码搜索</span>
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input id="reviews-course-search" type="search" placeholder="搜索课程代码，如 CS5487" autocomplete="off">
+          </label>
+        </div>
       </section>
 
       <section class="reviews-course-area" id="reviews-course-area" aria-label="课程列表与评价">
@@ -101,8 +108,8 @@
     </main>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="assets/cloud-config.js?v=20260812e"></script>
-    <script src="assets/shared.js?v=20260812e"></script>
-    <script src="assets/reviews.js?v=20260812e"></script>
+    <script src="assets/cloud-config.js?v=20260812f"></script>
+    <script src="assets/shared.js?v=20260812f"></script>
+    <script src="assets/reviews.js?v=20260812f"></script>
   </body>
 </html>

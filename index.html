@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="assets/styles.css?v=20260812e">
+    <link rel="stylesheet" href="assets/styles.css?v=20260812f">
   </head>
   <body data-page="planner">
     <aside class="sidebar" id="sidebar">
@@ -148,6 +148,10 @@
           <div class="timetable-toolbar">
             <div>
               <p class="eyebrow"><span data-i18n="intro.eyebrow">我的课表</span> · <span id="programme-summary-name">—</span> <a id="programme-info-link" class="programme-info-link" href="#" target="_blank" rel="noopener noreferrer" hidden>项目介绍 ↗</a></p>
+              <div class="semester-switch" role="tablist" aria-label="课表学期切换">
+                <button type="button" data-semester-switch="SemA" role="tab" aria-selected="true"><strong>Sem A</strong><span>第一学期</span></button>
+                <button type="button" data-semester-switch="SemB" role="tab" aria-selected="false"><strong>Sem B</strong><span>第二学期</span></button>
+              </div>
               <h2 class="selection-summary">
                 <span class="selection-summary-part">必修 <strong id="core-count">0</strong>门 <strong id="core-credit-count">0</strong>分</span>
                 <span class="selection-summary-plus" aria-hidden="true">+</span>
@@ -159,6 +163,7 @@
             </div>
             <div class="toolbar-actions">
               <span id="conflict-status" class="conflict-status is-clear" data-i18n="conflict.clear">暂无冲突</span>
+              <button id="export-pdf" class="button button-quiet" type="button" title="将课表导出为图片型 PDF 文件">导出 PDF</button>
               <button id="export-selection" class="button button-quiet" type="button" data-i18n="toolbar.export">导出文本</button>
               <button id="import-selection" class="button button-quiet" type="button" data-i18n="toolbar.import">导入文本</button>
               <input id="import-selection-file" type="file" accept=".txt,text/plain" hidden>
@@ -191,8 +196,8 @@
     </main>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="assets/cloud-config.js?v=20260812e"></script>
-    <script src="assets/shared.js?v=20260812e"></script>
-    <script src="assets/planner.js?v=20260812e"></script>
+    <script src="assets/cloud-config.js?v=20260812f"></script>
+    <script src="assets/shared.js?v=20260812f"></script>
+    <script src="assets/planner.js?v=20260812f"></script>
   </body>
 </html>

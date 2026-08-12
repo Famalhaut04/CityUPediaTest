@@ -21,6 +21,11 @@
   // 当前院系课程（含名称等元信息）
   let currentCourses = [];
 
+  // 全站课程数据（搜索用）
+  let allData = null;
+  let allCourses = [];
+  let searchQuery = "";
+
   // ============ 构建 学院 → 院系 → 课程 层级 ============
   // 依据 programmes 中的 college / department 归类课程
   function buildHierarchy(data) {
@@ -179,6 +184,46 @@
       });
   }
 
+  // ============ 课程代码搜索（全站范围） ============
+  // 输入课程代码（大小写不敏感，支持前缀匹配），在全站课程中查找并展示结果
+  function searchAllCourses(query) {
+    const q = String(query || "").trim().toUpperCase();
+    const container = document.getElementById("reviews-course-list");
+    const empty = document.getElementById("reviews-course-empty");
+    if (!container) return;
+    if (!q) {
+      // 清空搜索：回到当前院系视图
+      const dept = document.getElementById("department-select")?.value;
+      if (dept) {
+        loadDepartment(dept);
+      } else {
+        empty.hidden = false;
+        empty.textContent = t("reviews.empty");
+        container.innerHTML = "";
+      }
+      return;
+    }
+    const matched = allCourses.filter((course) =>
+      String(course.code).toUpperCase().includes(q)
+      || String(course.programme_title || course.title || "").toUpperCase().includes(q)
+    );
+    if (!matched.length) {
+      empty.hidden = false;
+      empty.textContent = `未找到与「${MSDS.escapeHtml(query)}」匹配的课程`;
+      container.innerHTML = "";
+      return;
+    }
+    empty.hidden = true;
+    if (!MSDS.cloudReviewsEnabled()) {
+      renderCourseList(matched, {});
+      return;
+    }
+    container.innerHTML = `<div class="cloud-reviews-loading">${MSDS.escapeHtml(t("reviews.loading"))}</div>`;
+    MSDS.fetchCloudReviewsBatch(matched.map((c) => c.code))
+      .then((grouped) => renderCourseList(matched, grouped))
+      .catch(() => renderCourseList(matched, {}));
+  }
+
   // ============ 初始化 ============
   async function init() {
     // 语言切换由 shared.js 的 initLangToggle 处理（含 applyLang），此处无需重复绑定；
@@ -189,6 +234,8 @@
 
     try {
       const data = await MSDS.loadCourseData();
+      allData = data;
+      allCourses = data.courses || [];
       const hierarchy = buildHierarchy(data);
       stats.courses = (data.courses || []).length;
       refreshStats();
@@ -196,6 +243,15 @@
       fillCollegeSelect(hierarchy);
       const collegeSelect = document.getElementById("college-select");
       const deptSelect = document.getElementById("department-select");
+      const searchInput = document.getElementById("reviews-course-search");
+
+      if (searchInput) {
+        let searchTimer = null;
+        searchInput.addEventListener("input", () => {
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(() => searchAllCourses(searchInput.value), 200);
+        });
+      }
 
       if (deptSelect) {
         deptSelect.addEventListener("change", () => {

@@ -3,6 +3,7 @@
 
   const LEGACY_STORAGE_KEY = "MSDS-planner-selections-v1";
   const STORAGE_KEY = "CITYU-planner-selections-v3";
+  const SEMESTER_KEY = "CITYU-current-semester";
   const REVIEWS_KEY = "CITYU-course-reviews-v1";
   const PROGRAMME_KEY = "CITYU-current-programme";
   const DEFAULT_PROGRAMME = "MSDS";
@@ -139,8 +140,8 @@
       const legacy = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY) || "{}");
       if (!legacy || typeof legacy !== "object" || Array.isArray(legacy)) return;
       const all = getAllSelections();
-      if (!all[DEFAULT_PROGRAMME]) {
-        all[DEFAULT_PROGRAMME] = legacy;
+      if (!all[DEFAULT_PROGRAMME] || typeof all[DEFAULT_PROGRAMME] !== "object" || all[DEFAULT_PROGRAMME].SemA === undefined) {
+        all[DEFAULT_PROGRAMME] = { SemA: legacy, SemB: {} };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
       }
       localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -149,25 +150,67 @@
     }
   }
 
-  function getStoredSelections(programmeCode) {
+  // 课表按 项目 → 学期（SemA/SemB）→ 课程 三层保存；
+  // 旧版数据为 项目 → 课程 两层，读取时自动归入 SemA 并回写迁移
+  function getStoredSemester() {
+    try {
+      const stored = localStorage.getItem(SEMESTER_KEY);
+      return stored === "SemB" ? "SemB" : "SemA";
+    } catch {
+      return "SemA";
+    }
+  }
+
+  function saveSemester(semester) {
+    try {
+      localStorage.setItem(SEMESTER_KEY, semester === "SemB" ? "SemB" : "SemA");
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function getStoredSelections(programmeCode, semester) {
     migrateLegacySelections();
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    const selections = all[code];
+    const term = semester === "SemB" ? "SemB" : "SemA";
+    let stored = all[code];
+    if (!stored || typeof stored !== "object" || Array.isArray(stored)) return {};
+    // 旧版两层结构（项目 → 课程）：整体归入 SemA 并回写
+    if (stored.SemA === undefined && stored.SemB === undefined) {
+      stored = { SemA: stored, SemB: {} };
+      all[code] = stored;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    }
+    const selections = stored[term];
     return selections && typeof selections === "object" && !Array.isArray(selections) ? selections : {};
   }
 
-  function saveSelections(selections, programmeCode) {
+  function saveSelections(selections, programmeCode, semester) {
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    all[code] = selections || {};
+    const term = semester === "SemB" ? "SemB" : "SemA";
+    let stored = all[code];
+    if (!stored || typeof stored !== "object" || Array.isArray(stored)) stored = {};
+    if (stored.SemA === undefined && stored.SemB === undefined) {
+      stored = { SemA: stored, SemB: {} };
+    }
+    stored[term] = selections || {};
+    all[code] = stored;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
   }
 
-  function clearSelections(programmeCode) {
+  function clearSelections(programmeCode, semester) {
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    delete all[code];
+    const term = semester === "SemB" ? "SemB" : "SemA";
+    let stored = all[code];
+    if (!stored || typeof stored !== "object" || Array.isArray(stored)) return;
+    if (stored.SemA === undefined && stored.SemB === undefined) {
+      stored = { SemA: stored, SemB: {} };
+    }
+    stored[term] = {};
+    all[code] = stored;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
   }
 
@@ -1016,6 +1059,8 @@
     getStoredProgramme,
     getStoredReviews,
     getStoredSelections,
+    getStoredSemester,
+    saveSemester,
     loadCourseData,
     makeDefaultSelection,
     pickTutorial,

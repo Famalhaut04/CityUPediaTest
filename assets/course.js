@@ -40,7 +40,7 @@
     const displayProgramme = belongsToCurrent ? currentProgramme : (courseProgrammes[0] || MSDS.DEFAULT_PROGRAMME);
     const displayRequirementType = MSDS.getRequirementType(course, displayProgramme);
     const displayGroupInfo = MSDS.getElectiveGroupInfo(MSDS.getProgramme(data, displayProgramme), MSDS.getElectiveGroup(course, displayProgramme));
-    const selections = MSDS.getStoredSelections(currentProgramme);
+    const selections = MSDS.getStoredSelections(currentProgramme, course.semester_tag);
     const isAdded = Boolean(selections[course.code]);
     const myReview = MSDS.getCourseReview(course.code);
     let added = isAdded;
@@ -210,11 +210,11 @@
         MSDS.showToast("该课程暂无归属项目");
         return;
       }
-      const current = MSDS.getStoredSelections(programme);
+      const current = MSDS.getStoredSelections(programme, course.semester_tag);
       if (current[course.code]) {
         // 已加入：再次点击取消选择
         delete current[course.code];
-        MSDS.saveSelections(current, programme);
+        MSDS.saveSelections(current, programme, course.semester_tag);
         added = false;
         const button = document.getElementById("detail-add");
         button.textContent = "加入课表";
@@ -226,7 +226,7 @@
       if (chosenTutorialCrn) {
         current[course.code].tutorialCrn = chosenTutorialCrn;
       }
-      MSDS.saveSelections(current, programme);
+      MSDS.saveSelections(current, programme, course.semester_tag);
       if (!belongsToCurrent) {
         MSDS.saveProgramme(programme);
       }
@@ -362,10 +362,10 @@
         chosenTutorialCrn = event.target.value;
         if (!added) return;
         const programme = belongsToCurrent ? currentProgramme : courseProgrammes[0];
-        const current = MSDS.getStoredSelections(programme);
+        const current = MSDS.getStoredSelections(programme, course.semester_tag);
         if (!current[course.code]) return;
         current[course.code].tutorialCrn = chosenTutorialCrn;
-        MSDS.saveSelections(current, programme);
+        MSDS.saveSelections(current, programme, course.semester_tag);
         const section = MSDS.findSection(course, chosenTutorialCrn);
         MSDS.showToast(section ? `已切换到 ${section.section}` : "已切换 Tutorial");
       });

@@ -410,6 +410,32 @@
                         "semester_tag":  "SemA"
                     },
                     {
+                        "code":  "DSC6009",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Machine Learning at Scale",
+                        "schedule_title":  "Machine Learning at Scale",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
                         "code":  "DSC6011",
                         "programmes":  [
                                            "MSDS"
@@ -769,6 +795,188 @@
                         "semester_tag":  "SemA"
                     },
                     {
+                        "code":  "BIOS6900",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Time Series Analysis",
+                        "schedule_title":  "Time Series Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "BIOS6901",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Spatial Data Analysis",
+                        "schedule_title":  "Spatial Data Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "BIOS6903",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "core"
+                                                        },
+
+                        "requirement_type":  "core",
+                        "programme_title":  "Communication and Project Study",
+                        "schedule_title":  "Communication and Project Study",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "BIOS6904",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Survival Analysis",
+                        "schedule_title":  "Survival Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "BIOS6905",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Clinical Trials",
+                        "schedule_title":  "Clinical Trials",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "BIOS8005",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Selected Topics in Biostatistics",
+                        "schedule_title":  "Selected Topics in Biostatistics",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "BIOS8006",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Longitudinal Data Analysis",
+                        "schedule_title":  "Longitudinal Data Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS5182",
                         "programmes":  [
                                            "MSCS"
@@ -786,6 +994,35 @@
                         "credits":  3,
                         "remarks":  "CC",
                         "prerequisites":  "CS2303 Data Structures for Media or CS3334 Data Structures or EE3206 Java Programming and Applications",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS5185",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Multimedia Technologies and Applications",
+                        "schedule_title":  "Multimedia Technologies and Applications",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
                         "exclusive_course":  "Nil",
                         "summary":  {
                                         "web":  "N",
@@ -828,6 +1065,35 @@
                                                       }
                     },
                     {
+                        "code":  "CS5188",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Virtual Reality Technologies and Applications",
+                        "schedule_title":  "Virtual Reality Technologies and Applications",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS2303 Data Structures for Media or CS3334 Data Structures or EE3206 Java Programming and Applications",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS5222",
                         "programmes":  [
                                            "MSCY",
@@ -856,6 +1122,64 @@
                                                           "MSCY":  "group2"
                                                       },
                         "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "CS5282",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Practical Optimization Algorithms and Techniques",
+                        "schedule_title":  "Practical Optimization Algorithms and Techniques",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS2310 Computer Programming and CS4335 Design and Analysis of Algorithms",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS5286",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Algorithms and Techniques for Web Searching",
+                        "schedule_title":  "Algorithms and Techniques for Web Searching",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
                     },
                     {
                         "code":  "CS5285",
@@ -1013,6 +1337,35 @@
                         "semester_tag":  "SemA"
                     },
                     {
+                        "code":  "CS5348",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Software Quality Engineering",
+                        "schedule_title":  "Software Quality Engineering",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS5351 Software Engineering",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS5351",
                         "programmes":  [
                                            "MSCY",
@@ -1041,6 +1394,35 @@
                                                           "MSCY":  "group2"
                                                       },
                         "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "CS5367",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Computer Games Design",
+                        "schedule_title":  "Computer Games Design",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
                     },
                     {
                         "code":  "CS5481",
@@ -1324,6 +1706,32 @@
                                     },
                         "section_count":  1,
                         "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "BIOS5802",
+                        "programmes":  [
+                                           "MSBIOS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSBIOS":  "core"
+                                                        },
+
+                        "requirement_type":  "core",
+                        "programme_title":  "Advanced Methods in Biostatistics",
+                        "schedule_title":  "Advanced Methods in Biostatistics",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
                     },
                     {
                         "code":  "BIOS6902",
@@ -1688,6 +2096,32 @@
                         "semester_tag":  "SemB"
                     },
                     {
+                        "code":  "EC6001",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "eCommerce Project",
+                        "schedule_title":  "eCommerce Project",
+                        "title_changed":  false,
+                        "credits":  6,
+                        "remarks":  "CC",
+                        "prerequisites":  "完成至少 15 个 MSEC 学分",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "IS5314",
                         "programmes":  [
                                            "MSEC"
@@ -1848,6 +2282,67 @@
                         "semester_tag":  "SemB"
                     },
                     {
+                        "code":  "CS6175",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Virtual Reality and Game-Engine Technologies",
+                        "schedule_title":  "Virtual Reality and Game-Engine Technologies",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6187",
+                        "programmes":  [
+                                           "MSCS",
+                                           "MSAI"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective",
+                                                            "MSAI":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1",
+                                                               "MSAI":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Vision and Language",
+                        "schedule_title":  "Vision and Language",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "CS5187 Vision and Image or CS5286 Algorithms and Techniques for Web Searching or CS5487 Machine Learning: Principles and Practice",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS6290",
                         "programmes":  [
                                            "MSCY"
@@ -1934,6 +2429,96 @@
                         "semester_tag":  "SemB"
                     },
                     {
+                        "code":  "CS6534",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Guided Study",
+                        "schedule_title":  "Guided Study",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6535",
+                        "programmes":  [
+                                           "MSCS",
+                                           "MSAI"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective",
+                                                            "MSAI":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1",
+                                                               "MSAI":  "group2"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Guided Study in Artificial Intelligence",
+                        "schedule_title":  "Guided Study in Artificial Intelligence",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6536",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Guided Study in Data Science",
+                        "schedule_title":  "Guided Study in Data Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "CS6537",
                         "programmes":  [
                                            "MSCY"
@@ -1981,6 +2566,64 @@
                         "remarks":  "CC",
                         "prerequisites":  "暂未采集，请以官方课程大纲为准",
                         "exclusive_course":  "CS6531",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6520",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Project",
+                        "schedule_title":  "Project",
+                        "title_changed":  false,
+                        "credits":  6,
+                        "remarks":  "CC",
+                        "prerequisites":  "完成至少 12 学分（含两门必修课）",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "CS6521",
+                        "programmes":  [
+                                           "MSCS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSCS":  "elective"
+                                                        },
+
+                        "programme_elective_groups":  {
+                                                               "MSCS":  "group1"
+                                                           },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Research/Internship Project",
+                        "schedule_title":  "Research/Internship Project",
+                        "title_changed":  false,
+                        "credits":  6,
+                        "remarks":  "CC",
+                        "prerequisites":  "MSEC 至少 24 学分或 MSCS 至少 21 学分（含全部必修课）",
+                        "exclusive_course":  "Nil",
                         "summary":  {
                                         "web":  "N",
                                         "available":  "0",
@@ -2239,6 +2882,32 @@
                         "semester_tag":  "SemB"
                     },
                     {
+                        "code":  "DSC6014",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Networked Life and Data Science",
+                        "schedule_title":  "Networked Life and Data Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "DSC6015",
                         "programmes":  [
                                            "MSDS"
@@ -2339,6 +3008,32 @@
                         "semester_tag":  "SemB"
                     },
                     {
+                        "code":  "DSC8008",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data-driven Operations Research",
+                        "schedule_title":  "Data-driven Operations Research",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
                         "code":  "DSC8009",
                         "programmes":  [
                                            "MSDS"
@@ -2361,6 +3056,32 @@
                                         "medium":  "English"
                                     },
                         "section_count":  1,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "DSC8011",
+                        "programmes":  [
+                                           "MSDS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSDS":  "elective"
+                                                        },
+
+                        "requirement_type":  "elective",
+                        "programme_title":  "Social Foundations of Data Science",
+                        "schedule_title":  "Social Foundations of Data Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "CC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
                         "semester_tag":  "SemB"
                     },
                     {
