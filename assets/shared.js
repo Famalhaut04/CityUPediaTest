@@ -51,6 +51,7 @@
         Promise.all(Object.keys(sources).map((sourceId) =>
           getJson(`data/source-reviews/${encodeURIComponent(sourceId)}.json`)
             .then((sourceReview) => [sourceId, sourceReview])
+            .catch(() => [sourceId, { source_id: sourceId, course_reviews: {} }])
         ))
       ]).then(([courses, sourceReviewEntries]) => ({
         ...index,
@@ -753,9 +754,13 @@
 
   const I18N = {
     zh: {
-      "nav.courses": "课程表",
+      "nav.courses": "排课系统",
       "nav.cityu": "城大官网",
       "nav.reviews": "课程评价",
+      "nav.lang": "中英文切换",
+      "nav.account": "登录 / 注册",
+      "nav.group.main": "主要功能",
+      "nav.group.more": "更多",
       "intro.eyebrow": "我的课表",
       "intro.title": "自助排课台",
       "intro.desc": "先选择学院，再选择院系与硕士项目，即可按对应培养方案浏览课程、比较班次并规划每周课表；左侧悬停可预览课程评价与时段。",
@@ -856,11 +861,15 @@
       "reviews.writeReview": "写评价"
     },
     en: {
-      "nav.courses": "Courses",
+      "nav.courses": "Planner",
       "nav.cityu": "CityU",
       "nav.reviews": "Course Reviews",
+      "nav.lang": "Language",
+      "nav.account": "Sign In / Register",
+      "nav.group.main": "Main",
+      "nav.group.more": "More",
       "intro.eyebrow": "My Timetable",
-      "intro.title": "Course Hub",
+      "intro.title": "Course Planner",
       "intro.desc": "Pick a college, then a department and a master's programme to browse courses, compare sections, and plan your weekly schedule. Hover on the left panel to preview course reviews and time slots.",
       "stat.graduation": "Graduation Credits",
       "stat.requirement": "Core + Elective",

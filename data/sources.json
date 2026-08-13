@@ -1,39 +1,39 @@
 {
   "ec_summary": {
-    "title": "CityU EC Semester A 安全下车",
+    "title": "EC Semester A 安全下车",
     "url": "http://xhslink.cn/o/4QCGDGCwma0",
     "platform": "小红书",
-    "note": "涉及 CS5285 的课堂投入与期中体验。"
+    "note": "涉及 CS5187、CS5285、EC5001、IS5414 与 IS6335。"
   },
   "ec_review": {
     "title": "CityU EC Semester A 课程简评",
     "url": "http://xhslink.cn/o/4Uxnptv3TGX",
     "platform": "小红书",
-    "note": "记录 CS5285 的难度、考核构成与教师反馈。"
+    "note": "记录考勤、作业、考试形式和主观推荐等级。"
   },
   "ec_sharp": {
     "title": "CityU EC Semester A 选课锐评（上）",
     "url": "http://xhslink.cn/o/4kPz9LzXM7b",
     "platform": "小红书",
-    "note": "详细记录 CS5285 的作业、期中、期末占比与复习建议。"
+    "note": "详细记录 CS5222、CS5285 与 CS5481 的成绩构成。"
   },
   "ec_update": {
     "title": "CityU EC 选课分享（更新中）",
     "url": "http://xhslink.cn/o/AW3uT4JVBvr",
     "platform": "小红书",
-    "note": "涉及 CS5285 的考核构成与通过压力。"
+    "note": "涉及 AC5803、CS5285、CS5187 与 EC5001。"
   },
   "ec_sema_course_review": {
     "title": "港城 EC SemA 课程简评",
     "url": "http://xhslink.cn/o/2QfQMpxDKX",
     "platform": "小红书",
-    "note": "记录 CS5285 的作业、期中与期末考核形式。"
+    "note": "涉及 AC5803、CS5285、EC5001、IS5414 与 IS5740 的考核形式和主观推荐。"
   },
   "cs_ec_sema_review_2": {
     "title": "CityU CS / EC Semester A 课程体验",
     "url": "https://www.xiaohongshu.com/explore/676793ee000000000b00d2b1?xsec_token=AB31yjXUEPGDkbmBuP1UCx10tD8c4A2YKtb5PWTQiH2J0=",
     "platform": "小红书",
-    "note": "对 CS5285 的难度与班次时段提出保留意见。"
+    "note": "涉及 CS5222、CS5481、CS5187、CS5285、CS5489 与 EC5001 的课堂体验、考核形式和选课建议。"
   },
   "cs5285_info_sec": {
     "title": "聊聊香港城市大学CS5285 信息安全",
@@ -178,5 +178,95 @@
     "url": "https://www.xiaohongshu.com/explore/6a6832680000000001002c0e",
     "platform": "小红书",
     "note": "DS 选课求助评论区，涉及 DSC6012 时间序列课程评价。"
+  },
+  "overview": {
+    "title": "香港城市大学泛 CS / IS 系选课指北",
+    "url": "http://xhslink.cn/o/98wnU5Mazs0",
+    "platform": "小红书",
+    "note": "涵盖 MSEC 核心课、CS 学术向课程及 IS 课程的总体建议。"
+  },
+  "cs_review": {
+    "title": "CityU CS 课程评价（一）",
+    "url": "http://xhslink.cn/o/8Bf4AHZNHAi",
+    "platform": "小红书",
+    "note": "涉及 CS5481、CS5222、CS5187 与 EC5001。"
+  },
+  "fall_review": {
+    "title": "CityU 25 Fall 选课",
+    "url": "http://xhslink.cn/o/1hqntIeUFLd",
+    "platform": "小红书",
+    "note": "涉及 CS5481 与 EC5001 的考核构成。"
+  },
+  "sem_b_review": {
+    "title": "CityU MSc CS Semester B 体验与攻略",
+    "url": "http://xhslink.cn/o/1QrUqYW1LQh",
+    "platform": "小红书",
+    "note": "包含 Intelligent Systems 的学习与考试体验。"
+  },
+  "vision_review": {
+    "title": "CityU MSc CS Semester A 课程评价（下）",
+    "url": "http://xhslink.cn/o/9Gc21Gjjh6e",
+    "platform": "小红书",
+    "note": "对 CS5187 的课堂、项目、作业和考试分别评分。"
+  },
+  "cs5187_guide": {
+    "title": "CityU CS 选课血泪史 2",
+    "url": "https://www.xiaohongshu.com/explore/68960125000000002501ac81",
+    "platform": "小红书",
+    "note": "来自本地 CityU-CS-Guide 数据，评价 CS5187 的课堂和项目。"
+  },
+  "cs5486_guide": {
+    "title": "CityU CS 选课血泪史 3",
+    "url": "https://www.xiaohongshu.com/explore/6896d8f6000000002501cfe6",
+    "platform": "小红书",
+    "note": "来自本地 CityU-CS-Guide 数据，建议谨慎选择 CS5486。"
+  },
+  "cs5488_guide": {
+    "title": "CityU CS Master Semester A",
+    "url": "https://www.xiaohongshu.com/explore/695c948d000000002102ad0b",
+    "platform": "小红书",
+    "note": "来自本地 CityU-CS-Guide 数据，提及 CS5488 的难度与考试形式。"
+  },
+  "cs5489_guide": {
+    "title": "CS5489 课程体验",
+    "url": "https://www.xiaohongshu.com/explore/66bf27a800000000250322f8",
+    "platform": "小红书",
+    "note": "来自本地 CityU-CS-Guide 数据，涉及难度、作业量与给分。"
+  },
+  "cs6382_guide": {
+    "title": "CS6382 课程体验",
+    "url": "https://www.xiaohongshu.com/explore/677bef1a000000001800eca7",
+    "platform": "小红书",
+    "note": "来自本地 CityU-CS-Guide 数据，提及课程难度与考试形式。"
+  },
+  "is6400_review": {
+    "title": "香港城市大学 IS6400 测评",
+    "url": "http://xhslink.cn/o/3vAwcgkIwnp",
+    "platform": "小红书",
+    "note": "详细记录 IS6400 的课堂、tutorial、项目与期末考试体验。"
+  },
+  "dtti_is5740_review": {
+    "title": "DTTI 选课分享（选修课）",
+    "url": "http://xhslink.cn/o/8g0oOy4XhF5",
+    "platform": "小红书",
+    "note": "介绍 IS5740 的数据分析内容、SAS Miner 实操和考核安排。"
+  },
+  "bis_sema_review": {
+    "title": "CityU BIS 就读体验与 SemA 课程分享",
+    "url": "http://xhslink.cn/o/7GioTFXeL22",
+    "platform": "小红书",
+    "note": "评价 AC5511 与 IS6523 的课程内容、教师、作业和考试安排。"
+  },
+  "ee_mit_24fall_review": {
+    "title": "CityU EE / MIT 24 Fall SemA 课程评价",
+    "url": "http://xhslink.cn/o/6N0E2OyKqeQ",
+    "platform": "小红书",
+    "note": "从 MIT 选课视角评价 IS5414 的 UML 内容、课堂提问、期末与给分。"
+  },
+  "is5414_2025_sema_exam": {
+    "title": "2025 SemA IS5414 期末题目回忆",
+    "url": "http://xhslink.cn/o/7qDmSDPMlBa",
+    "platform": "小红书",
+    "note": "回忆 2025 SemA IS5414 期末的四类 UML 题型、阅读量、作答耗时与外卖平台题材。"
   }
 }

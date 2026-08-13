@@ -63,7 +63,7 @@
       return `<span class="programme-badge" title="${MSDS.escapeHtml(programme.name_en)}">${MSDS.escapeHtml(programme.code)}<small>${type === "core" ? "核心" : "选修"}</small></span>`;
     }).join("");
 
-    document.title = `${course.code} ${course.programme_title} · CityU 课程综合系统`;
+    document.title = `${course.code} ${course.programme_title} · CityU Pedia`;
     detail.innerHTML = `
       <a class="back-link" href="${backHref}">${backLabel}</a>
       <section class="detail-hero">

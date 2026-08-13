@@ -1,13 +1,9 @@
 {
   "course_code": "CS5488",
-  "level": null,
-  "verdict": "暂无评价",
-  "summary": "大数据算法与技术课程：讲授大数据存储与计算框架（Hadoop/Spark）、流式算法、近似算法与分布式算法，以及大规模数据处理实践。",
-  "tags": [
-    "大数据",
-    "分布式算法",
-    "Hadoop"
-  ],
-  "source_ids": [],
-  "last_updated": "2026-08-05"
+  "level": "research",
+  "verdict": "学术向",
+  "summary": "大数据算法与技术，含多个 Assignment、Final 与 Group-Project；Assignment 基本可拿满，Group-Project 3-4 人一组容错高。老师幽默风趣，会关注小红书上同学们的评价。难度偏高、期末闭卷，适合想补算法基础的同学。",
+  "tags": ["难度较高", "算法方向", "期末闭卷", "小组项目"],
+  "source_ids": ["cs5488_guide"],
+  "last_updated": "2026-08-13"
 }

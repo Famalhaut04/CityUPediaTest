@@ -1,11 +1,9 @@
 {
   "course_code": "IS6335",
-  "level": null,
-  "verdict": "暂无评价",
-  "summary": "数据可视化课程，信息系统系开设，MSc Electronic Commerce 可选修。课程为第一学期开设，涵盖数据可视化原理与工具实践。本地暂未收集到往届学生评价。",
-  "tags": [
-    "数据可视化",
-    "信息设计"
-  ],
-  "source_ids": []
+  "level": "good",
+  "verdict": "方向匹配可选",
+  "summary": "数据可视化，主要使用 R，作业与项目投入可控；不同班次教师可能带来差异。",
+  "tags": ["数据可视化", "R", "项目制", "压力适中"],
+  "source_ids": ["overview", "ec_summary"],
+  "last_updated": "2026-08-13"
 }

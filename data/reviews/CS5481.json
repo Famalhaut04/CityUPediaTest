@@ -1,13 +1,9 @@
 {
   "course_code": "CS5481",
-  "level": null,
-  "verdict": "暂无评价",
-  "summary": "数据工程课程：讲授数据管道、ETL、数据仓库与数据湖、流式处理与分布式计算（Spark 等），以及数据治理与可观测性，贴近生产级数据平台实践。",
-  "tags": [
-    "数据工程",
-    "ETL",
-    "Spark"
-  ],
-  "source_ids": [],
-  "last_updated": "2026-08-05"
+  "level": "strong",
+  "verdict": "优先考虑",
+  "summary": "数据工程，老师（清华毕业、内地人）语速适中；内容涉及数据抓取/处理/可视化、大模型、索引（B 树/B+ 树）、SQL/NoSQL 与推荐系统。作业与小组项目难度可控，历史两至三次作业；期末通常闭卷。",
+  "tags": ["难度适中", "期末闭卷", "小组项目", "无考勤", "给分友好"],
+  "source_ids": ["cs_review", "ec_sharp", "fall_review", "cs_ec_sema_review_2"],
+  "last_updated": "2026-08-13"
 }

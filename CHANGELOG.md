@@ -1,5 +1,31 @@
 # 更新日志 / Changelog
 
+## 测试版 4.5（Test v4.5）· 2026-08-13
+
+> 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityU Pedia；导航重组为两组；无评价课程不再显示星级。
+
+### 视觉重构（Claude 风格）
+
+- **暖色编辑部美学**：全站设计令牌由冷色 Indigo 全面替换为 Claude 风格暖色系——暖米白底 `#FAF9F5`、暖黑墨色 `#2B2822`、珊瑚橙主色 `#C15F3C`（暗色模式 `#E08A6A`），配套完整暗色模式自适应
+- **衬线标题**：页面标题、课程详情标题、关于我们标题改为 Source Serif 4 + Noto Serif SC 衬线字体（weight 700），正文保持 Inter + Noto Sans SC，更具编辑部气质
+- **品牌徽章**：侧边栏 Logo 由图片改为珊瑚橙渐变文字徽章（「城」字），品牌名统一为 CityU Pedia
+- **色板查漏**：反馈页必填星号等冷色硬编码统一替换为主题色变量（`var(--danger)` 等），消除旧 Indigo 残留
+
+### 项目更名 CityU Pedia
+
+- 全站品牌名由「CityU 课程综合系统」更名为 **CityU Pedia（城大课程百科）**，页面标题、副标题、导航文案与反馈页文案同步更新
+
+### 导航重组
+
+- 侧边栏导航重组为两组：**第一组（主要功能）**——排课系统、课程评价、城大官网、中英文切换、登录 / 注册；**第二组（更多）**——关于我们、问题反馈
+- 中英文切换按钮新增语言徽章（EN / 中文），移除原 GitHub 菜单项
+
+### 评价数据修正（无数据不打分）
+
+- 对照 [fluffywood.github.io/cityuds](https://fluffywood.github.io/cityuds) 与 [shariqri.github.io/CtiyU-CS-Course-Board](https://shariqri.github.io/CtiyU-CS-Course-Board) 两个参考站点核对课程评价与数据，并从全网补充缺失评价
+- **无数据不打分**：无往届评价的课程 `level` 统一为 `unknown`，`ratingFor()` 返回 `null`，前端不再渲染星级，仅保留「暂无评价」文案，杜绝凭空打星
+- 统计：106 门课程中 30 门有口碑评分（strong 4 / recommended 6 / good 6 / research 4 / neutral 5 / caution 5），76 门无评价数据不再显示星级
+
 ## 测试版 4.4（Test v4.4）· 2026-08-12
 
 > 补齐计算学院全部课程（含生物统计学 SemB 课程）至 106 门；课表支持 SemA/SemB 学期切换与图片型 PDF 导出；课程评价中心新增课程代码搜索。
