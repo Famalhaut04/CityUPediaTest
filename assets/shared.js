@@ -758,6 +758,7 @@
       "nav.cityu": "城大官网",
       "nav.reviews": "课程评价",
       "nav.lang": "中英文切换",
+      "nav.github": "GitHub 仓库",
       "nav.account": "登录 / 注册",
       "nav.group.main": "主要功能",
       "nav.group.more": "更多",
@@ -863,6 +864,7 @@
       "nav.cityu": "CityU",
       "nav.reviews": "Course Reviews",
       "nav.lang": "Language",
+      "nav.github": "GitHub Repo",
       "nav.account": "Sign In / Register",
       "nav.group.main": "Main",
       "nav.group.more": "More",
@@ -1012,9 +1014,31 @@
     // 关于我们已迁移到 about.html 独立页面，此处保留空函数以兼容旧引用
   }
 
+  function initUpdateNotice() {
+    try {
+      if (localStorage.getItem("cityu-update-notice-v452") === "dismissed") return;
+    } catch (e) { /* localStorage 不可用时仍显示通知 */ }
+    const isEn = getStoredLang() === "en";
+    const notice = document.createElement("div");
+    notice.className = "update-notice";
+    notice.setAttribute("role", "status");
+    notice.innerHTML =
+      '<div class="update-notice-body">' +
+        '<strong>' + (isEn ? "CityU Pedia updated to v4.5.2" : "CityU Pedia 已更新至 v4.5.2") + '</strong>' +
+        '<span>' + (isEn ? "GitHub repo link · Claude-style fonts & UI · image-PDF export only" : "新增 GitHub 仓库入口 · 字体与界面配色对齐 Claude 风格 · 仅保留课表图片 PDF 导出") + '</span>' +
+      '</div>' +
+      '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';
+    notice.querySelector(".update-notice-close").addEventListener("click", () => {
+      notice.remove();
+      try { localStorage.setItem("cityu-update-notice-v452", "dismissed"); } catch (e) { /* ignore */ }
+    });
+    document.body.prepend(notice);
+  }
+
   function initShared() {
     initLangToggle();
     initAboutToggle();
+    initUpdateNotice();
   }
 
   if (document.readyState === "loading") {
