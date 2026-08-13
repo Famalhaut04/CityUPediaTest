@@ -1,14 +1,14 @@
 # CityU Pedia · 城大课程百科
 
-> **当前版本：测试版 4.5（Test v4.5）**
-> 本次更新将全站视觉重构为 Claude 风格暖色编辑部美学、项目更名为 CityU Pedia、导航重组为「主要功能 / 更多」两组，并修正无评价课程不显示星级。
+> **当前版本：测试版 4.5.2（Test v4.5.2）**
+> 最新更新新增 GitHub 仓库入口与更新推送通知横幅；全站为 Claude 风格暖色编辑部美学；项目已更名 CityU Pedia。
 > 完整的版本变更记录请查看 [更新日志（CHANGELOG.md）](CHANGELOG.md)。
 
 CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）授课型硕士生**打造的一站式课程综合平台，涵盖排课规划与课程评价两大核心功能。整合课程时间表查询、班次选择与学生评价汇总，帮你做出更明智的决定。
 
 > ⚠️ **免责声明：** 课程评价内容均整理自公开社交平台（小红书、知乎、Reddit 等），仅供参考，不构成建议。请以学校官方信息为准。
 >
-> 当前数据适用于 **Semester A 2026/27**。课表快照时间为 **2026-08-05 12:00（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
+> 当前数据覆盖 **Semester A 2026/27** 与 **Semester B** 两个学期。课表快照时间为 **2026-08-05 12:00（Asia/Beijing）**，名额、教师、教室及注册状态可能随时变化，请以 CityU AIMS 的最新信息为准。
 
 ## 在线访问
 
@@ -212,6 +212,13 @@ python -m http.server 8090
 📧 **fomalhautskywalker@gmail.com**
 
 也欢迎在 [Issues](https://github.com/Famalhaut04/Cityu-course-selection/issues) 中提交 Bug 或功能需求。
+
+### 资料致谢
+
+部分课程资料与评价数据整理自以下公开站点：
+
+- [CtiyU-CS-Course-Board](https://shariqri.github.io/CtiyU-CS-Course-Board/)
+- [cityuds](https://fluffywood.github.io/cityuds/?term=S)
 
 ## 使用提示与免责声明
 
