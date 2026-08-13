@@ -14,11 +14,6 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 
 **https://Famalhaut04.github.io/Cityu-course-selection/**
 
-## 运维文档
-
-- [云端数据库接入说明（CLOUD_DATABASE.md）](CLOUD_DATABASE.md)：Supabase 配置、RLS 策略、SMTP 邮件
-- [管理员手动重置密码指南（ADMIN_PASSWORD_RESET.md）](ADMIN_PASSWORD_RESET.md)：学生忘记密码时如何在 Supabase 后台重置
-
 ## 测试版 4.5 更新内容
 
 > 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityU Pedia；导航重组为两组；无评价课程不再显示星级。
@@ -81,7 +76,7 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 
 - **登录页面**：独立登录页（侧边栏「登录 / 注册」入口），双模式 Tab——**学生登录**（可注册，登录后提交评价）与**管理员登录**（登录后可删除任意云端评价）
 - **学生账号**：Supabase Auth 邮箱注册/登录，可填昵称；未登录提交评价时自动跳转登录页并回跳原课程
-- **数据库升级**：`course_reviews` 新增 `user_id` 列，仅登录用户可提交；升级脚本见 `tools/login_setup.sql`（需在 Supabase SQL Editor 执行一次）
+- **数据库升级**：`course_reviews` 新增 `user_id` 列，仅登录用户可提交
 
 ### 评价中心界面改版
 
@@ -105,7 +100,7 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 ### 新增功能
 
 - **课程评价中心**：全新独立页面（侧边栏「课程评价」入口），两级下拉菜单（学院 → 院系）浏览各系课程，点击课程直接查看云端共享评价并提交自己的评价；课程卡片显示平均评分与评价数
-- **云端共享评价**：课程详情页与评价中心共用同一套云端数据（Supabase `course_reviews` 表），单独评价课程与排课时评价课程全部收录；提交评价时可填写昵称。接入方式见 [CLOUD_DATABASE.md](CLOUD_DATABASE.md)，未配置时自动回退本地模式
+- **云端共享评价**：课程详情页与评价中心共用同一套云端数据（Supabase `course_reviews` 表），单独评价课程与排课时评价课程全部收录；提交评价时可填写昵称，未配置时自动回退本地模式
 - **个人课程评价**：每门课程详情页支持星级评分与评语，保存后展示"已评 N★"标记，数据保存在浏览器本地，刷新不丢失；云端评价支持删除自己提交的内容
 
 ### 界面优化
