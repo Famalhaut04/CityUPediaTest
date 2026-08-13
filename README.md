@@ -70,7 +70,7 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 
 ## 测试版 4.2 更新内容
 
-> 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版（参考 [cupedia.org/courses](https://cupedia.org/courses)）并优化使用逻辑。
+> 新增登录体系（学生邮箱注册登录、管理员登录删评）与密码重置；课程评价中心界面改版并优化使用逻辑。
 
 ### 登录体系（新增）
 
@@ -202,11 +202,7 @@ python -m http.server 8090
 
 ## 联系与贡献
 
-任何问题、建议或合作意向，欢迎联系：
-
-📧 **fomalhautskywalker@gmail.com**
-
-也欢迎在 [Issues](https://github.com/Famalhaut04/Cityu-course-selection/issues) 中提交 Bug 或功能需求。
+任何问题、建议或合作意向，欢迎在 [Issues](https://github.com/Famalhaut04/Cityu-course-selection/issues) 中提交，我们会尽快回复。
 
 ### 资料致谢
 

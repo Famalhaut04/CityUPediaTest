@@ -281,13 +281,8 @@
   }
 
   // ============ 管理员（Supabase Auth 邮箱登录） ============
-  function adminEmail() {
-    try {
-      return String(window.CLOUD_CONFIG?.adminEmail || "").trim();
-    } catch {
-      return "";
-    }
-  }
+  // 管理员身份由 Supabase 后端判定：仅当账号的 app_metadata.is_admin === true
+  // 时才视为管理员，客户端不再硬编码管理员邮箱。
 
   // 管理员登录：邮箱 + 密码 → access_token（存会话，默认 1 小时）
   async function adminLogin(email, password) {
@@ -306,6 +301,7 @@
     const session = {
       token: data.access_token,
       email: String(data.user?.email || email).trim(),
+      isAdmin: Boolean(data.user?.app_metadata?.is_admin === true),
       expiresAt: Date.now() + (Number(data.expires_in || 3600) * 1000)
     };
     try {
@@ -324,13 +320,13 @@
     }
   }
 
-  // 当前管理员会话（未过期则返回，否则返回 null）
+  // 当前管理员会话（未过期且带有后端 is_admin 标记才返回，否则返回 null）
   function currentAdmin() {
     try {
       const raw = sessionStorage.getItem(ADMIN_SESSION);
       if (!raw) return null;
       const session = JSON.parse(raw);
-      if (!session || !session.token || Date.now() > session.expiresAt) return null;
+      if (!session || !session.token || !session.isAdmin || Date.now() > session.expiresAt) return null;
       return session;
     } catch {
       return null;
@@ -1064,7 +1060,6 @@
     formatSection,
     sectionRestrictedProgrammes,
     getUserKey,
-    adminEmail,
     isAdminLoggedIn,
     adminLogin,
     adminLogout,

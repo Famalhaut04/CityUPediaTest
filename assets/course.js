@@ -484,8 +484,8 @@
         }
         try {
           const session = await MSDS.adminLogin(emailInput.value, passwordInput.value);
-          if (MSDS.adminEmail() && session.email !== MSDS.adminEmail()) {
-            // 登录成功但非管理员邮箱：不授予管理员权限（RLS 后端仍会拒绝其删除操作）
+          if (!session.isAdmin) {
+            // 登录成功但非管理员账号：不授予管理员权限（RLS 后端仍会拒绝其删除操作）
             MSDS.showToast("该账号无管理员权限");
           } else {
             MSDS.showToast("管理员登录成功");

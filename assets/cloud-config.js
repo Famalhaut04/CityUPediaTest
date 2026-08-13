@@ -3,11 +3,11 @@
 // ------------------------------------------------------------
 // 已启用云端共享评价。数据表与 RLS 策略已在 Supabase 中创建完成。
 //
-// adminEmail：管理员邮箱。管理员可删除任意评价；普通用户只能删除
-// 自己提交的评价（通过浏览器生成的 user_key 识别）。
-// 需要先在 Supabase Dashboard → Authentication → Users 中创建该邮箱
-// 的登录账号，并将邮箱填入此处，同时执行 CLOUD_DATABASE.md 中的
-// 「管理员删除策略」SQL。
+// 管理员身份不再在客户端硬编码邮箱，改由 Supabase 后端判定：
+//   1) 在 Supabase Dashboard → Authentication → Users 中，为管理员账号
+//      的 app_metadata 增加 { "is_admin": true }（Metadata 一栏）；
+//   2) 前端登录后从会话 JWT 的 app_metadata.is_admin 读取管理员标记；
+//   3) 真正的删除权限仍由数据库 RLS 策略在服务端校验（见本地运维文档）。
 //
 // 注意：publishable key 用于匿名公开读取/提交评价，
 // 请勿放置数据库的 service_role secret key。
@@ -15,5 +15,4 @@
 window.CLOUD_CONFIG = {
   supabaseUrl: "https://xifkjcdpbyeknrhiknyb.supabase.co",
   supabaseAnonKey: "sb_publishable_Yf3PoJ0hFDELzmackZF_BQ_aqdw2k-e",
-  adminEmail: "fomalhautskywalker@gmail.com",
 };

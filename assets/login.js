@@ -260,7 +260,7 @@
       statusEl.classList.remove("is-error");
       try {
         const session = await MSDS.adminLogin(email, password);
-        if (MSDS.adminEmail() && session.email !== MSDS.adminEmail()) {
+        if (!session.isAdmin) {
           MSDS.adminLogout();
           throw new Error("该账号无管理员权限");
         }
