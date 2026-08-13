@@ -643,32 +643,32 @@
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
     // 标题区
-    ctx.fillStyle = "#0f172a";
-    ctx.font = "700 26px 'Inter','Noto Sans SC',sans-serif";
+    ctx.fillStyle = "#2B2822";
+    ctx.font = "700 26px 'Source Serif 4','Noto Serif SC',serif";
     ctx.textBaseline = "middle";
     const progName = currentProgramme().name_zh || currentProgramme().name_en;
     ctx.fillText(`CityU 课表 · ${progName}（${activeSemester}）`, 24, 34);
     ctx.font = "400 15px 'Inter','Noto Sans SC',sans-serif";
-    ctx.fillStyle = "#64748b";
+    ctx.fillStyle = "#6E6A5F";
     ctx.fillText(`Programme: ${activeProgramme} · Semester: ${activeSemester} · ${new Date().toLocaleDateString("zh-CN")}`, 24, 62);
 
     const gridTop = titleHeight;
     // 表头
-    ctx.fillStyle = "#f1f5f9";
+    ctx.fillStyle = "#F5F3ED";
     ctx.fillRect(0, gridTop, canvasWidth, headerHeight);
-    ctx.fillStyle = "#0f172a";
+    ctx.fillStyle = "#2B2822";
     ctx.font = "700 17px 'Inter','Noto Sans SC',sans-serif";
     ctx.fillText("GMT+8", timeColWidth / 2, gridTop + headerHeight / 2);
     DAYS.forEach((day, index) => {
       const x = timeColWidth + index * colWidth;
-      ctx.fillStyle = "#f8fafc";
+      ctx.fillStyle = "#FAF9F5";
       ctx.fillRect(x, gridTop, colWidth, headerHeight);
-      ctx.fillStyle = "#0f172a";
+      ctx.fillStyle = "#2B2822";
       ctx.textAlign = "center";
       ctx.font = "700 18px 'Inter','Noto Sans SC',sans-serif";
       ctx.fillText(MSDS.DAY_NAMES[day], x + colWidth / 2, gridTop + 32);
       ctx.font = "500 13px 'Inter',sans-serif";
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = "#9A958A";
       ctx.fillText(day, x + colWidth / 2, gridTop + 58);
       ctx.textAlign = "left";
     });
@@ -676,19 +676,19 @@
     // 时间轴与网格线
     for (let hour = START_HOUR; hour <= END_HOUR; hour++) {
       const y = gridTop + headerHeight + (hour - START_HOUR) * hourHeight;
-      ctx.strokeStyle = "#e2e8f0";
+      ctx.strokeStyle = "#EAE7DE";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(canvasWidth, y);
       ctx.stroke();
-      ctx.fillStyle = "#475569";
+      ctx.fillStyle = "#6E6A5F";
       ctx.font = "500 12px 'Inter',sans-serif";
       ctx.fillText(`${String(hour).padStart(2, "0")}:00`, 8, y + 16);
     }
     DAYS.forEach((day, index) => {
       const x = timeColWidth + index * colWidth;
-      ctx.strokeStyle = "#e2e8f0";
+      ctx.strokeStyle = "#EAE7DE";
       ctx.beginPath();
       ctx.moveTo(x, gridTop + headerHeight);
       ctx.lineTo(x, canvasHeight);
@@ -789,91 +789,6 @@
     }
     write(enc(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`));
     return pdf.slice(0, pos);
-  }
-
-  function selectionsToText() {
-    const lines = [
-      "# CityU 课表结果导出",
-      `# Programme: ${activeProgramme}`,
-      `# Exported: ${new Date().toISOString()}`,
-      ""
-    ];
-    Object.keys(selections).sort().forEach((code) => {
-      const selected = selections[code];
-      const course = courseByCode(code);
-      const primarySection = course && selected.primaryCrn ? MSDS.findSection(course, selected.primaryCrn) : null;
-      const note = course
-        ? ` # ${course.programme_title}${primarySection ? " · " + MSDS.formatSection(primarySection) : ""}`
-        : "";
-      lines.push(`${code} | Primary=${selected.primaryCrn || "-"} | Tutorial=${selected.tutorialCrn || "-"}${note}`);
-    });
-    return lines.join("\n") + "\n";
-  }
-
-  function exportSelectionsAsText() {
-    if (!Object.keys(selections).length) {
-      MSDS.showToast("还没有加入课程，无法导出");
-      return;
-    }
-    const text = selectionsToText();
-    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `cityu-selection-${activeProgramme}-${activeSemester}-${new Date().toISOString().slice(0, 10)}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
-    MSDS.showToast("已导出课表结果");
-  }
-
-  // 解析形如 "COMP5111 | Primary=12345 | Tutorial=12346" 的行；# 开头为注释，行内 # 之后的内容视为备注忽略
-  function parseSelectionsText(text) {
-    return text.split(/\r?\n/)
-      .map((rawLine) => rawLine.trim())
-      .filter((line) => line && !line.startsWith("#"))
-      .map((line) => {
-        const match = line.match(/^([A-Za-z0-9]+)\s*\|\s*Primary=([^|#]+?)\s*(?:\|\s*Tutorial=([^|#]+?)\s*)?(?:#.*)?$/);
-        if (!match) return { raw: line, error: "格式无法解析" };
-        const [, code, primaryRaw, tutorialRaw] = match;
-        return {
-          code: code.toUpperCase(),
-          primaryCrn: primaryRaw && primaryRaw.trim() !== "-" ? primaryRaw.trim() : null,
-          tutorialCrn: tutorialRaw && tutorialRaw.trim() !== "-" ? tutorialRaw.trim() : null
-        };
-      });
-  }
-
-  function importSelectionsFromText(text) {
-    const parsed = parseSelectionsText(text);
-    if (!parsed.length) {
-      MSDS.showToast("文件内容为空或格式不正确");
-      return;
-    }
-    if (!window.confirm(`将导入 ${parsed.length} 门课程，覆盖当前「${activeProgramme}」的课表结果，确定继续吗？`)) return;
-
-    const nextSelections = {};
-    const skipped = [];
-    parsed.forEach((item) => {
-      if (item.error) { skipped.push(`${item.raw}（${item.error}）`); return; }
-      const course = courseByCode(item.code);
-      if (!course) { skipped.push(`${item.code}（当前项目中找不到该课程）`); return; }
-      const primarySection = item.primaryCrn ? MSDS.findSection(course, item.primaryCrn) : null;
-      if (item.primaryCrn && !primarySection) { skipped.push(`${item.code}（主课班次 ${item.primaryCrn} 不存在，可能已变更，已跳过整门课）`); return; }
-      const tutorialSection = item.tutorialCrn ? MSDS.findSection(course, item.tutorialCrn) : null;
-      if (item.tutorialCrn && !tutorialSection) skipped.push(`${item.code}（Tutorial 班次 ${item.tutorialCrn} 不存在，已忽略该 Tutorial）`);
-      nextSelections[item.code] = {
-        primaryCrn: primarySection ? item.primaryCrn : null,
-        tutorialCrn: tutorialSection ? item.tutorialCrn : null
-      };
-    });
-
-    selections = nextSelections;
-    renderAll();
-    const successCount = Object.keys(nextSelections).length;
-    MSDS.showToast(`已导入 ${successCount} 门课程${skipped.length ? `，跳过 ${skipped.length} 项` : ""}`);
-    if (skipped.length) console.warn("导入课表结果时跳过的记录：", skipped);
   }
 
   function switchProgramme(code) {
@@ -1024,21 +939,7 @@
       button.addEventListener("click", () => switchSemester(button.dataset.semesterSwitch));
     });
 
-    document.getElementById("export-selection").addEventListener("click", exportSelectionsAsText);
     document.getElementById("export-pdf").addEventListener("click", exportTimetableAsPdf);
-
-    const importFileInput = document.getElementById("import-selection-file");
-    document.getElementById("import-selection").addEventListener("click", () => {
-      importFileInput.value = "";
-      importFileInput.click();
-    });
-    importFileInput.addEventListener("change", () => {
-      const file = importFileInput.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => importSelectionsFromText(String(reader.result || ""));
-      reader.readAsText(file);
-    });
   }
 
   MSDS.loadCourseData().then((loadedData) => {
