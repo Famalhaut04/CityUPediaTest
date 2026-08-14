@@ -1,1 +1,231 @@
-{"CS5187":{"pdf":"docs/CS5187.pdf"},"CS5222":{"pdf":"docs/CS5222.pdf"},"CS5285":{"pdf":"docs/CS5285.pdf","translation":"data/course-documents/translations/CS5285.json"},"CS5292":{"pdf":"docs/CS5292.pdf"},"CS5294":{"pdf":"docs/CS5294.pdf"},"CS5295":{"pdf":"docs/CS5295.pdf"},"CS5298":{"pdf":"docs/CS5298.pdf"},"CS5351":{"pdf":"docs/CS5351.pdf"},"CS5481":{"pdf":"docs/CS5481.pdf"},"CS5486":{"pdf":"docs/CS5486.pdf"},"CS5488":{"pdf":"docs/CS5488.pdf"},"CS5489":{"pdf":"docs/CS5489.pdf"},"CS5494":{"pdf":"docs/CS5494.pdf"},"CS5495":{"pdf":"docs/CS5495.pdf"},"CS6382":{"pdf":"docs/CS6382.pdf"},"DSC5001":{"pdf":"docs/DSC5001.pdf","translation":"data/course-documents/translations/DSC5001.json"},"DSC5002":{"pdf":"docs/DSC5002.pdf","translation":"data/course-documents/translations/DSC5002.json"},"DSC5003":{"pdf":"docs/DSC5003.pdf","translation":"data/course-documents/translations/DSC5003.json"},"DSC6004":{"pdf":"docs/DSC6004.pdf","translation":"data/course-documents/translations/DSC6004.json"},"DSC6006":{"pdf":"docs/DSC6006.pdf","translation":"data/course-documents/translations/DSC6006.json"},"DSC6008":{"pdf":"docs/DSC6008.pdf","translation":"data/course-documents/translations/DSC6008.json"},"DSC6011":{"pdf":"docs/DSC6011.pdf","translation":"data/course-documents/translations/DSC6011.json"},"DSC6012":{"pdf":"docs/DSC6012.pdf","translation":"data/course-documents/translations/DSC6012.json"},"DSC6013":{"pdf":"docs/DSC6013.pdf","translation":"data/course-documents/translations/DSC6013.json"},"DSC6016":{"pdf":"docs/DSC6016.pdf","translation":"data/course-documents/translations/DSC6016.json"},"DSC6017":{"pdf":"docs/DSC6017.pdf","translation":"data/course-documents/translations/DSC6017.json"},"DSC6018":{"pdf":"docs/DSC6018.pdf","translation":"data/course-documents/translations/DSC6018.json"},"DSC6020":{"pdf":"docs/DSC6020.pdf"},"DSC6021":{"pdf":"docs/DSC6021.pdf"},"DSC6026":{"pdf":"docs/DSC6026.pdf"},"DSC8004":{"pdf":"docs/DSC8004.pdf"},"DSC8005":{"pdf":"docs/DSC8005.pdf"},"BIOS5800":{"pdf":"docs/BIOS5800.pdf"},"BIOS5801":{"pdf":"docs/BIOS5801.pdf"},"BIOS6902":{"pdf":"docs/BIOS6902.pdf"},"CS5182":{"pdf":"docs/CS5182.pdf"},"CS5281":{"pdf":"docs/CS5281.pdf"},"CS5288":{"pdf":"docs/CS5288.pdf"},"CS5291":{"pdf":"docs/CS5291.pdf"},"CS5293":{"pdf":"docs/CS5293.pdf"},"CS5296":{"pdf":"docs/CS5296.pdf"},"CS5297":{"pdf":"docs/CS5297.pdf"},"CS5483":{"pdf":"docs/CS5483.pdf"},"CS5487":{"pdf":"docs/CS5487.pdf"},"CS5491":{"pdf":"docs/CS5491.pdf"},"CS5493":{"pdf":"docs/CS5493.pdf"},"CS6283":{"pdf":"docs/CS6283.pdf"},"CS6284":{"pdf":"docs/CS6284.pdf"},"CS6290":{"pdf":"docs/CS6290.pdf"},"CS6487":{"pdf":"docs/CS6487.pdf"},"CS6491":{"pdf":"docs/CS6491.pdf"},"CS6493":{"pdf":"docs/CS6493.pdf"}}
+{
+  "CS5187": {
+    "pdf": "docs/CS5187.pdf",
+    "translation": "data/course-documents/translations/CS5187.json"
+  },
+  "CS5222": {
+    "pdf": "docs/CS5222.pdf",
+    "translation": "data/course-documents/translations/CS5222.json"
+  },
+  "CS5285": {
+    "pdf": "docs/CS5285.pdf",
+    "translation": "data/course-documents/translations/CS5285.json"
+  },
+  "CS5292": {
+    "pdf": "docs/CS5292.pdf"
+  },
+  "CS5294": {
+    "pdf": "docs/CS5294.pdf",
+    "translation": "data/course-documents/translations/CS5294.json"
+  },
+  "CS5295": {
+    "pdf": "docs/CS5295.pdf"
+  },
+  "CS5298": {
+    "pdf": "docs/CS5298.pdf"
+  },
+  "CS5351": {
+    "pdf": "docs/CS5351.pdf"
+  },
+  "CS5481": {
+    "pdf": "docs/CS5481.pdf",
+    "translation": "data/course-documents/translations/CS5481.json"
+  },
+  "CS5486": {
+    "pdf": "docs/CS5486.pdf",
+    "translation": "data/course-documents/translations/CS5486.json"
+  },
+  "CS5488": {
+    "pdf": "docs/CS5488.pdf",
+    "translation": "data/course-documents/translations/CS5488.json"
+  },
+  "CS5489": {
+    "pdf": "docs/CS5489.pdf",
+    "translation": "data/course-documents/translations/CS5489.json"
+  },
+  "CS5494": {
+    "pdf": "docs/CS5494.pdf"
+  },
+  "CS5495": {
+    "pdf": "docs/CS5495.pdf"
+  },
+  "CS6382": {
+    "pdf": "docs/CS6382.pdf",
+    "translation": "data/course-documents/translations/CS6382.json"
+  },
+  "DSC5001": {
+    "pdf": "docs/DSC5001.pdf",
+    "translation": "data/course-documents/translations/DSC5001.json"
+  },
+  "DSC5002": {
+    "pdf": "docs/DSC5002.pdf",
+    "translation": "data/course-documents/translations/DSC5002.json"
+  },
+  "DSC5003": {
+    "pdf": "docs/DSC5003.pdf",
+    "translation": "data/course-documents/translations/DSC5003.json"
+  },
+  "DSC6004": {
+    "pdf": "docs/DSC6004.pdf",
+    "translation": "data/course-documents/translations/DSC6004.json"
+  },
+  "DSC6006": {
+    "pdf": "docs/DSC6006.pdf",
+    "translation": "data/course-documents/translations/DSC6006.json"
+  },
+  "DSC6008": {
+    "pdf": "docs/DSC6008.pdf",
+    "translation": "data/course-documents/translations/DSC6008.json"
+  },
+  "DSC6011": {
+    "pdf": "docs/DSC6011.pdf",
+    "translation": "data/course-documents/translations/DSC6011.json"
+  },
+  "DSC6012": {
+    "pdf": "docs/DSC6012.pdf",
+    "translation": "data/course-documents/translations/DSC6012.json"
+  },
+  "DSC6013": {
+    "pdf": "docs/DSC6013.pdf",
+    "translation": "data/course-documents/translations/DSC6013.json"
+  },
+  "DSC6016": {
+    "pdf": "docs/DSC6016.pdf",
+    "translation": "data/course-documents/translations/DSC6016.json"
+  },
+  "DSC6017": {
+    "pdf": "docs/DSC6017.pdf",
+    "translation": "data/course-documents/translations/DSC6017.json"
+  },
+  "DSC6018": {
+    "pdf": "docs/DSC6018.pdf",
+    "translation": "data/course-documents/translations/DSC6018.json"
+  },
+  "DSC6020": {
+    "pdf": "docs/DSC6020.pdf"
+  },
+  "DSC6021": {
+    "pdf": "docs/DSC6021.pdf"
+  },
+  "DSC6026": {
+    "pdf": "docs/DSC6026.pdf"
+  },
+  "DSC8004": {
+    "pdf": "docs/DSC8004.pdf"
+  },
+  "DSC8005": {
+    "pdf": "docs/DSC8005.pdf"
+  },
+  "BIOS5800": {
+    "pdf": "docs/BIOS5800.pdf"
+  },
+  "BIOS5801": {
+    "pdf": "docs/BIOS5801.pdf"
+  },
+  "BIOS6902": {
+    "pdf": "docs/BIOS6902.pdf"
+  },
+  "CS5182": {
+    "pdf": "docs/CS5182.pdf"
+  },
+  "CS5281": {
+    "pdf": "docs/CS5281.pdf",
+    "translation": "data/course-documents/translations/CS5281.json"
+  },
+  "CS5288": {
+    "pdf": "docs/CS5288.pdf"
+  },
+  "CS5291": {
+    "pdf": "docs/CS5291.pdf"
+  },
+  "CS5293": {
+    "pdf": "docs/CS5293.pdf"
+  },
+  "CS5296": {
+    "pdf": "docs/CS5296.pdf"
+  },
+  "CS5297": {
+    "pdf": "docs/CS5297.pdf"
+  },
+  "CS5483": {
+    "pdf": "docs/CS5483.pdf"
+  },
+  "CS5487": {
+    "pdf": "docs/CS5487.pdf",
+    "translation": "data/course-documents/translations/CS5487.json"
+  },
+  "CS5491": {
+    "pdf": "docs/CS5491.pdf"
+  },
+  "CS5493": {
+    "pdf": "docs/CS5493.pdf"
+  },
+  "CS6283": {
+    "pdf": "docs/CS6283.pdf"
+  },
+  "CS6284": {
+    "pdf": "docs/CS6284.pdf"
+  },
+  "CS6290": {
+    "pdf": "docs/CS6290.pdf",
+    "translation": "data/course-documents/translations/CS6290.json"
+  },
+  "CS6487": {
+    "pdf": "docs/CS6487.pdf"
+  },
+  "CS6491": {
+    "pdf": "docs/CS6491.pdf"
+  },
+  "CS6493": {
+    "pdf": "docs/CS6493.pdf",
+    "translation": "data/course-documents/translations/CS6493.json"
+  },
+  "AC5511": {
+    "pdf": "docs/AC5511.pdf",
+    "translation": "data/course-documents/translations/AC5511.json"
+  },
+  "AC5803": {
+    "pdf": "docs/AC5803.pdf",
+    "translation": "data/course-documents/translations/AC5803.json"
+  },
+  "CS6521": {
+    "pdf": "docs/CS6521.pdf",
+    "translation": "data/course-documents/translations/CS6521.json"
+  },
+  "EF5010": {
+    "pdf": "docs/EF5010.pdf",
+    "translation": "data/course-documents/translations/EF5010.json"
+  },
+  "EF5042": {
+    "pdf": "docs/EF5042.pdf",
+    "translation": "data/course-documents/translations/EF5042.json"
+  },
+  "IS5540": {
+    "pdf": "docs/IS5540.pdf",
+    "translation": "data/course-documents/translations/IS5540.json"
+  },
+  "IS6335": {
+    "pdf": "docs/IS6335.pdf",
+    "translation": "data/course-documents/translations/IS6335.json"
+  },
+  "IS6400": {
+    "pdf": "docs/IS6400.pdf",
+    "translation": "data/course-documents/translations/IS6400.json"
+  },
+  "IS6523": {
+    "pdf": "docs/IS6523.pdf",
+    "translation": "data/course-documents/translations/IS6523.json"
+  },
+  "LW5962": {
+    "pdf": "docs/LW5962.pdf",
+    "translation": "data/course-documents/translations/LW5962.json"
+  },
+  "MKT5644": {
+    "pdf": "docs/MKT5644.pdf",
+    "translation": "data/course-documents/translations/MKT5644.json"
+  },
+  "IS5740": {
+    "pdf": "docs/IS5740.pdf",
+    "translation": "data/course-documents/translations/IS5740.json"
+  }
+}

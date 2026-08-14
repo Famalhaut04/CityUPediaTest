@@ -1037,11 +1037,13 @@
                         "code":  "CS5187",
                         "programmes":  [
                                            "MSAI",
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
                                                             "MSAI":  "elective",
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "elective",
                         "programme_title":  "Vision and Image",
@@ -1097,11 +1099,13 @@
                         "code":  "CS5222",
                         "programmes":  [
                                            "MSCY",
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
                                                             "MSCS":  "core",
-                                                            "MSCY":  "elective"
+                                                            "MSCY":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Computer Networks \u0026 Internets",
@@ -1155,10 +1159,12 @@
                     {
                         "code":  "CS5286",
                         "programmes":  [
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
 
                         "programme_elective_groups":  {
@@ -1179,7 +1185,7 @@
                                         "medium":  "English"
                                     },
                         "section_count":  0,
-                        "semester_tag":  "SemB"
+                        "semester_tag":  "SemA"
                     },
                     {
                         "code":  "CS5285",
@@ -1248,11 +1254,13 @@
                         "code":  "CS5294",
                         "programmes":  [
                                            "MSCY",
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
                                                             "MSCY":  "core",
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Information Security Technology Management",
@@ -1427,10 +1435,12 @@
                     {
                         "code":  "CS5481",
                         "programmes":  [
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSCS":  "core"
+                                                            "MSCS":  "core",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Data Engineering",
@@ -1453,10 +1463,12 @@
                         "code":  "CS5486",
                         "programmes":  [
                                            "MSAI",
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSAI":  "core"
+                                                            "MSAI":  "core",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Intelligent Systems",
@@ -1481,14 +1493,16 @@
                     {
                         "code":  "CS5488",
                         "programmes":  [
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "elective",
-                        "programme_title":  "Big Data Algorithms and Technology",
-                        "schedule_title":  "Big Data Algorithms and Technology",
+                        "programme_title":  "Big Data Algorithms and Techniques",
+                        "schedule_title":  "Big Data Algorithms and Techniques",
                         "title_changed":  false,
                         "credits":  3,
                         "remarks":  "CC",
@@ -1511,12 +1525,14 @@
                         "programmes":  [
                                            "MSAI",
                                            "MSCY",
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
                                                             "MSAI":  "core",
                                                             "MSCS":  "elective",
-                                                            "MSCY":  "elective"
+                                                            "MSCY":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Machine Learning: Algorithms and Applications",
@@ -1632,10 +1648,12 @@
                     {
                         "code":  "CS6382",
                         "programmes":  [
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
                         "requirement_type":  "elective",
                         "programme_title":  "Algorithm Analysis and Game Theory",
@@ -1846,8 +1864,8 @@
                                                             "MSEC":  "elective"
                                                         },
                         "requirement_type":  "elective",
-                        "programme_title":  "IS Infrastructure and Security Management",
-                        "schedule_title":  "IS Infrastructure and Security Management",
+                        "programme_title":  "Information Systems Infrastructure and Security Management",
+                        "schedule_title":  "Information Systems Infrastructure and Security Management",
                         "title_changed":  false,
                         "credits":  3,
                         "remarks":  "IS",
@@ -2607,10 +2625,12 @@
                     {
                         "code":  "CS6521",
                         "programmes":  [
-                                           "MSCS"
+                                           "MSCS",
+                                           "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSCS":  "elective"
+                                                            "MSCS":  "elective",
+                                                            "MSEC":  "elective"
                                                         },
 
                         "programme_elective_groups":  {
@@ -2631,7 +2651,7 @@
                                         "medium":  "English"
                                     },
                         "section_count":  0,
-                        "semester_tag":  "SemB"
+                        "semester_tag":  "SemA"
                     },
                     {
                         "code":  "CS6531",
@@ -2935,10 +2955,12 @@
                     {
                         "code":  "DSC6019",
                         "programmes":  [
-                                           "MSDS"
+                                           "MSDS",
+                                           "MSAIFS"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSDS":  "elective"
+                                                            "MSDS":  "elective",
+                                                            "MSAIFS":  "elective"
                                                         },
                         "requirement_type":  "elective",
                         "programme_title":  "Embodied AI and Applications",
@@ -2955,7 +2977,10 @@
                                         "medium":  "English"
                                     },
                         "section_count":  1,
-                        "semester_tag":  "SemB"
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track4"
+                                                      }
                     },
                     {
                         "code":  "DSC6032",
@@ -3132,6 +3157,1466 @@
                                         "medium":  "English"
                                     },
                         "section_count":  1,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "AC5511",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Financial and Management Accounting",
+                        "schedule_title":  "Financial and Management Accounting",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "AC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "AC5803",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Financial Statement Analysis in Global Context",
+                        "schedule_title":  "Financial Statement Analysis in Global Context",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "AC",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "EF5010",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Economics for Business",
+                        "schedule_title":  "Economics for Business",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "EF",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "EF5042",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Corporate Finance",
+                        "schedule_title":  "Corporate Finance",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "EF",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "LW5962",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Law Relating to Business and Companies",
+                        "schedule_title":  "Law Relating to Business and Companies",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "LW",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "MKT5644",
+                        "programmes":  [
+                                           "MSEC"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSEC":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Digital Marketing",
+                        "schedule_title":  "Digital Marketing",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "MKT",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "Y",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA"
+                    },
+                    {
+                        "code":  "CHEM6134",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "AI for Chemistry",
+                        "schedule_title":  "AI for Chemistry",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY5503",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Introduction to Quantum Technology",
+                        "schedule_title":  "Introduction to Quantum Technology",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY5504",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data Acquisition & Processing Skills for Physicists I",
+                        "schedule_title":  "Data Acquisition & Processing Skills for Physicists I",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY5505",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data Acquisition & Processing Skills for Physicists II",
+                        "schedule_title":  "Data Acquisition & Processing Skills for Physicists II",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY5506",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data Analysis and Modelling in Physics",
+                        "schedule_title":  "Data Analysis and Modelling in Physics",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY6502",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Advanced Computational Methods for Simulation and Modelling",
+                        "schedule_title":  "Advanced Computational Methods for Simulation and Modelling",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY6603",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Introduction to Quantum Information",
+                        "schedule_title":  "Introduction to Quantum Information",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "PHY6604",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Machine Learning in Physics",
+                        "schedule_title":  "Machine Learning in Physics",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6025",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "AI for Materials Science",
+                        "schedule_title":  "AI for Materials Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "MSE5301",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Instrumentation for Materials Characterization",
+                        "schedule_title":  "Instrumentation for Materials Characterization",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "需批准",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "MSE5303",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Structure and Deformation of Materials",
+                        "schedule_title":  "Structure and Deformation of Materials",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "需批准",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "MSE6181",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Photonics in Nanomaterial Systems and Devices",
+                        "schedule_title":  "Photonics in Nanomaterial Systems and Devices",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "需批准",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "MSE6265",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Quantum Theory of Semiconductors",
+                        "schedule_title":  "Quantum Theory of Semiconductors",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "需批准",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track1"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5001",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Common Disease and Genomic Medicine",
+                        "schedule_title":  "Common Disease and Genomic Medicine",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5002",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Infectious Disease Management",
+                        "schedule_title":  "Infectious Disease Management",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5007",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Pharmacology Principles in Drug Discovery and Development",
+                        "schedule_title":  "Pharmacology Principles in Drug Discovery and Development",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5008",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Fundamental and Advanced Multi-omics Research",
+                        "schedule_title":  "Fundamental and Advanced Multi-omics Research",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5009",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Ageing and the Science of Human Longevity",
+                        "schedule_title":  "Ageing and the Science of Human Longevity",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5010",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Artificial Intelligence in Health Science Research and Management",
+                        "schedule_title":  "Artificial Intelligence in Health Science Research and Management",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5011",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Wearable Technologies and Digital Medicine",
+                        "schedule_title":  "Wearable Technologies and Digital Medicine",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5012",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Nutrition Science and Stress Management",
+                        "schedule_title":  "Nutrition Science and Stress Management",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS5013",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Storytelling of Health Science Data with Analysis and Visualization",
+                        "schedule_title":  "Storytelling of Health Science Data with Analysis and Visualization",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS8111",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Immunology and Infectious Diseases",
+                        "schedule_title":  "Immunology and Infectious Diseases",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "BMS8112",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Viruses, Immunity and Ageing",
+                        "schedule_title":  "Viruses, Immunity and Ageing",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track2"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE5201",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Air Pollution and Atmospheric Chemistry",
+                        "schedule_title":  "Air Pollution and Atmospheric Chemistry",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE5202",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Climate Change: Science, Adaptation and Mitigation",
+                        "schedule_title":  "Climate Change: Science, Adaptation and Mitigation",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE5211",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Data Analysis in Environmental Applications",
+                        "schedule_title":  "Data Analysis in Environmental Applications",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE5212",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Environmental Pollution: Theories, Measurement and Mitigation",
+                        "schedule_title":  "Environmental Pollution: Theories, Measurement and Mitigation",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6101",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Energy Generation and Storage Systems",
+                        "schedule_title":  "Energy Generation and Storage Systems",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6103",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Energy Conversion: Theory and Methodology",
+                        "schedule_title":  "Energy Conversion: Theory and Methodology",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6104",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Energy Conservation and Audit",
+                        "schedule_title":  "Energy Conservation and Audit",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6115",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Carbon Audit and Management",
+                        "schedule_title":  "Carbon Audit and Management",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6118",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Emerging Energy Technologies",
+                        "schedule_title":  "Emerging Energy Technologies",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6122",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Advanced Thermosciences for Energy Engineering",
+                        "schedule_title":  "Advanced Thermosciences for Energy Engineering",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6124",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Fuel Processing",
+                        "schedule_title":  "Fuel Processing",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6125",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Carbon Capture Use and Storage",
+                        "schedule_title":  "Carbon Capture Use and Storage",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6212",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Environmental Modelling",
+                        "schedule_title":  "Environmental Modelling",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6213",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Wastewater Engineering and Water Quality Assessment",
+                        "schedule_title":  "Wastewater Engineering and Water Quality Assessment",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6214",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Solid Waste Treatment and Management",
+                        "schedule_title":  "Solid Waste Treatment and Management",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6224",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Environmental Engineering Science",
+                        "schedule_title":  "Environmental Engineering Science",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "SEE6225",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Environmental Assessment",
+                        "schedule_title":  "Environmental Assessment",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track3"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6027",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Topics of AI for Computational Social Sciences",
+                        "schedule_title":  "Topics of AI for Computational Social Sciences",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track4"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6028",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Medical Image and Analysis",
+                        "schedule_title":  "Medical Image and Analysis",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track4"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6029",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Topics of Artificial Intelligence for Biomedical Studies",
+                        "schedule_title":  "Topics of Artificial Intelligence for Biomedical Studies",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track4"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6030",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Quantum Machine Learning",
+                        "schedule_title":  "Quantum Machine Learning",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Nil",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "Nil",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB",
+                        "programme_elective_groups":  {
+                                                          "MSAIFS":  "track4"
+                                                      }
+                    },
+                    {
+                        "code":  "DSC6023",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Internship in Artificial Intelligence for Sciences",
+                        "schedule_title":  "Internship in Artificial Intelligence for Sciences",
+                        "title_changed":  false,
+                        "credits":  3,
+                        "remarks":  "Internship",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "DSC6024",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
+                        "semester_tag":  "SemB"
+                    },
+                    {
+                        "code":  "DSC6024",
+                        "programmes":  [
+                                           "MSAIFS"
+                                       ],
+                        "programme_requirement_types":  {
+                                                            "MSAIFS":  "elective"
+                                                        },
+                        "requirement_type":  "elective",
+                        "programme_title":  "Dissertation for Artificial Intelligence for Sciences",
+                        "schedule_title":  "Dissertation for Artificial Intelligence for Sciences",
+                        "title_changed":  false,
+                        "credits":  6,
+                        "remarks":  "Dissertation",
+                        "prerequisites":  "Nil",
+                        "exclusive_course":  "DSC6023",
+                        "summary":  {
+                                        "web":  "N",
+                                        "available":  "0",
+                                        "capacity":  "0",
+                                        "medium":  "English"
+                                    },
+                        "section_count":  0,
                         "semester_tag":  "SemB"
                     }
                 ]

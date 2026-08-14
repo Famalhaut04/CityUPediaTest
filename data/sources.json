@@ -268,5 +268,23 @@
     "url": "http://xhslink.cn/o/7qDmSDPMlBa",
     "platform": "小红书",
     "note": "回忆 2025 SemA IS5414 期末的四类 UML 题型、阅读量、作答耗时与外卖平台题材。"
+  },
+  "bis_navigator": {
+    "title": "MScBIS 选课笔记（BIS Navigator）",
+    "url": "https://avalonc.github.io/MScBIS/",
+    "platform": "GitHub",
+    "note": "CityU 商务信息系统硕士选课笔记，含 AC5511、EF5042 等多门商科课评价。"
+  },
+  "offercool_ef5010": {
+    "title": "CityU OSCM 24Fall 就读体验（EF5010 推荐）",
+    "url": "https://offercool.cn/article/studying/26741",
+    "platform": "Offercool",
+    "note": "学姐明确推荐 EF5010，说明作业与期末构成。"
+  },
+  "sohu_mkt5644": {
+    "title": "CityU MSc Marketing 选课体验（Digital Marketing）",
+    "url": "https://m.sohu.com/a/624119860_120211621/",
+    "platform": "搜狐",
+    "note": "MSc Marketing 学姐评价 Digital Marketing 选修轻松有趣，代码对应 MKT5644 待核实。"
   }
 }
