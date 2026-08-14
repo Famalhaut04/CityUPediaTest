@@ -142,7 +142,7 @@
       if (!legacy || typeof legacy !== "object" || Array.isArray(legacy)) return;
       const all = getAllSelections();
       if (!all[DEFAULT_PROGRAMME] || typeof all[DEFAULT_PROGRAMME] !== "object" || all[DEFAULT_PROGRAMME].SemA === undefined) {
-        all[DEFAULT_PROGRAMME] = { SemA: legacy, SemB: {} };
+        all[DEFAULT_PROGRAMME] = { SemA: legacy, SemB: {}, Summer: {} };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
       }
       localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -151,12 +151,24 @@
     }
   }
 
-  // 课表按 项目 → 学期（SemA/SemB）→ 课程 三层保存；
+  // 课表按 项目 → 学期（SemA/SemB/Summer）→ 课程 三层保存；
   // 旧版数据为 项目 → 课程 两层，读取时自动归入 SemA 并回写迁移
+  function normalizeSemester(s) {
+    return s === "SemB" ? "SemB" : s === "Summer" ? "Summer" : "SemA";
+  }
+
+  function ensureSemesterStructure(stored) {
+    if (!stored || typeof stored !== "object" || Array.isArray(stored)) return null;
+    if (stored.SemA === undefined && stored.SemB === undefined) {
+      return { SemA: stored, SemB: {}, Summer: {} };
+    }
+    if (stored.Summer === undefined) stored.Summer = {};
+    return stored;
+  }
+
   function getStoredSemester() {
     try {
-      const stored = localStorage.getItem(SEMESTER_KEY);
-      return stored === "SemB" ? "SemB" : "SemA";
+      return normalizeSemester(localStorage.getItem(SEMESTER_KEY));
     } catch {
       return "SemA";
     }
@@ -164,7 +176,7 @@
 
   function saveSemester(semester) {
     try {
-      localStorage.setItem(SEMESTER_KEY, semester === "SemB" ? "SemB" : "SemA");
+      localStorage.setItem(SEMESTER_KEY, normalizeSemester(semester));
     } catch {
       /* ignore */
     }
@@ -174,14 +186,14 @@
     migrateLegacySelections();
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    const term = semester === "SemB" ? "SemB" : "SemA";
+    const term = normalizeSemester(semester);
     let stored = all[code];
     if (!stored || typeof stored !== "object" || Array.isArray(stored)) return {};
-    // 旧版两层结构（项目 → 课程）：整体归入 SemA 并回写
-    if (stored.SemA === undefined && stored.SemB === undefined) {
-      stored = { SemA: stored, SemB: {} };
-      all[code] = stored;
+    const migrated = ensureSemesterStructure(stored);
+    if (migrated && migrated !== stored) {
+      all[code] = migrated;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      stored = migrated;
     }
     const selections = stored[term];
     return selections && typeof selections === "object" && !Array.isArray(selections) ? selections : {};
@@ -190,12 +202,10 @@
   function saveSelections(selections, programmeCode, semester) {
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    const term = semester === "SemB" ? "SemB" : "SemA";
+    const term = normalizeSemester(semester);
     let stored = all[code];
-    if (!stored || typeof stored !== "object" || Array.isArray(stored)) stored = {};
-    if (stored.SemA === undefined && stored.SemB === undefined) {
-      stored = { SemA: stored, SemB: {} };
-    }
+    const migrated = ensureSemesterStructure(stored);
+    stored = migrated || { SemA: {}, SemB: {}, Summer: {} };
     stored[term] = selections || {};
     all[code] = stored;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
@@ -204,12 +214,11 @@
   function clearSelections(programmeCode, semester) {
     const all = getAllSelections();
     const code = String(programmeCode || getStoredProgramme());
-    const term = semester === "SemB" ? "SemB" : "SemA";
+    const term = normalizeSemester(semester);
     let stored = all[code];
-    if (!stored || typeof stored !== "object" || Array.isArray(stored)) return;
-    if (stored.SemA === undefined && stored.SemB === undefined) {
-      stored = { SemA: stored, SemB: {} };
-    }
+    const migrated = ensureSemesterStructure(stored);
+    if (!migrated) return;
+    stored = migrated;
     stored[term] = {};
     all[code] = stored;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
@@ -1012,7 +1021,7 @@
 
   function initUpdateNotice() {
     try {
-      if (localStorage.getItem("cityu-update-notice-v462") === "dismissed") return;
+      if (localStorage.getItem("cityu-update-notice-v47") === "dismissed") return;
     } catch (e) { /* localStorage 不可用时仍显示通知 */ }
     const isEn = getStoredLang() === "en";
     const notice = document.createElement("div");
@@ -1020,13 +1029,13 @@
     notice.setAttribute("role", "status");
     notice.innerHTML =
       '<div class="update-notice-body">' +
-        '<strong>' + (isEn ? "CityU Pedia updated to v4.6.2" : "CityU Pedia 已更新至 v4.6.2") + '</strong>' +
-        '<span>' + (isEn ? "Fixed MSc CS electives: restored EC5001 Introduction to eCommerce (IS dept) as Group II elective" : "修正 MSCS 选修课：按官网恢复 EC5001 电子商务导论（资讯系统系）为 Group II 选修课") + '</span>' +
+        '<strong>' + (isEn ? "CityU Pedia updated to v4.7" : "CityU Pedia 已更新至 v4.7") + '</strong>' +
+        '<span>' + (isEn ? "Complete MSCS curriculum (41 courses) · Summer term support added" : "补全 MSCS 全部课程（41 门）· 新增 Summer 暑期学期支持") + '</span>' +
       '</div>' +
       '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';
     notice.querySelector(".update-notice-close").addEventListener("click", () => {
       notice.remove();
-      try { localStorage.setItem("cityu-update-notice-v462", "dismissed"); } catch (e) { /* ignore */ }
+      try { localStorage.setItem("cityu-update-notice-v47", "dismissed"); } catch (e) { /* ignore */ }
     });
     document.body.prepend(notice);
   }

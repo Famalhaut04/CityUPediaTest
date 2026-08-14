@@ -237,7 +237,7 @@
     container.hidden = false;
     if (!["all", ...terms].includes(activeSemesterFilter)) activeSemesterFilter = "all";
     row.innerHTML = [`<button class="term-filter-pill ${activeSemesterFilter === "all" ? "active" : ""}" type="button" data-term-filter="all">全部</button>`]
-      .concat(terms.map((term) => `<button class="term-filter-pill ${term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : ""} ${activeSemesterFilter === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
+      .concat(terms.map((term) => `<button class="term-filter-pill ${term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : term === "Summer" ? "term-summer" : ""} ${activeSemesterFilter === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
       .join("");
   }
 
@@ -267,7 +267,7 @@
       const groupInfo = MSDS.getElectiveGroupInfo(currentProgramme(), MSDS.getElectiveGroup(course, activeProgramme));
       const groupBadge = groupInfo ? `<span class="mini-badge group">${MSDS.escapeHtml(groupInfo.label_zh)}</span>` : "";
       const termBadge = course.semester_tag
-        ? `<span class="mini-badge term ${course.semester_tag === "SemA" ? "term-a" : "term-b"}">${MSDS.escapeHtml(course.semester_tag)}</span>`
+        ? `<span class="mini-badge term ${course.semester_tag === "SemA" ? "term-a" : course.semester_tag === "SemB" ? "term-b" : course.semester_tag === "Summer" ? "term-summer" : ""}">${MSDS.escapeHtml(course.semester_tag)}</span>`
         : "";
       const myReview = MSDS.getCourseReview(course.code);
       const reviewBadge = myReview ? `<span class="mini-badge review" title="我的评价：${Number(myReview.rating)} 星${myReview.comment ? " · " + MSDS.escapeHtml(myReview.comment) : ""}">已评 ${Number(myReview.rating)}★</span>` : "";
@@ -528,7 +528,7 @@
     MSDS.saveSelections(selections, activeProgramme, activeSemester);
   }
 
-  // 切换课表学期（SemA / SemB），各自独立保存课表
+  // 切换课表学期（SemA / SemB / Summer），各自独立保存课表
   function switchSemester(semester) {
     if (semester === activeSemester) return;
     activeSemester = semester;

@@ -788,6 +788,10 @@ body {
   color: var(--ok);
 }
 
+.term-filter-pill.term-summer:hover {
+  color: var(--warning);
+}
+
 .day-filter-pill.active,
 .term-filter-pill.active {
   background: var(--primary-soft);
@@ -803,6 +807,11 @@ body {
 .term-filter-pill.term-b.active {
   background: var(--ok-soft);
   color: var(--ok);
+}
+
+.term-filter-pill.term-summer.active {
+  background: var(--warning-soft);
+  color: var(--warning);
 }
 
 /* 课表 SemA / SemB 学期切换 */
@@ -857,6 +866,11 @@ body {
 .semester-switch button[data-semester-switch="SemA"].active {
   background: var(--danger-soft);
   color: var(--danger);
+}
+
+.semester-switch button[data-semester-switch="Summer"].active {
+  background: var(--warning-soft);
+  color: var(--warning);
 }
 
 .course-list,
@@ -1121,7 +1135,7 @@ body {
   border: 1px solid var(--hairline);
 }
 
-/* SemA（第一学期）红色 / SemB（第二学期）绿色 */
+/* SemA（第一学期）红色 / SemB（第二学期）绿色 / Summer（暑期）琥珀色 */
 .mini-badge.term.term-a {
   background: var(--danger-soft);
   color: var(--danger);
@@ -1131,6 +1145,12 @@ body {
 .mini-badge.term.term-b {
   background: var(--ok-soft);
   color: var(--ok);
+  border-color: transparent;
+}
+
+.mini-badge.term.term-summer {
+  background: var(--warning-soft);
+  color: var(--warning);
   border-color: transparent;
 }
 
