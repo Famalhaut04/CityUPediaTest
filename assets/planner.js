@@ -717,7 +717,9 @@
     // 转 JPEG → 手写最小 PDF（单页图片型）
     const jpegDataUrl = canvas.toDataURL("image/jpeg", 0.92);
     const jpegBase64 = jpegDataUrl.split(",")[1];
-    const pdfBytes = jpegImageToPdf(jpegBase64, canvasWidth, canvasHeight);
+    // 注意：canvas 经 ctx.scale(scale,scale) 绘制后，位图像素尺寸是 canvas.width × canvas.height（已乘 scale），
+    // 必须传入物理尺寸，否则 PDF 中 /Width //Height 与 JPEG 实际采样点数不符，阅读器会渲染成灰屏/空白。
+    const pdfBytes = jpegImageToPdf(jpegBase64, canvas.width, canvas.height);
 
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
@@ -727,7 +729,7 @@
     document.body.appendChild(link);
     link.click();
     link.remove();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
     MSDS.showToast("已导出课表 PDF（图片型）");
   }
 
