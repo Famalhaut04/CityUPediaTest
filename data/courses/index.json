@@ -1468,6 +1468,7 @@
                                        ],
                         "programme_requirement_types":  {
                                                             "MSAI":  "core",
+                                                            "MSCS":  "elective",
                                                             "MSEC":  "elective"
                                                         },
                         "requirement_type":  "core",
@@ -1782,8 +1783,7 @@
                                            "MSEC"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSEC":  "core",
-                                                            "MSCS":  "elective"
+                                                            "MSEC":  "core"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Introduction to eCommerce",
@@ -1800,10 +1800,7 @@
                                         "medium":  "English"
                                     },
                         "section_count":  1,
-                        "semester_tag":  "SemA",
-                        "programme_elective_groups":  {
-                                                          "MSCS":  "group2"
-                                                      }
+                        "semester_tag":  "SemA"
                     },
                     {
                         "code":  "IS5540",

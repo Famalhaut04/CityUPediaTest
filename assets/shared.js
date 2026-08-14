@@ -1012,7 +1012,7 @@
 
   function initUpdateNotice() {
     try {
-      if (localStorage.getItem("cityu-update-notice-v46") === "dismissed") return;
+      if (localStorage.getItem("cityu-update-notice-v461") === "dismissed") return;
     } catch (e) { /* localStorage 不可用时仍显示通知 */ }
     const isEn = getStoredLang() === "en";
     const notice = document.createElement("div");
@@ -1020,13 +1020,13 @@
     notice.setAttribute("role", "status");
     notice.innerHTML =
       '<div class="update-notice-body">' +
-        '<strong>' + (isEn ? "CityU Pedia updated to v4.6" : "CityU Pedia 已更新至 v4.6") + '</strong>' +
-        '<span>' + (isEn ? "Complete AIFS (MSAIFS) curriculum · EC course PDFs, bilingual intros & reviews" : "补全 AIFS（人工智能与科学理学硕士）完整课程体系 · EC 专业课程 PDF、双语逐页介绍与课程评价") + '</span>' +
+        '<strong>' + (isEn ? "CityU Pedia updated to v4.6.1" : "CityU Pedia 已更新至 v4.6.1") + '</strong>' +
+        '<span>' + (isEn ? "Fixed MSc Computer Science core courses (3 core, no IS courses)" : "修正计算机科学理学硕士（MSCS）核心课程：仅 3 门核心课，不含 IS 系课程") + '</span>' +
       '</div>' +
       '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';
     notice.querySelector(".update-notice-close").addEventListener("click", () => {
       notice.remove();
-      try { localStorage.setItem("cityu-update-notice-v46", "dismissed"); } catch (e) { /* ignore */ }
+      try { localStorage.setItem("cityu-update-notice-v461", "dismissed"); } catch (e) { /* ignore */ }
     });
     document.body.prepend(notice);
   }
