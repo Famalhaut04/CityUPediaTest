@@ -415,5 +415,149 @@
   "DSC6030": {
     "pdf": "docs/DSC6030.pdf",
     "translation": "data/course-documents/translations/DSC6030.json"
+  },
+  "DSC6009": {
+    "pdf": "docs/DSC6009.pdf"
+  },
+  "BIOS8005": {
+    "pdf": "docs/BIOS8005.pdf"
+  },
+  "CS5286": {
+    "pdf": "docs/CS5286.pdf"
+  },
+  "EC5001": {
+    "pdf": "docs/EC5001.pdf"
+  },
+  "IS5414": {
+    "pdf": "docs/IS5414.pdf"
+  },
+  "DSC8001": {
+    "pdf": "docs/DSC8001.pdf"
+  },
+  "DSC8002": {
+    "pdf": "docs/DSC8002.pdf"
+  },
+  "DSC8003": {
+    "pdf": "docs/DSC8003.pdf"
+  },
+  "BIOS6900": {
+    "pdf": "docs/BIOS6900.pdf"
+  },
+  "BIOS6901": {
+    "pdf": "docs/BIOS6901.pdf"
+  },
+  "BIOS6903": {
+    "pdf": "docs/BIOS6903.pdf"
+  },
+  "BIOS6904": {
+    "pdf": "docs/BIOS6904.pdf"
+  },
+  "BIOS6905": {
+    "pdf": "docs/BIOS6905.pdf"
+  },
+  "BIOS8006": {
+    "pdf": "docs/BIOS8006.pdf"
+  },
+  "CS5185": {
+    "pdf": "docs/CS5185.pdf"
+  },
+  "CS5188": {
+    "pdf": "docs/CS5188.pdf"
+  },
+  "CS5282": {
+    "pdf": "docs/CS5282.pdf"
+  },
+  "CS5348": {
+    "pdf": "docs/CS5348.pdf"
+  },
+  "CS5367": {
+    "pdf": "docs/CS5367.pdf"
+  },
+  "BIOS5802": {
+    "pdf": "docs/BIOS5802.pdf"
+  },
+  "CS5611": {
+    "pdf": "docs/CS5611.pdf"
+  },
+  "CS5612": {
+    "pdf": "docs/CS5612.pdf"
+  },
+  "DSC6001": {
+    "pdf": "docs/DSC6001.pdf"
+  },
+  "DSC6002": {
+    "pdf": "docs/DSC6002.pdf"
+  },
+  "EC6001": {
+    "pdf": "docs/EC6001.pdf"
+  },
+  "IS5314": {
+    "pdf": "docs/IS5314.pdf"
+  },
+  "DSC6022": {
+    "pdf": "docs/DSC6022.pdf"
+  },
+  "CS6175": {
+    "pdf": "docs/CS6175.pdf"
+  },
+  "CS6187": {
+    "pdf": "docs/CS6187.pdf"
+  },
+  "CS6534": {
+    "pdf": "docs/CS6534.pdf"
+  },
+  "CS6535": {
+    "pdf": "docs/CS6535.pdf"
+  },
+  "CS6536": {
+    "pdf": "docs/CS6536.pdf"
+  },
+  "CS6537": {
+    "pdf": "docs/CS6537.pdf"
+  },
+  "CS6532": {
+    "pdf": "docs/CS6532.pdf"
+  },
+  "CS6520": {
+    "pdf": "docs/CS6520.pdf"
+  },
+  "CS6531": {
+    "pdf": "docs/CS6531.pdf"
+  },
+  "DSC6003": {
+    "pdf": "docs/DSC6003.pdf"
+  },
+  "DSC6007": {
+    "pdf": "docs/DSC6007.pdf"
+  },
+  "DSC6014": {
+    "pdf": "docs/DSC6014.pdf"
+  },
+  "DSC6015": {
+    "pdf": "docs/DSC6015.pdf"
+  },
+  "DSC6019": {
+    "pdf": "docs/DSC6019.pdf"
+  },
+  "DSC6032": {
+    "pdf": "docs/DSC6032.pdf"
+  },
+  "DSC8007": {
+    "pdf": "docs/DSC8007.pdf"
+  },
+  "DSC8008": {
+    "pdf": "docs/DSC8008.pdf"
+  },
+  "DSC8009": {
+    "pdf": "docs/DSC8009.pdf"
+  },
+  "DSC8011": {
+    "pdf": "docs/DSC8011.pdf"
+  },
+  "DSC8013": {
+    "pdf": "docs/DSC8013.pdf"
+  },
+  "DSC8014": {
+    "pdf": "docs/DSC8014.pdf"
   }
 }
