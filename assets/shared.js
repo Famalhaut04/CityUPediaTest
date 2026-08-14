@@ -1012,7 +1012,7 @@
 
   function initUpdateNotice() {
     try {
-      if (localStorage.getItem("cityu-update-notice-v461") === "dismissed") return;
+      if (localStorage.getItem("cityu-update-notice-v462") === "dismissed") return;
     } catch (e) { /* localStorage 不可用时仍显示通知 */ }
     const isEn = getStoredLang() === "en";
     const notice = document.createElement("div");
@@ -1020,13 +1020,13 @@
     notice.setAttribute("role", "status");
     notice.innerHTML =
       '<div class="update-notice-body">' +
-        '<strong>' + (isEn ? "CityU Pedia updated to v4.6.1" : "CityU Pedia 已更新至 v4.6.1") + '</strong>' +
-        '<span>' + (isEn ? "Fixed MSc Computer Science core courses (3 core, no IS courses)" : "修正计算机科学理学硕士（MSCS）核心课程：仅 3 门核心课，不含 IS 系课程") + '</span>' +
+        '<strong>' + (isEn ? "CityU Pedia updated to v4.6.2" : "CityU Pedia 已更新至 v4.6.2") + '</strong>' +
+        '<span>' + (isEn ? "Fixed MSc CS electives: restored EC5001 Introduction to eCommerce (IS dept) as Group II elective" : "修正 MSCS 选修课：按官网恢复 EC5001 电子商务导论（资讯系统系）为 Group II 选修课") + '</span>' +
       '</div>' +
       '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';
     notice.querySelector(".update-notice-close").addEventListener("click", () => {
       notice.remove();
-      try { localStorage.setItem("cityu-update-notice-v461", "dismissed"); } catch (e) { /* ignore */ }
+      try { localStorage.setItem("cityu-update-notice-v462", "dismissed"); } catch (e) { /* ignore */ }
     });
     document.body.prepend(notice);
   }

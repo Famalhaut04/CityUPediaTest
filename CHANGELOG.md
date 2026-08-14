@@ -1,5 +1,14 @@
 # 更新日志 / Changelog
 
+## 测试版 4.6.2（Test v4.6.2）· 2026-08-14
+
+> 修正 MSCS 选修课归属：按城大官网恢复 EC5001（电子商务导论，资讯系统系）为 Group II 选修课。
+
+### 课程数据修正
+
+- **恢复 IS 系选修课 EC5001**：经与城大官网「MSc Computer Science」课程结构（Group II Electives）核对，EC5001 Introduction to eCommerce（电子商务导论，由资讯系统系授课）确属 MSCS 选修 Group II 课程，且 26fall（SemA 2026/27）开课。此前 v4.6.1 将其误移除，现已在 `programmes`、`programme_requirement_types`（MSCS: elective）与 `programme_elective_groups`（MSCS: group2）中恢复
+- **澄清核心课与选修课边界**：MSCS 核心课仍为 3 门（CS5222/CS5351/CS5481，不含 IS 系课程）；EC5001 属于「选修课 Group II」，非核心课，二者不冲突
+
 ## 测试版 4.6.1（Test v4.6.1）· 2026-08-14
 
 > 修正计算机科学理学硕士（MSCS）核心课程归属：仅保留 3 门核心课，并移除误挂的 IS 系课程。

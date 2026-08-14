@@ -1780,10 +1780,12 @@
                     {
                         "code":  "EC5001",
                         "programmes":  [
-                                           "MSEC"
+                                           "MSEC",
+                                           "MSCS"
                                        ],
                         "programme_requirement_types":  {
-                                                            "MSEC":  "core"
+                                                            "MSEC":  "core",
+                                                            "MSCS":  "elective"
                                                         },
                         "requirement_type":  "core",
                         "programme_title":  "Introduction to eCommerce",
@@ -1800,7 +1802,10 @@
                                         "medium":  "English"
                                     },
                         "section_count":  1,
-                        "semester_tag":  "SemA"
+                        "semester_tag":  "SemA",
+                        "programme_elective_groups":  {
+                                                          "MSCS":  "group2"
+                                                      }
                     },
                     {
                         "code":  "IS5540",
