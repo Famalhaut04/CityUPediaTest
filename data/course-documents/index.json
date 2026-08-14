@@ -227,5 +227,193 @@
   "IS5740": {
     "pdf": "docs/IS5740.pdf",
     "translation": "data/course-documents/translations/IS5740.json"
+  },
+  "CHEM6134": {
+    "pdf": "docs/CHEM6134.pdf",
+    "translation": "data/course-documents/translations/CHEM6134.json"
+  },
+  "PHY5503": {
+    "pdf": "docs/PHY5503.pdf",
+    "translation": "data/course-documents/translations/PHY5503.json"
+  },
+  "PHY5504": {
+    "pdf": "docs/PHY5504.pdf",
+    "translation": "data/course-documents/translations/PHY5504.json"
+  },
+  "PHY5505": {
+    "pdf": "docs/PHY5505.pdf",
+    "translation": "data/course-documents/translations/PHY5505.json"
+  },
+  "PHY5506": {
+    "pdf": "docs/PHY5506.pdf",
+    "translation": "data/course-documents/translations/PHY5506.json"
+  },
+  "PHY6502": {
+    "pdf": "docs/PHY6502.pdf",
+    "translation": "data/course-documents/translations/PHY6502.json"
+  },
+  "PHY6603": {
+    "pdf": "docs/PHY6603.pdf",
+    "translation": "data/course-documents/translations/PHY6603.json"
+  },
+  "PHY6604": {
+    "pdf": "docs/PHY6604.pdf",
+    "translation": "data/course-documents/translations/PHY6604.json"
+  },
+  "DSC6025": {
+    "pdf": "docs/DSC6025.pdf",
+    "translation": "data/course-documents/translations/DSC6025.json"
+  },
+  "MSE5301": {
+    "pdf": "docs/MSE5301.pdf",
+    "translation": "data/course-documents/translations/MSE5301.json"
+  },
+  "MSE5303": {
+    "pdf": "docs/MSE5303.pdf",
+    "translation": "data/course-documents/translations/MSE5303.json"
+  },
+  "MSE6181": {
+    "pdf": "docs/MSE6181.pdf",
+    "translation": "data/course-documents/translations/MSE6181.json"
+  },
+  "MSE6265": {
+    "pdf": "docs/MSE6265.pdf",
+    "translation": "data/course-documents/translations/MSE6265.json"
+  },
+  "BMS5001": {
+    "pdf": "docs/BMS5001.pdf",
+    "translation": "data/course-documents/translations/BMS5001.json"
+  },
+  "BMS5002": {
+    "pdf": "docs/BMS5002.pdf",
+    "translation": "data/course-documents/translations/BMS5002.json"
+  },
+  "BMS5007": {
+    "pdf": "docs/BMS5007.pdf",
+    "translation": "data/course-documents/translations/BMS5007.json"
+  },
+  "BMS5008": {
+    "pdf": "docs/BMS5008.pdf",
+    "translation": "data/course-documents/translations/BMS5008.json"
+  },
+  "BMS5009": {
+    "pdf": "docs/BMS5009.pdf",
+    "translation": "data/course-documents/translations/BMS5009.json"
+  },
+  "BMS5010": {
+    "pdf": "docs/BMS5010.pdf",
+    "translation": "data/course-documents/translations/BMS5010.json"
+  },
+  "BMS5011": {
+    "pdf": "docs/BMS5011.pdf",
+    "translation": "data/course-documents/translations/BMS5011.json"
+  },
+  "BMS5012": {
+    "pdf": "docs/BMS5012.pdf",
+    "translation": "data/course-documents/translations/BMS5012.json"
+  },
+  "BMS5013": {
+    "pdf": "docs/BMS5013.pdf",
+    "translation": "data/course-documents/translations/BMS5013.json"
+  },
+  "BMS8111": {
+    "pdf": "docs/BMS8111.pdf",
+    "translation": "data/course-documents/translations/BMS8111.json"
+  },
+  "BMS8112": {
+    "pdf": "docs/BMS8112.pdf",
+    "translation": "data/course-documents/translations/BMS8112.json"
+  },
+  "SEE5201": {
+    "pdf": "docs/SEE5201.pdf",
+    "translation": "data/course-documents/translations/SEE5201.json"
+  },
+  "SEE5202": {
+    "pdf": "docs/SEE5202.pdf",
+    "translation": "data/course-documents/translations/SEE5202.json"
+  },
+  "SEE5211": {
+    "pdf": "docs/SEE5211.pdf",
+    "translation": "data/course-documents/translations/SEE5211.json"
+  },
+  "SEE5212": {
+    "pdf": "docs/SEE5212.pdf",
+    "translation": "data/course-documents/translations/SEE5212.json"
+  },
+  "SEE6101": {
+    "pdf": "docs/SEE6101.pdf",
+    "translation": "data/course-documents/translations/SEE6101.json"
+  },
+  "SEE6103": {
+    "pdf": "docs/SEE6103.pdf",
+    "translation": "data/course-documents/translations/SEE6103.json"
+  },
+  "SEE6104": {
+    "pdf": "docs/SEE6104.pdf",
+    "translation": "data/course-documents/translations/SEE6104.json"
+  },
+  "SEE6115": {
+    "pdf": "docs/SEE6115.pdf",
+    "translation": "data/course-documents/translations/SEE6115.json"
+  },
+  "SEE6118": {
+    "pdf": "docs/SEE6118.pdf",
+    "translation": "data/course-documents/translations/SEE6118.json"
+  },
+  "SEE6122": {
+    "pdf": "docs/SEE6122.pdf",
+    "translation": "data/course-documents/translations/SEE6122.json"
+  },
+  "SEE6124": {
+    "pdf": "docs/SEE6124.pdf",
+    "translation": "data/course-documents/translations/SEE6124.json"
+  },
+  "SEE6125": {
+    "pdf": "docs/SEE6125.pdf",
+    "translation": "data/course-documents/translations/SEE6125.json"
+  },
+  "SEE6212": {
+    "pdf": "docs/SEE6212.pdf",
+    "translation": "data/course-documents/translations/SEE6212.json"
+  },
+  "SEE6213": {
+    "pdf": "docs/SEE6213.pdf",
+    "translation": "data/course-documents/translations/SEE6213.json"
+  },
+  "SEE6214": {
+    "pdf": "docs/SEE6214.pdf",
+    "translation": "data/course-documents/translations/SEE6214.json"
+  },
+  "SEE6224": {
+    "pdf": "docs/SEE6224.pdf",
+    "translation": "data/course-documents/translations/SEE6224.json"
+  },
+  "SEE6225": {
+    "pdf": "docs/SEE6225.pdf",
+    "translation": "data/course-documents/translations/SEE6225.json"
+  },
+  "DSC6023": {
+    "pdf": "docs/DSC6023.pdf",
+    "translation": "data/course-documents/translations/DSC6023.json"
+  },
+  "DSC6024": {
+    "pdf": "docs/DSC6024.pdf",
+    "translation": "data/course-documents/translations/DSC6024.json"
+  },
+  "DSC6027": {
+    "pdf": "docs/DSC6027.pdf",
+    "translation": "data/course-documents/translations/DSC6027.json"
+  },
+  "DSC6028": {
+    "pdf": "docs/DSC6028.pdf",
+    "translation": "data/course-documents/translations/DSC6028.json"
+  },
+  "DSC6029": {
+    "pdf": "docs/DSC6029.pdf",
+    "translation": "data/course-documents/translations/DSC6029.json"
+  },
+  "DSC6030": {
+    "pdf": "docs/DSC6030.pdf",
+    "translation": "data/course-documents/translations/DSC6030.json"
   }
 }
