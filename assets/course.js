@@ -31,16 +31,18 @@
       return {
         ...source,
         id,
-        review: sourceReviewStore[id]?.course_reviews?.[course.code] || ""
+        review: String(sourceReviewStore[id]?.course_reviews?.[course.code] || "").trim()
       };
     }).filter(Boolean);
+    // 有原文摘录的来源排在前面：部分来源尚未逐课整理原文，此时只展示标题与原文链接
+    sources.sort((a, b) => Number(Boolean(b.review)) - Number(Boolean(a.review)));
     const currentProgramme = MSDS.getStoredProgramme() || MSDS.DEFAULT_PROGRAMME;
     const courseProgrammes = MSDS.courseProgrammes(course, data);
     const belongsToCurrent = courseProgrammes.includes(currentProgramme);
     const displayProgramme = belongsToCurrent ? currentProgramme : (courseProgrammes[0] || MSDS.DEFAULT_PROGRAMME);
     const displayRequirementType = MSDS.getRequirementType(course, displayProgramme);
     const displayGroupInfo = MSDS.getElectiveGroupInfo(MSDS.getProgramme(data, displayProgramme), MSDS.getElectiveGroup(course, displayProgramme));
-    const selections = MSDS.getStoredSelections(currentProgramme, course.semester_tag);
+    const selections = MSDS.getStoredSelections(currentProgramme, MSDS.primarySemester(course));
     const isAdded = Boolean(selections[course.code]);
     const myReview = MSDS.getCourseReview(course.code);
     let added = isAdded;
@@ -71,7 +73,7 @@
           <div class="detail-code-row">
             <span class="detail-code">${MSDS.escapeHtml(course.code)}</span>
             ${displayRequirementType === "core" ? '<span class="verdict-badge core">核心课</span>' : MSDS.recommendationBadge(rec)}
-            ${course.semester_tag ? `<span class="mini-badge term ${course.semester_tag === "SemA" ? "term-a" : course.semester_tag === "SemB" ? "term-b" : course.semester_tag === "Summer" ? "term-summer" : ""}">${MSDS.escapeHtml(course.semester_tag)}</span>` : ""}
+            ${MSDS.courseTerms(course).map((term) => `<span class="mini-badge term ${MSDS.termBadgeClass(term)}">${MSDS.escapeHtml(term)}</span>`).join("")}
           </div>
           <h1>${MSDS.escapeHtml(course.programme_title)}</h1>
           <p>${course.credits} 学分 · ${MSDS.escapeHtml(course.remarks)} · ${MSDS.escapeHtml(titleNote)}</p>
@@ -99,32 +101,32 @@
           </section>
 
           <section class="detail-section my-review-section">
-            <h2>我的评价</h2>
-            <div class="auth-banner" id="course-auth-banner"></div>
-            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "评分与评语会保存到云端共享给所有使用者，也会保留在当前浏览器本地。" : "评分与评语仅保存在当前浏览器本地，仅供自己参考（云端共享未启用）。"}</p>
+            <h2>提交评价</h2>
+            <p class="my-review-hint">${MSDS.larkReviewsEnabled() ? "填写下方表单提交你的课程评价，提交后由 CSSA 管理员审核通过后展示。" : "评分与评语仅保存在当前浏览器本地，仅供自己参考（云端共享未启用）。"}</p>
+            ${MSDS.larkReviewsEnabled() ? `
+            <iframe src="${MSDS.escapeHtml(window.LARK_CONFIG.formUrl)}" style="width:100%;height:680px;border:none;min-height:480px;" title="课程评价表单" allow="clipboard-read;clipboard-write"></iframe>
+            <p class="my-review-hint" style="margin-top:0.5rem;">表单由飞书提供，填写后数据进入审核流程。</p>
+            ` : `
             <div class="my-review-form">
               <div class="my-review-stars">
                 <span class="my-review-label">课程评分</span>
                 ${ratingPickerHTML(myReview?.rating || 0, false)}
                 <span class="my-review-score" id="my-review-score">${myReview?.rating ? `${myReview.rating} 星` : "未评分"}</span>
               </div>
-              ${MSDS.cloudReviewsEnabled() ? `
-              <label class="my-review-comment-label" for="my-review-nickname">昵称（选填）</label>
-              <input id="my-review-nickname" class="my-review-comment" type="text" maxlength="30" placeholder="不填则使用登录账号默认昵称">` : ""}
               <label class="my-review-comment-label" for="my-review-comment">课程评语（选填）</label>
               <textarea id="my-review-comment" class="my-review-comment" rows="4" maxlength="500" placeholder="写下你的课程感受、上课体验或避坑建议…">${myReview ? MSDS.escapeHtml(myReview.comment) : ""}</textarea>
               <div class="my-review-actions">
                 <button id="my-review-save" class="button button-primary" type="button">${myReview ? "更新评价" : "保存评价"}</button>
-                ${myReview ? `<button id="my-review-remove" class="button button-quiet" type="button">删除评价</button>` : ""}
+                <button id="my-review-remove" class="button button-quiet" type="button" ${myReview ? "" : "hidden"}>删除评价</button>
                 <span class="my-review-saved" id="my-review-saved" hidden></span>
               </div>
-            </div>
+            </div>`}
           </section>
 
           <section class="detail-section cloud-reviews-section" id="course-reviews">
             <h2>课程评价</h2>
-            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，实时同步自云端数据库。你可以删除自己提交的评价。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
-            ${MSDS.cloudReviewsEnabled() ? `
+            <p class="my-review-hint">${MSDS.cloudReviewsEnabled() ? "所有使用者的共享评价，定期同步自审核数据库。" : "云端共享未启用，暂无法查看其他使用者的评价。"}</p>
+            ${MSDS.cloudReviewsEnabled() && !MSDS.larkReviewsEnabled() ? `
             <div class="admin-panel" id="admin-panel">
               <form class="admin-login-form" id="admin-login-form">
                 <strong class="admin-panel-title">管理员登录</strong>
@@ -197,7 +199,9 @@
                   </div>
                   <a class="source-review-link" href="${MSDS.escapeHtml(source.url)}" target="_blank" rel="noreferrer">查看原文</a>
                 </div>
-                <p>${MSDS.escapeHtml(source.review)}</p>
+                ${source.review
+                  ? `<p>${MSDS.escapeHtml(source.review)}</p>`
+                  : '<p class="source-review-pending">本站尚未整理这条来源中与本课程相关的原文摘录，可点击「查看原文」阅读原帖。</p>'}
               </article>`).join("")}</div>` : '<div class="notice source-empty">本地资料暂未找到可核对的学生评价来源。</div>'}
             <div class="notice source-notice"><strong>阅读提示：</strong>学生经验对应往届课程，考核方式、教师与难度可能变化。当前班次事实来自 ${MSDS.escapeHtml(data.schedule_as_of || "课表快照")} 的 AIMS 课表快照。</div>
           </section>
@@ -210,11 +214,11 @@
         MSDS.showToast("该课程暂无归属项目");
         return;
       }
-      const current = MSDS.getStoredSelections(programme, course.semester_tag);
+      const current = MSDS.getStoredSelections(programme, MSDS.primarySemester(course));
       if (current[course.code]) {
         // 已加入：再次点击取消选择
         delete current[course.code];
-        MSDS.saveSelections(current, programme, course.semester_tag);
+        MSDS.saveSelections(current, programme, MSDS.primarySemester(course));
         added = false;
         const button = document.getElementById("detail-add");
         button.textContent = "加入课表";
@@ -226,7 +230,7 @@
       if (chosenTutorialCrn) {
         current[course.code].tutorialCrn = chosenTutorialCrn;
       }
-      MSDS.saveSelections(current, programme, course.semester_tag);
+      MSDS.saveSelections(current, programme, MSDS.primarySemester(course));
       if (!belongsToCurrent) {
         MSDS.saveProgramme(programme);
       }
@@ -238,12 +242,15 @@
     });
 
     // ============ 我的评价：星级选择、保存、删除 ============
+    // Lark 模式下评价表单改为 iframe，以下逻辑跳过
+    const larkMode = MSDS.larkReviewsEnabled();
     let chosenRating = myReview?.rating || 0;
     const scoreEl = document.getElementById("my-review-score");
     const starsContainer = document.querySelector(".rating-picker");
 
     // 登录状态横幅：未登录提示去登录；已登录显示账号与退出按钮
     function renderAuthBanner() {
+      if (larkMode) return;
       const banner = document.getElementById("course-auth-banner");
       if (!banner) return;
       const student = MSDS.currentStudent ? MSDS.currentStudent() : null;
@@ -291,7 +298,7 @@
       scoreEl.textContent = chosenRating ? `${chosenRating} 星` : "未评分";
     }
 
-    if (starsContainer) {
+    if (starsContainer && !larkMode) {
       starsContainer.addEventListener("click", (event) => {
         const star = event.target.closest(".rate-star");
         if (!star || star.disabled) return;
@@ -310,7 +317,9 @@
       });
     }
 
-    document.getElementById("my-review-save").addEventListener("click", () => {
+    const saveBtn = document.getElementById("my-review-save");
+    if (saveBtn && !larkMode) {
+    saveBtn.addEventListener("click", () => {
       if (!chosenRating) {
         MSDS.showToast("请先选择星级评分");
         return;
@@ -320,6 +329,9 @@
       const savedEl = document.getElementById("my-review-saved");
       savedEl.textContent = `已保存于 ${new Date().toLocaleString("zh-CN", { hour12: false })}`;
       savedEl.hidden = false;
+      // 首次保存后立即切换成“已有评价”状态，无需刷新页面才能看到删除按钮
+      document.getElementById("my-review-save").textContent = "更新评价";
+      document.getElementById("my-review-remove").hidden = false;
       MSDS.showToast(`已保存 ${course.code} 的评价`);
       // 云端共享：若已启用 Supabase，同步提交到云端并刷新“课程评价”
       if (MSDS.cloudReviewsEnabled()) {
@@ -341,14 +353,17 @@
           });
       }
     });
+    }
 
-    document.getElementById("my-review-remove")?.addEventListener("click", () => {
+    const removeBtn = document.getElementById("my-review-remove");
+    if (removeBtn && !larkMode) {
+    removeBtn.addEventListener("click", () => {
       if (!window.confirm(`确定删除 ${course.code} 的个人评价吗？`)) return;
       MSDS.removeCourseReview(course.code);
       chosenRating = 0;
       document.getElementById("my-review-comment").value = "";
       refreshStarState();
-      document.getElementById("my-review-remove").remove();
+      document.getElementById("my-review-remove").hidden = true;
       const saveButton = document.getElementById("my-review-save");
       saveButton.textContent = "保存评价";
       const savedEl = document.getElementById("my-review-saved");
@@ -356,16 +371,17 @@
       savedEl.textContent = "";
       MSDS.showToast("已删除评价");
     });
+    }
 
     document.querySelectorAll(".tutorial-pick").forEach((radio) => {
       radio.addEventListener("change", (event) => {
         chosenTutorialCrn = event.target.value;
         if (!added) return;
         const programme = belongsToCurrent ? currentProgramme : courseProgrammes[0];
-        const current = MSDS.getStoredSelections(programme, course.semester_tag);
+        const current = MSDS.getStoredSelections(programme, MSDS.primarySemester(course));
         if (!current[course.code]) return;
         current[course.code].tutorialCrn = chosenTutorialCrn;
-        MSDS.saveSelections(current, programme, course.semester_tag);
+        MSDS.saveSelections(current, programme, MSDS.primarySemester(course));
         const section = MSDS.findSection(course, chosenTutorialCrn);
         MSDS.showToast(section ? `已切换到 ${section.section}` : "已切换 Tutorial");
       });
@@ -377,9 +393,9 @@
       const stars = "★".repeat(Math.max(0, Math.min(5, Number(item.rating) || 0))) + "☆".repeat(Math.max(0, 5 - Math.min(5, Number(item.rating) || 0)));
       const when = new Date(item.created_at).toLocaleString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
       const student = MSDS.currentStudent ? MSDS.currentStudent() : null;
-      const isMine = (student && student.userId && item.user_id && String(item.user_id) === String(student.userId))
-        || (MSDS.getUserKey() && item.user_key && item.user_key === MSDS.getUserKey());
-      const isAdmin = MSDS.isAdminLoggedIn();
+      const isMine = !larkMode && ((student && student.userId && item.user_id && String(item.user_id) === String(student.userId))
+        || (MSDS.getUserKey() && item.user_key && item.user_key === MSDS.getUserKey()));
+      const isAdmin = !larkMode && MSDS.isAdminLoggedIn();
       const canDelete = isMine || isAdmin;
       const deleteLabel = isAdmin && !isMine ? "管理员删除" : "删除";
       return `
@@ -428,14 +444,17 @@
     }
 
     function bindCloudReviewDelete() {
+      if (larkMode) return;
       const container = document.getElementById("cloud-reviews");
       if (!container) return;
       container.querySelectorAll("[data-delete]").forEach((button) => {
         button.addEventListener("click", async () => {
           const id = button.getAttribute("data-delete");
           if (!id) return;
-          const label = MSDS.isAdminLoggedIn() && button.textContent.includes("管理员") ? "删除这条评价" : "删除你提交的这条评价";
-          if (!window.confirm(`确定${label}吗？该操作不可恢复。`)) return;
+          // 按钮原文案（“删除” / “管理员删除”）要留存，失败后需要原样还原
+          const originalLabel = button.textContent;
+          const confirmText = MSDS.isAdminLoggedIn() && originalLabel.includes("管理员") ? "删除这条评价" : "删除你提交的这条评价";
+          if (!window.confirm(`确定${confirmText}吗？该操作不可恢复。`)) return;
           button.disabled = true;
           button.textContent = "删除中…";
           try {
@@ -444,7 +463,7 @@
             loadCloudReviews(true);
           } catch (error) {
             button.disabled = false;
-            button.textContent = label;
+            button.textContent = originalLabel;
             MSDS.showToast(`删除失败：${error.message}`);
           }
         });
@@ -469,9 +488,9 @@
         });
     }
 
-    // 管理员登录 / 退出
+    // 管理员登录 / 退出（Lark 模式下跳过）
     const adminPanel = document.getElementById("admin-panel");
-    if (adminPanel) {
+    if (adminPanel && !larkMode) {
       const loginForm = document.getElementById("admin-login-form");
       const statusEl = document.getElementById("admin-status");
       loginForm.addEventListener("submit", async (event) => {

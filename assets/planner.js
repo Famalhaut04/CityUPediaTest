@@ -62,7 +62,7 @@
         .filter((section) => Number(section.credits) > 0)
         .map((section) => section.day);
       const matchesDay = activeDay === "all" || primaryDays.includes(activeDay);
-      const matchesSemester = activeSemesterFilter === "all" || course.semester_tag === activeSemesterFilter;
+      const matchesSemester = activeSemesterFilter === "all" || MSDS.courseTerms(course).includes(activeSemesterFilter);
       return matchesSearch && matchesFilter && matchesDay && matchesSemester;
     });
   }
@@ -149,14 +149,16 @@
       const available = programme.data_ready !== false
         && courses.some((course) => MSDS.courseProgrammes(course, data).includes(programme.code));
       const active = programme.code === activeProgramme;
+      // 保留原始文本供 textContent 使用，写进 title 属性时再转义，
+      // 否则 hints[0] 进 textContent 会把 & < > 显示成 &amp; &lt; &gt;
       const hint = available
-        ? `${MSDS.escapeHtml(programme.name_zh)}（${MSDS.escapeHtml(programme.name_en)}）`
-        : `${MSDS.escapeHtml(programme.name_zh)}：课程数据待补充`;
+        ? `${programme.name_zh}（${programme.name_en}）`
+        : `${programme.name_zh}：课程数据待补充`;
       if (active) hints.push(hint);
       if (!available) {
         return `<span class="programme-pill is-pending" role="tab" aria-selected="false" title="课程数据待补充，敬请期待">${MSDS.escapeHtml(programme.code)}<small>筹备中</small></span>`;
       }
-      return `<button class="programme-pill ${active ? "active" : ""}" type="button" role="tab" aria-selected="${active ? "true" : "false"}" data-programme="${MSDS.escapeHtml(programme.code)}" title="${hint}">${MSDS.escapeHtml(programme.code)}<small>${MSDS.escapeHtml(programme.name_zh.replace(/硕士$/, ""))}</small></button>`;
+      return `<button class="programme-pill ${active ? "active" : ""}" type="button" role="tab" aria-selected="${active ? "true" : "false"}" data-programme="${MSDS.escapeHtml(programme.code)}" title="${MSDS.escapeHtml(hint)}">${MSDS.escapeHtml(programme.code)}<small>${MSDS.escapeHtml(programme.name_zh.replace(/硕士$/, ""))}</small></button>`;
     }).join("");
     const hint = document.getElementById("programme-bar-hint");
     if (hint) hint.textContent = hints[0] || "";
@@ -227,7 +229,7 @@
     const row = document.getElementById("term-filter-row");
     if (!container || !row) return;
 
-    const terms = [...new Set(programmeCourses().map((course) => course.semester_tag).filter(Boolean))].sort();
+    const terms = [...new Set(programmeCourses().flatMap((course) => MSDS.courseTerms(course)))].sort();
     if (!terms.length) {
       container.hidden = true;
       row.innerHTML = "";
@@ -237,7 +239,7 @@
     container.hidden = false;
     if (!["all", ...terms].includes(activeSemesterFilter)) activeSemesterFilter = "all";
     row.innerHTML = [`<button class="term-filter-pill ${activeSemesterFilter === "all" ? "active" : ""}" type="button" data-term-filter="all">全部</button>`]
-      .concat(terms.map((term) => `<button class="term-filter-pill ${term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : term === "Summer" ? "term-summer" : ""} ${activeSemesterFilter === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
+      .concat(terms.map((term) => `<button class="term-filter-pill ${MSDS.termBadgeClass(term)} ${activeSemesterFilter === term ? "active" : ""}" type="button" data-term-filter="${MSDS.escapeHtml(term)}">${MSDS.escapeHtml(term)}</button>`))
       .join("");
   }
 
@@ -266,9 +268,7 @@
         : MSDS.recommendationBadge(rec, true);
       const groupInfo = MSDS.getElectiveGroupInfo(currentProgramme(), MSDS.getElectiveGroup(course, activeProgramme));
       const groupBadge = groupInfo ? `<span class="mini-badge group">${MSDS.escapeHtml(groupInfo.label_zh)}</span>` : "";
-      const termBadge = course.semester_tag
-        ? `<span class="mini-badge term ${course.semester_tag === "SemA" ? "term-a" : course.semester_tag === "SemB" ? "term-b" : course.semester_tag === "Summer" ? "term-summer" : ""}">${MSDS.escapeHtml(course.semester_tag)}</span>`
-        : "";
+      const termBadge = MSDS.courseTerms(course).map((term) => `<span class="mini-badge term ${MSDS.termBadgeClass(term)}">${MSDS.escapeHtml(term)}</span>`).join("");
       const myReview = MSDS.getCourseReview(course.code);
       const reviewBadge = myReview ? `<span class="mini-badge review" title="我的评价：${Number(myReview.rating)} 星${myReview.comment ? " · " + MSDS.escapeHtml(myReview.comment) : ""}">已评 ${Number(myReview.rating)}★</span>` : "";
       return `
@@ -421,7 +421,9 @@
     const axis = document.getElementById("time-axis");
     axis.innerHTML = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, index) => {
       const hour = START_HOUR + index;
-      return `<span class="time-label" style="top:${index * 60}px">${String(hour).padStart(2, "0")}:00</span>`;
+      // 首个标签（09:00）不下移，避免被表头 sticky 背景遮挡而显示不全
+      const shift = index === 0 ? "0" : "-6px";
+      return `<span class="time-label" style="top:${index * 60}px;transform:translateY(${shift})">${String(hour).padStart(2, "0")}:00</span>`;
     }).join("");
   }
 
@@ -532,6 +534,8 @@
   function switchSemester(semester) {
     if (semester === activeSemester) return;
     activeSemester = semester;
+    // 学期切换时同步选课列表过滤，使 Summer 等学期形成独立的选课块
+    activeSemesterFilter = semester;
     if (typeof MSDS.saveSemester === "function") MSDS.saveSemester(semester);
     reloadSelections();
     applyDefaultSelections();
@@ -722,14 +726,20 @@
     const pdfBytes = jpegImageToPdf(jpegBase64, canvas.width, canvas.height);
 
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `cityu-timetable-${activeProgramme}-${activeSemester}-${new Date().toISOString().slice(0, 10)}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const fileName = `cityu-timetable-${activeProgramme}-${activeSemester}-${new Date().toISOString().slice(0, 10)}.pdf`;
+    const file = new File([blob], fileName, { type: "application/pdf" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: "CityU 课表 PDF" }).catch(() => {});
+    } else {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
     MSDS.showToast("已导出课表 PDF（图片型）");
   }
 
@@ -777,7 +787,6 @@
       offsets[i] = pos;
       write(enc(`${i} 0 obj\n`));
       write(enc(objects[i]));
-      write(enc("\n"));
       if (i === 5) {
         write(imgData);
         write(enc("\nendstream"));

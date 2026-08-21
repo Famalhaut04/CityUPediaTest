@@ -111,6 +111,24 @@
     return [data?.programme || DEFAULT_PROGRAMME];
   }
 
+  // 课程学期列表：semester_tag 支持 "SemB+Summer" 形式，表示同一门课在多个学期开设
+  function courseTerms(course) {
+    const raw = course?.semester_tag;
+    if (!raw) return [];
+    return String(raw).split("+").map((term) => term.trim()).filter(Boolean);
+  }
+
+  // 课程详情页加入课表时使用的主学期（双学期课程取第一个，即常规学期）
+  function primarySemester(course) {
+    const terms = courseTerms(course);
+    return terms.length ? terms[0] : "SemA";
+  }
+
+  // 学期标签的 CSS 修饰类
+  function termBadgeClass(term) {
+    return term === "SemA" ? "term-a" : term === "SemB" ? "term-b" : term === "Summer" ? "term-summer" : "";
+  }
+
   function getStoredProgramme() {
     try {
       return localStorage.getItem(PROGRAMME_KEY) || DEFAULT_PROGRAMME;
@@ -266,13 +284,32 @@
   const USER_SESSION = "CITYU-user-session"; // 学生登录会话（access_token 与过期时间）
   const USER_NICKNAME = "CITYU-user-nickname"; // 学生昵称（登录/注册时填写，评价默认显示）
 
+  function larkReviewsEnabled() {
+    try {
+      return Boolean(window.LARK_CONFIG && window.LARK_CONFIG.formUrl);
+    } catch {
+      return false;
+    }
+  }
+
   function cloudReviewsEnabled() {
+    if (larkReviewsEnabled()) return true;
     try {
       const config = window.CLOUD_CONFIG;
       return Boolean(config && config.supabaseUrl && config.supabaseAnonKey);
     } catch {
       return false;
     }
+  }
+
+  let larkReviewsCache = null;
+  async function getLarkReviews() {
+    if (larkReviewsCache) return larkReviewsCache;
+    const response = await fetch("data/lark-reviews.json");
+    if (!response.ok) return [];
+    const all = await response.json();
+    larkReviewsCache = Array.isArray(all) ? all : [];
+    return larkReviewsCache;
   }
 
   // 生成或读取本机唯一的 user_key（localStorage 持久化）
@@ -533,6 +570,10 @@
   // 读取某门课程的最新云端评价（按时间倒序，最多 20 条；配合 5 分钟会话缓存控制流量）
   async function fetchCloudReviews(code, options = {}) {
     if (!cloudReviewsEnabled()) return [];
+    if (larkReviewsEnabled()) {
+      const all = await getLarkReviews();
+      return all.filter((r) => String(r.course_code).toUpperCase() === String(code).toUpperCase());
+    }
     const force = Boolean(options.force);
     if (!force) {
       const cached = readCloudCache(code);
@@ -628,6 +669,17 @@
   async function fetchCloudReviewsBatch(codes) {
     const list = Array.isArray(codes) ? codes.map((c) => String(c).trim()).filter(Boolean) : [];
     if (!cloudReviewsEnabled() || !list.length) return {};
+    if (larkReviewsEnabled()) {
+      const all = await getLarkReviews();
+      const grouped = {};
+      all.forEach((r) => {
+        const code = String(r.course_code || "").toUpperCase();
+        if (!list.map((c) => c.toUpperCase()).includes(code)) return;
+        if (!grouped[code]) grouped[code] = [];
+        grouped[code].push(r);
+      });
+      return grouped;
+    }
     const config = window.CLOUD_CONFIG;
     const url = `${config.supabaseUrl}/rest/v1/course_reviews?course_code=in.(${list.map((c) => encodeURIComponent(c)).join(",")})&limit=1000`;
     const response = await fetch(url, {
@@ -725,17 +777,15 @@
   }
 
   // 渲染星级口碑分（含分数与来源数）
+  // 半星用「实心星叠加在空心星上并按百分比裁切」实现：早期版本用 ⯨（U+2BE8）表示半星，
+  // 但该字符不在常见中英文字体内，Chrome / Safari 上会渲染成方框「豆腐块」。
   function ratingStars(rec, options = {}) {
     const score = ratingFor(rec);
     if (score == null) return "";
-    const full = Math.floor(score);
-    const half = score - full >= 0.25 && score - full < 0.75;
-    const empty = 5 - full - (half ? 1 : 0);
-    const stars =
-      "★".repeat(full) + (half ? "⯨" : "") + "☆".repeat(empty);
+    const percent = Math.max(0, Math.min(100, (score / 5) * 100));
     const count = rec?.source_ids?.length || rec?.sourceIds?.length || 0;
     const meta = options.withMeta === false ? "" : `<span class="rating-meta">${count ? `${count} 条评价来源` : "学生评价"}</span>`;
-    return `<span class="rating-line" aria-label="口碑评分 ${score} 分（满分 5 分）"><span class="rating-stars" aria-hidden="true">${stars}</span><strong class="rating-score">${score.toFixed(1)}</strong>${meta}</span>`;
+    return `<span class="rating-line" aria-label="口碑评分 ${score} 分（满分 5 分）"><span class="rating-stars" aria-hidden="true"><span class="rating-stars-empty">★★★★★</span><span class="rating-stars-fill" style="width:${percent}%">★★★★★</span></span><strong class="rating-score">${score.toFixed(1)}</strong>${meta}</span>`;
   }
 
   // ==================== 语言切换 ====================
@@ -1021,7 +1071,7 @@
 
   function initUpdateNotice() {
     try {
-      if (localStorage.getItem("cityu-update-notice-v47") === "dismissed") return;
+      if (localStorage.getItem("cityu-update-notice-pdffix2") === "dismissed") return;
     } catch (e) { /* localStorage 不可用时仍显示通知 */ }
     const isEn = getStoredLang() === "en";
     const notice = document.createElement("div");
@@ -1029,13 +1079,13 @@
     notice.setAttribute("role", "status");
     notice.innerHTML =
       '<div class="update-notice-body">' +
-        '<strong>' + (isEn ? "CityUpedia测试版 updated to v4.7" : "CityUpedia测试版 已更新至 v4.7") + '</strong>' +
-        '<span>' + (isEn ? "Complete MSCS curriculum (41 courses) · Summer term support added" : "补全 MSCS 全部课程（41 门）· 新增 Summer 暑期学期支持") + '</span>' +
+        '<strong>' + (isEn ? "Mobile PDF display issue fixed" : "移动端 PDF 显示问题已修复") + '</strong>' +
+        '<span>' + (isEn ? "Fixed blank PDFs on mobile: course document PDFs and exported timetable PDFs now display correctly after download." : "修复了课程 PDF 与排课台导出 PDF 在手机端下载后白屏无法查看的问题，现均可正常打开。") + '</span>' +
       '</div>' +
       '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';
     notice.querySelector(".update-notice-close").addEventListener("click", () => {
       notice.remove();
-      try { localStorage.setItem("cityu-update-notice-v47", "dismissed"); } catch (e) { /* ignore */ }
+      try { localStorage.setItem("cityu-update-notice-pdffix2", "dismissed"); } catch (e) { /* ignore */ }
     });
     document.body.prepend(notice);
   }
@@ -1059,7 +1109,11 @@
     PROGRAMME_KEY,
     clearSelections,
     cloudReviewsEnabled,
+    larkReviewsEnabled,
     courseProgrammes,
+    courseTerms,
+    primarySemester,
+    termBadgeClass,
     currentAdmin,
     deleteCloudReview,
     escapeHtml,
