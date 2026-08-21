@@ -1,10 +1,10 @@
-# CityU Pedia · 城大课程百科
+# CityUpedia测试版 · 城大课程百科
 
 > **当前版本：测试版 4.7.1（Test v4.7.1）**
 > 最新更新补全全部缺失课程 PDF（48 门）并修复索引，159 门课程 PDF 覆盖率达 100%。
 > 完整的版本变更记录请查看 [更新日志（CHANGELOG.md）](CHANGELOG.md)。
 
-CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）授课型硕士生**打造的一站式课程综合平台，涵盖排课规划与课程评价两大核心功能。整合课程时间表查询、班次选择与学生评价汇总，帮你做出更明智的决定。
+CityUpedia测试版（城大课程百科）是一个为**香港城市大学（CityU）授课型硕士生**打造的一站式课程综合平台，涵盖排课规划与课程评价两大核心功能。整合课程时间表查询、班次选择与学生评价汇总，帮你做出更明智的决定。
 
 > ⚠️ **免责声明：** 课程评价内容均整理自公开社交平台（小红书、知乎、Reddit 等），仅供参考，不构成建议。请以学校官方信息为准。
 >
@@ -12,21 +12,21 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 
 ## 在线访问
 
-**https://Famalhaut04.github.io/Cityu-course-selection/**
+**https://Famalhaut04.github.io/CityUPediaTest/**
 
 ## 测试版 4.5 更新内容
 
-> 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityU Pedia；导航重组为两组；无评价课程不再显示星级。
+> 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityUpedia测试版；导航重组为两组；无评价课程不再显示星级。
 
 ### 视觉重构（Claude 风格）
 
 - **暖色编辑部美学**：全站由冷色 Indigo 换为 Claude 风格暖色系——暖米白底 `#FAF9F5`、暖黑墨色 `#2B2822`、珊瑚橙主色 `#C15F3C`（暗色模式 `#E08A6A`），配套暗色模式自适应
 - **衬线标题**：页面标题、详情标题、关于我们标题改为 Source Serif 4 + Noto Serif SC 衬线字体，正文保持 Inter + Noto Sans SC
-- **品牌徽章**：侧边栏 Logo 由图片改为珊瑚橙渐变文字徽章（「城」字），品牌名统一为 CityU Pedia
+- **品牌徽章**：侧边栏 Logo 由图片改为珊瑚橙渐变文字徽章（「城」字），品牌名统一为 CityUpedia测试版
 
-### 项目更名 CityU Pedia
+### 项目更名 CityUpedia测试版
 
-- 全站品牌名由「CityU 课程综合系统」更名为 **CityU Pedia（城大课程百科）**，页面标题、副标题、导航与反馈页文案同步更新
+- 全站品牌名由「CityU 课程综合系统」更名为 **CityUpedia测试版（城大课程百科）**，页面标题、副标题、导航与反馈页文案同步更新
 
 ### 导航重组
 
@@ -159,8 +159,8 @@ CityU Pedia（城大课程百科）是一个为**香港城市大学（CityU）�
 项目使用原生 HTML、CSS 和 JavaScript，无需安装依赖或执行构建。
 
 ```powershell
-git clone https://github.com/Famalhaut04/Cityu-course-selection.git
-cd Cityu-course-selection
+git clone https://github.com/Famalhaut04/CityUPediaTest.git
+cd CityUPediaTest
 python -m http.server 8090
 ```
 
@@ -202,7 +202,7 @@ python -m http.server 8090
 
 ## 联系与贡献
 
-任何问题、建议或合作意向，欢迎在 [Issues](https://github.com/Famalhaut04/Cityu-course-selection/issues) 中提交，我们会尽快回复。
+任何问题、建议或合作意向，欢迎在 [Issues](https://github.com/Famalhaut04/CityUPediaTest/issues) 中提交，我们会尽快回复。
 
 ### 资料致谢
 

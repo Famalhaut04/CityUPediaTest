@@ -1029,7 +1029,7 @@
     notice.setAttribute("role", "status");
     notice.innerHTML =
       '<div class="update-notice-body">' +
-        '<strong>' + (isEn ? "CityU Pedia updated to v4.7" : "CityU Pedia 已更新至 v4.7") + '</strong>' +
+        '<strong>' + (isEn ? "CityUpedia测试版 updated to v4.7" : "CityUpedia测试版 已更新至 v4.7") + '</strong>' +
         '<span>' + (isEn ? "Complete MSCS curriculum (41 courses) · Summer term support added" : "补全 MSCS 全部课程（41 门）· 新增 Summer 暑期学期支持") + '</span>' +
       '</div>' +
       '<button class="update-notice-close" type="button" aria-label="' + (isEn ? "Dismiss" : "关闭") + '">&times;</button>';

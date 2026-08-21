@@ -1,5 +1,13 @@
 # 更新日志 / Changelog
 
+## 测试版 4.7.2（Test v4.7.2）· 2026-08-21
+
+> 仓库更名：`Cityu-course-selection` → **CityUPediaTest**，作为 CityUPedia 的独立测试/开发项目；站点品牌名统一为 **CityUpedia测试版**。正式版 `CityUPedia` 保持不变。
+
+- **仓库改名**：GitHub 仓库由 `Cityu-course-selection` 更名为 `CityUPediaTest`，Pages 地址更新为 `https://Famalhaut04.github.io/CityUPediaTest/`
+- **品牌统一**：全站标题、导航栏、README 中的 `CityU Pedia` 统一为 `CityUpedia测试版`
+- **分工**：`CityUPediaTest` = 测试与开发；`CityUPedia` = 正式版（不做改动）
+
 ## 测试版 4.7.1（Test v4.7.1）· 2026-08-14
 
 > 补全全部缺失课程 PDF（48 门），修复 2 处断裂引用，课程 PDF 覆盖率达 100%。
@@ -73,7 +81,7 @@
 
 ### 导航新增
 
-- **GitHub 仓库入口**：中英文切换按钮下方新增「GitHub 仓库」菜单项，点击在新标签页打开项目 GitHub 页面（`github.com/Famalhaut04/Cityu-course-selection`），文案支持中英文切换
+- **GitHub 仓库入口**：中英文切换按钮下方新增「GitHub 仓库」菜单项，点击在新标签页打开项目 GitHub 页面（`github.com/Famalhaut04/CityUPediaTest`），文案支持中英文切换
 
 ### 更新推送通知
 
@@ -101,18 +109,18 @@
 
 ## 测试版 4.5（Test v4.5）· 2026-08-13
 
-> 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityU Pedia；导航重组为两组；无评价课程不再显示星级。
+> 全站视觉重构为 Claude 风格暖色编辑部美学；项目更名 CityUpedia测试版；导航重组为两组；无评价课程不再显示星级。
 
 ### 视觉重构（Claude 风格）
 
 - **暖色编辑部美学**：全站设计令牌由冷色 Indigo 全面替换为 Claude 风格暖色系——暖米白底 `#FAF9F5`、暖黑墨色 `#2B2822`、珊瑚橙主色 `#C15F3C`（暗色模式 `#E08A6A`），配套完整暗色模式自适应
 - **衬线标题**：页面标题、课程详情标题、关于我们标题改为 Source Serif 4 + Noto Serif SC 衬线字体（weight 700），正文保持 Inter + Noto Sans SC，更具编辑部气质
-- **品牌徽章**：侧边栏 Logo 沿用 CSSA 图标图片，品牌名统一为 CityU Pedia
+- **品牌徽章**：侧边栏 Logo 沿用 CSSA 图标图片，品牌名统一为 CityUpedia测试版
 - **色板查漏**：反馈页必填星号等冷色硬编码统一替换为主题色变量（`var(--danger)` 等），消除旧 Indigo 残留
 
-### 项目更名 CityU Pedia
+### 项目更名 CityUpedia测试版
 
-- 全站品牌名统一为 **CityU Pedia（城大课程百科）**，页面标题、副标题、导航文案与反馈页文案同步更新
+- 全站品牌名统一为 **CityUpedia测试版（城大课程百科）**，页面标题、副标题、导航文案与反馈页文案同步更新
 
 ### 导航重组
 
